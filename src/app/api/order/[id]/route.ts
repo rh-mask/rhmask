@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { orderStatus, RouterError } from "@/lib/router/oneclick";
+import { orderStatus, RouterError } from "@/lib/router/intent";
 
 export const runtime = "nodejs";
 

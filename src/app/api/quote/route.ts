@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { quoteInput, requestQuote, RouterError } from "@/lib/router/oneclick";
+import { quoteInput, requestQuote, RouterError } from "@/lib/router/intent";
 
 export const runtime = "nodejs";
 
