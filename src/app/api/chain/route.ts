@@ -4,7 +4,7 @@ import { robinhoodChain } from "@/lib/chain";
 import { serverRpcUrl } from "@/lib/env";
 
 export const runtime = "nodejs";
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 /** Chain parameters plus a live block number so the UI can show the chain is reachable. */
 export async function GET() {
@@ -16,12 +16,15 @@ export async function GET() {
   } catch (err) {
     rpcError = err instanceof Error ? err.message.split("\n")[0] : "rpc unreachable";
   }
-  return NextResponse.json({
-    id: robinhoodChain.id,
-    name: robinhoodChain.name,
-    nativeCurrency: robinhoodChain.nativeCurrency,
-    explorer: robinhoodChain.blockExplorers.default.url,
-    blockNumber,
-    rpcError,
-  });
+  return NextResponse.json(
+    {
+      id: robinhoodChain.id,
+      name: robinhoodChain.name,
+      nativeCurrency: robinhoodChain.nativeCurrency,
+      explorer: robinhoodChain.blockExplorers.default.url,
+      blockNumber,
+      rpcError,
+    },
+    { headers: { "cache-control": "public, s-maxage=15, stale-while-revalidate=30" } },
+  );
 }

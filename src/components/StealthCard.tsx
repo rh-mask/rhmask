@@ -1,46 +1,74 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Badge } from "@/components/Badge";
 import { generateStealthKeys, deriveStealthAddress, type StealthKeys, type StealthDerivation } from "@/lib/stealth";
 import { explorerAddress } from "@/lib/chain";
 
 const STORAGE_KEY = "veilstreet.stealth.keys.v1";
 
-function loadKeys(): StealthKeys | null {
+/**
+ * Local key store exposed through useSyncExternalStore so the server render
+ * (no keys) and the first client frame agree, and updates propagate without
+ * setState-in-effect.
+ */
+const listeners = new Set<() => void>();
+
+function readRaw(): string | null {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as StealthKeys) : null;
+    return localStorage.getItem(STORAGE_KEY);
   } catch {
     return null;
   }
 }
 
+function subscribe(cb: () => void) {
+  listeners.add(cb);
+  window.addEventListener("storage", cb);
+  return () => {
+    listeners.delete(cb);
+    window.removeEventListener("storage", cb);
+  };
+}
+
+function writeRaw(value: string | null) {
+  try {
+    if (value === null) localStorage.removeItem(STORAGE_KEY);
+    else localStorage.setItem(STORAGE_KEY, value);
+  } catch {
+    /* storage unavailable: nothing persists */
+  }
+  listeners.forEach((cb) => cb());
+}
+
+function parseKeys(raw: string | null): StealthKeys | null {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as StealthKeys;
+  } catch {
+    return null;
+  }
+}
+
+const subscribeHydration = () => () => {};
+
 export function StealthCard() {
-  const [keys, setKeys] = useState<StealthKeys | null>(() => (typeof window === "undefined" ? null : loadKeys()));
+  const raw = useSyncExternalStore(subscribe, readRaw, () => null);
+  const keys = parseKeys(raw);
+  const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const [reveal, setReveal] = useState(false);
   const [target, setTarget] = useState("");
   const [derived, setDerived] = useState<StealthDerivation | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   function create() {
-    const k = generateStealthKeys();
-    setKeys(k);
     setReveal(false);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(k));
-    } catch {
-      /* storage unavailable: keys live in memory only */
-    }
+    writeRaw(JSON.stringify(generateStealthKeys()));
   }
 
   function forget() {
-    setKeys(null);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      /* ignore */
-    }
+    setReveal(false);
+    writeRaw(null);
   }
 
   function derive() {
@@ -92,7 +120,7 @@ export function StealthCard() {
             )}
           </div>
         ) : (
-          <button type="button" className="btn btn-primary mt-4" onClick={create}>
+          <button type="button" className="btn btn-primary mt-4" onClick={create} disabled={!hydrated}>
             Generate keys
           </button>
         )}
