@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #07080b;
+  --color-ink-2: #0e1015;
+  --color-ink-3: #161921;
+  --color-line: #232733;
+  --color-fog: #8b90a0;
+  --color-paper: #eef0f5;
+  --color-veil: #b8ff5c;
+  --color-veil-2: #7fd12b;
+  --color-warn: #ffb454;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  background: var(--color-ink-2);
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+}
+
+.field {
+  width: 100%;
+  background: var(--color-ink-3);
+  border: 1px solid var(--color-line);
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  color: var(--color-paper);
+  outline: none;
+}
+.field:focus {
+  border-color: var(--color-veil-2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1.1rem;
+  font-weight: 600;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--color-veil);
+  color: #0a1200;
+}
+.btn-primary:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  border: 1px solid var(--color-line);
+  color: var(--color-paper);
+}
+.btn-ghost:not(:disabled):hover {
+  border-color: var(--color-fog);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
+}
