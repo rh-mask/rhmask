@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export function GET() {
   return NextResponse.json({
     ok: true,
-    service: "veilstreet",
+    service: "rhmask",
     chainId: ROBINHOOD_CHAIN_ID,
     time: new Date().toISOString(),
   });

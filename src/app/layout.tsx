@@ -10,21 +10,21 @@ const appUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: {
-    default: "VeilStreet",
-    template: "%s · VeilStreet",
+    default: "RhMask",
+    template: "%s · RhMask",
   },
   description:
     "The privacy layer for tokenized stocks on Robinhood Chain. Receive unseen, trade unseen, and get paid in real stock tokens.",
   openGraph: {
-    title: "VeilStreet",
-    description: "Wall Street sees everything. VeilStreet sees nothing.",
+    title: "RhMask",
+    description: "Wall Street sees everything. RhMask sees nothing.",
     type: "website",
     url: appUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "VeilStreet",
-    description: "Wall Street sees everything. VeilStreet sees nothing.",
+    title: "RhMask",
+    description: "Wall Street sees everything. RhMask sees nothing.",
   },
 };
 

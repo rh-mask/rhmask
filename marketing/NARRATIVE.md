@@ -10,17 +10,17 @@ On Wall Street, only the exchange sees the tape. On-chain, everyone does.
 
 ## The promise
 
-**VeilStreet is the privacy layer for tokenized stocks.**
+**RhMask is the privacy layer for tokenized stocks.**
 
 Three things, no more:
 
 1. **Receive unseen.** One meta-address, a fresh address for every payment. Your balance never piles up on one wallet.
 2. **Trade unseen.** Private fills instead of public order books. The venue name and the fee are printed before you send.
-3. **Get paid in stocks.** Stake `$VEIL`, get streamed NVDA, SPY, TSLA. Every trade of `$VEIL` buys stock tokens for stakers, from day one, with a hash.
+3. **Get paid in stocks.** Stake `$MASK`, get streamed NVDA, SPY, TSLA. Every trade of `$MASK` buys stock tokens for stakers, from day one, with a hash.
 
 ## Master tagline
 
-> **Wall Street sees everything. VeilStreet sees nothing.**
+> **Wall Street sees everything. RhMask sees nothing.**
 
 Alternates for rotation:
 
@@ -49,7 +49,7 @@ Alternates for rotation:
 
 ## FOMO mechanics (honest ones)
 
-- **Day-one yield**: the creator fee on `$VEIL` trading means the vault has revenue the minute the token exists. Post the first payout hash within days of launch.
+- **Day-one yield**: the creator fee on `$MASK` trading means the vault has revenue the minute the token exists. Post the first payout hash within days of launch.
 - **Weekly ledger drops**: same day, same time, every week. A payout post is a countdown.
 - **Basket votes**: stakers choose the next stock in the basket. Every vote is a campaign.
 - **Stealth firsts**: first stealth payment on the chain, first stealth NVDA transfer, first gasless sweep. Each is a screenshot.
@@ -58,9 +58,9 @@ Alternates for rotation:
 ## Launch thread skeleton
 
 1. The flaw: on-chain stocks are public. Screenshot of a whale wallet anyone can read.
-2. The fix: VeilStreet, three surfaces, one line each.
+2. The fix: RhMask, three surfaces, one line each.
 3. Demo: generate a meta-address, derive an address, receive. 20-second clip.
-4. The token: `$VEIL` pays in stocks, not in `$VEIL`. Allocation table.
+4. The token: `$MASK` pays in stocks, not in `$MASK`. Allocation table.
 5. The proof: ledger page, empty today, first hash on [date].
 6. The launch: date, launchpad, no presale, team wallet disclosed.
 7. CTA: open the app, generate keys, follow for the ledger.

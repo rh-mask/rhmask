@@ -55,12 +55,12 @@ export function SwapCard() {
   return (
     <div className="card p-6">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold">Veil Swap</h2>
-        <Badge tone="veil">beta · dry quotes</Badge>
+        <h2 className="text-lg font-semibold">Mask Swap</h2>
+        <Badge tone="mask">beta · dry quotes</Badge>
       </div>
       <p className="mt-2 text-sm text-fog">
         Private fill, one receipt. Fee is printed on the quote before you send anything. Your wallet deposits straight
-        to the venue; VeilStreet never holds funds.
+        to the venue; RhMask never holds funds.
       </p>
 
       <div className="mt-5 grid gap-3">

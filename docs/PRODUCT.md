@@ -2,7 +2,7 @@
 
 ## One line
 
-VeilStreet is the privacy layer for tokenized stocks on Robinhood Chain: receive unseen, trade unseen, and earn real stock tokens for staking.
+RhMask is the privacy layer for tokenized stocks on Robinhood Chain: receive unseen, trade unseen, and earn real stock tokens for staking.
 
 ## Who it is for
 
@@ -19,7 +19,7 @@ VeilStreet is the privacy layer for tokenized stocks on Robinhood Chain: receive
 - The recipient scans announcements with the viewing key (view tags discard ~99.6% of announcements without a full derivation) and sweeps with the spending key.
 - Later: gasless sweeps through a relay paid from the vault, viewing-key export for selective disclosure (auditors, tax), and a browser extension that auto-derives addresses on any dapp's "send" field.
 
-### 2. Veil Swap (private routing)
+### 2. Mask Swap (private routing)
 
 - Two legs. **Cross-chain leg** uses an intent router: quotes from competing private fills, user deposits to a venue address, fill arrives at the receiving address. **Native leg** (in progress) routes stock-token swaps on-chain through a forwarder that batches and delays orders so no single swap is attributable in the mempool.
 - Every quote prints venue name, output, ETA, and the flat fee before the user sends anything.
@@ -28,9 +28,9 @@ VeilStreet is the privacy layer for tokenized stocks on Robinhood Chain: receive
 
 ### 3. Blue Chip Vault (staking)
 
-- Stake `$VEIL`. The vault streams a basket of stock tokens to stakers pro-rata over time.
-- Revenue sources: (a) routing fee on swaps, (b) creator share of trading fees on `$VEIL` itself, paid in ETH by the launchpad, (c) relay fee on gasless sweeps, (d) later, API keys and desk mirroring.
-- Revenue is converted to the basket on-chain by `RevenueRouter` and pushed to the vault. The vault does not hold `$VEIL` rewards; it pays out stock tokens only.
+- Stake `$MASK`. The vault streams a basket of stock tokens to stakers pro-rata over time.
+- Revenue sources: (a) routing fee on swaps, (b) creator share of trading fees on `$MASK` itself, paid in ETH by the launchpad, (c) relay fee on gasless sweeps, (d) later, API keys and desk mirroring.
+- Revenue is converted to the basket on-chain by `RevenueRouter` and pushed to the vault. The vault does not hold `$MASK` rewards; it pays out stock tokens only.
 - Tiers by staked amount unlock fee discounts, lower split thresholds, API rate limits, and relay priority. Tiers never change route quality.
 
 ### 4. Proof Ledger

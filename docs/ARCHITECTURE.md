@@ -16,9 +16,9 @@
  │ Ghost Receive   │  none        │                      │              │ Robinhood Chain  │
  │  keys, derive   │─────────────▶│                      │              │  4663            │
  │                 │              │ /api/chain ──────────┼─────────────▶│  RPC (Alchemy)   │
- │ Veil Swap       │ POST quote   │ /api/quote ──────────┼──┐           │                  │
+ │ Mask Swap       │ POST quote   │ /api/quote ──────────┼──┐           │                  │
  │  form, receipt  │─────────────▶│  zod → router client │  │           │ StealthAnnouncer │
- │                 │              │ /api/order/:id       │  │           │ VeilVault        │
+ │                 │              │ /api/order/:id       │  │           │ MaskVault        │
  │ Vault           │ GET vault    │ /api/vault ──────────┼──┼──────────▶│ ProofLedger      │
  │  totals, ledger │─────────────▶│  chain reads         │  │           └──────────────────┘
  │                 │              └──────────────────────┘  │           ┌──────────────────┐
@@ -47,8 +47,8 @@
 ### Vault payout (after launch)
 
 1. Revenue lands in `RevenueRouter` (ETH from launchpad fee escrow claims, input-token fees from routing, ETH from relay).
-2. Keeper calls `RevenueRouter.convert()` which swaps to basket tokens through a fixed route and pushes to `VeilVault`.
-3. `VeilVault` updates the reward-per-token accumulator. `ProofLedger.record()` logs the payout.
+2. Keeper calls `RevenueRouter.convert()` which swaps to basket tokens through a fixed route and pushes to `MaskVault`.
+3. `MaskVault` updates the reward-per-token accumulator. `ProofLedger.record()` logs the payout.
 4. `/api/vault` reads totals and the ledger; dashboard renders.
 
 ## Infrastructure

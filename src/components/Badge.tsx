@@ -1,7 +1,7 @@
-export function Badge({ tone = "fog", children }: { tone?: "fog" | "veil" | "warn"; children: React.ReactNode }) {
+export function Badge({ tone = "fog", children }: { tone?: "fog" | "mask" | "warn"; children: React.ReactNode }) {
   const cls =
-    tone === "veil"
-      ? "border-veil/40 text-veil"
+    tone === "mask"
+      ? "border-mask/40 text-mask"
       : tone === "warn"
         ? "border-warn/40 text-warn"
         : "border-line text-fog";

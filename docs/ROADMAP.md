@@ -5,7 +5,7 @@ Dates are targets, not promises. A surface is "live" only when the status table 
 ## Phase 0 · Now (this repository)
 
 - [x] Landing page with the narrative and an honest status table
-- [x] Dashboard: Ghost Receive (keys, derive, verify), Veil Swap (dry quotes), Vault (empty, labelled)
+- [x] Dashboard: Ghost Receive (keys, derive, verify), Mask Swap (dry quotes), Vault (empty, labelled)
 - [x] API: health, chain, tokens, quote, order status, vault summary
 - [x] Docs: product, architecture, tokenomics, roadmap, narrative
 - [ ] Deploy to Vercel production
@@ -23,9 +23,9 @@ Dates are targets, not promises. A surface is "live" only when the status table 
 
 ## Phase 2 · Weeks 3–6 · Token and vault
 
-- Audit scope fixed for `VeilVault`, `ProofLedger`, `RevenueRouter`
-- `$VEIL` fair launch on the launchpad, creator fee routed to the vault wallet, launch hash posted
-- `VeilVault` deployed after audit; staking, tiers, locks
+- Audit scope fixed for `MaskVault`, `ProofLedger`, `RevenueRouter`
+- `$MASK` fair launch on the launchpad, creator fee routed to the vault wallet, launch hash posted
+- `MaskVault` deployed after audit; staking, tiers, locks
 - First stock-token payout on the Proof Ledger
 - Buyback and burn pipeline live with hashes
 

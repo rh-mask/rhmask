@@ -1,8 +1,8 @@
 {
-  "name": "veilstreet",
+  "name": "rhmask",
   "version": "0.1.0",
   "private": true,
-  "description": "VeilStreet - the privacy layer for tokenized stocks on Robinhood Chain",
+  "description": "RhMask - the privacy layer for tokenized stocks on Robinhood Chain",
   "engines": {
     "node": ">=20.18.0"
   },

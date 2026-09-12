@@ -7,7 +7,7 @@ export function Nav() {
       <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <Logo className="h-6 w-6" />
-          VeilStreet
+          RhMask
         </Link>
         <nav className="flex items-center gap-1 text-sm">
           <Link href="/#how" className="px-3 py-1.5 rounded-lg text-fog hover:text-paper">

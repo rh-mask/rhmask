@@ -1,10 +1,10 @@
-# $VEIL
+# $MASK
 
 ## Principle
 
-`$VEIL` buys **access and discounts**. It never buys route quality. Route quality is equal for everyone.
+`$MASK` buys **access and discounts**. It never buys route quality. Route quality is equal for everyone.
 
-`$VEIL` is the only way to receive the vault's stock-token stream. That is the utility: stake `$VEIL`, get paid in NVDA, SPY, TSLA, AAPL, MSFT.
+`$MASK` is the only way to receive the vault's stock-token stream. That is the utility: stake `$MASK`, get paid in NVDA, SPY, TSLA, AAPL, MSFT.
 
 ## Supply and launch
 
@@ -14,15 +14,15 @@
 | Launch | Fair launch on the chain's leading launchpad (V2 bonding curve → locked Uniswap v4 pool). Full supply mints to the curve. |
 | Team allocation | None. The team buys from the curve with a disclosed wallet and posts the hash. |
 | Presale | None. |
-| Creator fee | Set at launch (cap is 10%; target 3%). Paid in ETH on every trade of `$VEIL`, on the curve and in the pool. **100% of it goes to the vault.** |
+| Creator fee | Set at launch (cap is 10%; target 3%). Paid in ETH on every trade of `$MASK`, on the curve and in the pool. **100% of it goes to the vault.** |
 
-The creator fee is the reason the vault can pay from day one. Every trade of `$VEIL`, buy or sell, produces ETH that becomes stock tokens for stakers. The flywheel does not wait for product volume.
+The creator fee is the reason the vault can pay from day one. Every trade of `$MASK`, buy or sell, produces ETH that becomes stock tokens for stakers. The flywheel does not wait for product volume.
 
 ## Revenue → vault
 
 | Source | Asset | Live when |
 |---|---|---|
-| Creator share of `$VEIL` trading fees | ETH | Token launch |
+| Creator share of `$MASK` trading fees | ETH | Token launch |
 | Routing fee (default 0.30% of input; integrator keeps half after the router's share) | input token | Router key configured |
 | Gasless sweep relay fee | ETH | Relay ships |
 | API keys, desk mirroring | ETH / stables | Phase 3 |
@@ -32,7 +32,7 @@ The creator fee is the reason the vault can pay from day one. Every trade of `$V
 | Share | Destination |
 |---|---|
 | 60% | **Vault**: converted to the basket and streamed to stakers |
-| 20% | **Buyback and burn** of `$VEIL`, executed on-chain, hash posted |
+| 20% | **Buyback and burn** of `$MASK`, executed on-chain, hash posted |
 | 15% | **Treasury**: audits, infrastructure, relay gas |
 | 5% | **Growth**: referrals, competitions |
 
@@ -40,7 +40,7 @@ Allocation is enforced by `RevenueRouter`, not by a spreadsheet.
 
 ## Tiers
 
-Tiers are by amount staked in `VeilVault`. Holding in a wallet does not count.
+Tiers are by amount staked in `MaskVault`. Holding in a wallet does not count.
 
 | Tier | Staked | Fee discount | Stream multiplier | Unlocks |
 |---|---|---|---|---|

@@ -5,7 +5,7 @@ import { Badge } from "@/components/Badge";
 import { generateStealthKeys, deriveStealthAddress, type StealthKeys, type StealthDerivation } from "@/lib/stealth";
 import { explorerAddress } from "@/lib/chain";
 
-const STORAGE_KEY = "veilstreet.stealth.keys.v1";
+const STORAGE_KEY = "rhmask.stealth.keys.v1";
 
 /**
  * Local key store exposed through useSyncExternalStore so the server render
@@ -86,7 +86,7 @@ export function StealthCard() {
       <div className="card p-6">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Your meta-address</h2>
-          <Badge tone="veil">client-side</Badge>
+          <Badge tone="mask">client-side</Badge>
         </div>
         <p className="mt-2 text-sm text-fog">
           Share this once. Every sender derives a new address from it. Keys are generated in this browser and stored
@@ -148,7 +148,7 @@ export function StealthCard() {
         {derived && (
           <div className="mt-4 rounded-xl border border-line bg-ink-3 p-3 space-y-2">
             <p className="text-xs text-fog">One-time address</p>
-            <a className="mono text-veil" href={explorerAddress(derived.stealthAddress)} target="_blank" rel="noreferrer">
+            <a className="mono text-mask" href={explorerAddress(derived.stealthAddress)} target="_blank" rel="noreferrer">
               {derived.stealthAddress}
             </a>
             <p className="text-xs text-fog">Ephemeral public key (give this to the recipient)</p>

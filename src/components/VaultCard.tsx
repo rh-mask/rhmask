@@ -29,10 +29,10 @@ export function VaultCard() {
       <div className="card p-6">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Blue Chip Vault</h2>
-          <Badge tone={data?.live ? "veil" : "warn"}>{data?.live ? "live" : "planned"}</Badge>
+          <Badge tone={data?.live ? "mask" : "warn"}>{data?.live ? "live" : "planned"}</Badge>
         </div>
         <p className="mt-2 text-sm text-fog">
-          Stake $VEIL, get paid in stock tokens. Revenue from routing fees and $VEIL trading fees buys the basket on-chain
+          Stake $MASK, get paid in stock tokens. Revenue from routing fees and $MASK trading fees buys the basket on-chain
           and streams it to stakers. Nothing is estimated: if a payout has no hash, it is not counted.
         </p>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -59,7 +59,7 @@ export function VaultCard() {
           {(data?.revenueSources ?? []).map((s) => (
             <li key={s.id} className="flex items-center justify-between gap-3">
               <span>{s.label}</span>
-              <Badge tone={s.live ? "veil" : "fog"}>{s.live ? "live" : "not yet"}</Badge>
+              <Badge tone={s.live ? "mask" : "fog"}>{s.live ? "live" : "not yet"}</Badge>
             </li>
           ))}
         </ul>
@@ -72,7 +72,7 @@ export function VaultCard() {
             {data.payouts.map((p) => (
               <li key={p.txHash} className="flex justify-between gap-3">
                 <span>{p.amount} {p.symbol}</span>
-                <a className="mono text-veil" href={explorerTx(p.txHash)} target="_blank" rel="noreferrer">{p.txHash.slice(0, 10)}…</a>
+                <a className="mono text-mask" href={explorerTx(p.txHash)} target="_blank" rel="noreferrer">{p.txHash.slice(0, 10)}…</a>
               </li>
             ))}
           </ul>

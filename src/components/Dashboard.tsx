@@ -7,7 +7,7 @@ import { StealthCard } from "@/components/StealthCard";
 import { VaultCard } from "@/components/VaultCard";
 
 const tabs = [
-  { id: "swap", label: "Veil Swap" },
+  { id: "swap", label: "Mask Swap" },
   { id: "receive", label: "Ghost Receive" },
   { id: "vault", label: "Blue Chip Vault" },
 ] as const;

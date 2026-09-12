@@ -1,16 +1,16 @@
-# VeilStreet
+# RhMask
 
 **The privacy layer for tokenized stocks on Robinhood Chain.**
 
-> Wall Street sees everything. VeilStreet sees nothing.
+> Wall Street sees everything. RhMask sees nothing.
 
-Tokenized stocks put the market on a public ledger: every entry, every exit, every balance is visible to anyone with an explorer. VeilStreet gives holders three things: a way to **receive unseen**, a way to **trade unseen**, and a vault that **pays stakers in real stock tokens**.
+Tokenized stocks put the market on a public ledger: every entry, every exit, every balance is visible to anyone with an explorer. RhMask gives holders three things: a way to **receive unseen**, a way to **trade unseen**, and a vault that **pays stakers in real stock tokens**.
 
 | Surface | What it does | State |
 |---|---|---|
 | **Ghost Receive** | One meta-address, a fresh unlinkable address per payment (ERC-5564 stealth addresses, derived in the browser). | beta |
-| **Veil Swap** | Private fills instead of public order books. Venue name and flat fee printed before you send. Non-custodial. | beta (dry quotes) |
-| **Blue Chip Vault** | Stake `$VEIL`; protocol revenue buys a basket of stock tokens and streams it to stakers. | planned |
+| **Mask Swap** | Private fills instead of public order books. Venue name and flat fee printed before you send. Non-custodial. | beta (dry quotes) |
+| **Blue Chip Vault** | Stake `$MASK`; protocol revenue buys a basket of stock tokens and streams it to stakers. | planned |
 | **Proof Ledger** | Every payout listed with its transaction hash. If it is not on the ledger, it did not happen. | planned |
 
 Nothing on the site is estimated or back-filled. Surfaces marked *planned* have no on-chain effect yet.
@@ -73,7 +73,7 @@ The app runs with no keys at all. Routes that need a key return a `503` naming t
 ## Project layout
 
 ```
-veilstreet/
+rhmask/
 ├─ src/
 │  ├─ app/             Next.js routes
 │  │  ├─ page.tsx      landing
@@ -120,7 +120,7 @@ veilstreet/
 
 **Not hidden:** on-chain settlement itself; the venue filling an order sees the deposit and the receiving address; network-level metadata (your IP to the RPC) unless you use your own node or a relay.
 
-VeilStreet is non-custodial software. It does not hold funds, does not provide investment advice, and does not guarantee execution, rates, or settlement times. Stock Tokens are issued by a third party and may be unavailable in your jurisdiction.
+RhMask is non-custodial software. It does not hold funds, does not provide investment advice, and does not guarantee execution, rates, or settlement times. Stock Tokens are issued by a third party and may be unavailable in your jurisdiction.
 
 ---
 

@@ -9,13 +9,13 @@ const pillars = [
     status: "beta",
   },
   {
-    title: "Veil Swap",
+    title: "Mask Swap",
     body: "Route swaps through private fills instead of public order books. Real venue name and flat fee printed before you send.",
     status: "beta",
   },
   {
     title: "Blue Chip Vault",
-    body: "Stake $VEIL. Protocol revenue buys stock tokens and streams them to stakers. Paid in NVDA and SPY, not in more $VEIL.",
+    body: "Stake $MASK. Protocol revenue buys stock tokens and streams them to stakers. Paid in NVDA and SPY, not in more $MASK.",
     status: "planned",
   },
   {
@@ -29,7 +29,7 @@ const steps = [
   ["01", "Generate keys", "Two keys, generated locally. Share the meta-address, keep the spending key."],
   ["02", "Receive unseen", "Senders derive a one-time address from your meta-address. Balances never pile up on one wallet."],
   ["03", "Trade unseen", "Quotes come from private fills. Your order never sits in a public book or mempool as a visible swap."],
-  ["04", "Get paid in stocks", "Stake $VEIL. Revenue converts to stock tokens on-chain and streams to you, hash by hash."],
+  ["04", "Get paid in stocks", "Stake $MASK. Revenue converts to stock tokens on-chain and streams to you, hash by hash."],
 ];
 
 export default function Landing() {
@@ -39,18 +39,18 @@ export default function Landing() {
         <div className="absolute inset-0 grid-bg" aria-hidden="true" />
         <div className="relative mx-auto max-w-6xl px-4 pt-20 pb-16 sm:pt-28">
           <div className="flex gap-2 mb-6">
-            <Badge tone="veil">Robinhood Chain</Badge>
+            <Badge tone="mask">Robinhood Chain</Badge>
             <Badge>Non-custodial</Badge>
             <Badge>No account</Badge>
           </div>
           <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl">
             Wall Street sees everything.
             <br />
-            <span className="text-veil">VeilStreet sees nothing.</span>
+            <span className="text-mask">RhMask sees nothing.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-fog">
             Tokenized stocks put the market on a public ledger. Your entries, your exits, your whole bag, visible to
-            anyone. VeilStreet is the privacy layer: receive unseen, trade unseen, and earn real stock tokens for
+            anyone. RhMask is the privacy layer: receive unseen, trade unseen, and earn real stock tokens for
             holding the line.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -66,7 +66,7 @@ export default function Landing() {
             <div key={p.title} className="card p-6">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="text-lg font-semibold">{p.title}</h3>
-                <Badge tone={p.status === "beta" ? "veil" : "warn"}>{p.status}</Badge>
+                <Badge tone={p.status === "beta" ? "mask" : "warn"}>{p.status}</Badge>
               </div>
               <p className="mt-3 text-fog">{p.body}</p>
             </div>
@@ -79,7 +79,7 @@ export default function Landing() {
         <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map(([n, title, body]) => (
             <li key={n} className="card p-5">
-              <span className="mono text-veil">{n}</span>
+              <span className="mono text-mask">{n}</span>
               <h3 className="mt-2 font-semibold">{title}</h3>
               <p className="mt-2 text-sm text-fog">{body}</p>
             </li>
@@ -90,20 +90,20 @@ export default function Landing() {
       <section className="mx-auto max-w-6xl px-4 py-12" id="token">
         <div className="card p-6 sm:p-10 grid gap-8 lg:grid-cols-2">
           <div>
-            <Badge tone="veil">$VEIL</Badge>
+            <Badge tone="mask">$MASK</Badge>
             <h2 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight">
               A token that pays you in someone else&apos;s stock.
             </h2>
             <p className="mt-4 text-fog">
-              $VEIL buys access and fee discounts. It never buys route quality. Stake it and the vault pays you in a
-              basket of stock tokens funded by protocol revenue. Every trade of $VEIL and every routed swap feeds the
+              $MASK buys access and fee discounts. It never buys route quality. Stake it and the vault pays you in a
+              basket of stock tokens funded by protocol revenue. Every trade of $MASK and every routed swap feeds the
               same vault.
             </p>
             <ul className="mt-6 space-y-2 text-sm">
-              <li className="flex gap-2"><span className="text-veil">▸</span> Fixed supply. No mint. No admin keys.</li>
-              <li className="flex gap-2"><span className="text-veil">▸</span> Fair launch on a public bonding curve. No presale, no team allocation.</li>
-              <li className="flex gap-2"><span className="text-veil">▸</span> Rewards paid in stock tokens, on-chain, with a hash.</li>
-              <li className="flex gap-2"><span className="text-veil">▸</span> Holders vote which stocks enter the basket.</li>
+              <li className="flex gap-2"><span className="text-mask">▸</span> Fixed supply. No mint. No admin keys.</li>
+              <li className="flex gap-2"><span className="text-mask">▸</span> Fair launch on a public bonding curve. No presale, no team allocation.</li>
+              <li className="flex gap-2"><span className="text-mask">▸</span> Rewards paid in stock tokens, on-chain, with a hash.</li>
+              <li className="flex gap-2"><span className="text-mask">▸</span> Holders vote which stocks enter the basket.</li>
             </ul>
           </div>
           <div className="grid gap-3 content-start">
@@ -141,14 +141,14 @@ export default function Landing() {
             <tbody>
               {[
                 ["Ghost Receive (key generation, derivation)", "beta", "Client-side only. Announcer contract not yet deployed."],
-                ["Veil Swap quotes", "beta", "Private fills via intent router. Native on-chain route in progress."],
+                ["Mask Swap quotes", "beta", "Private fills via intent router. Native on-chain route in progress."],
                 ["Blue Chip Vault", "planned", "Contract written after audit scope is fixed. No payouts yet."],
                 ["Proof Ledger", "planned", "Ships with the vault. Empty until the first payout."],
-                ["$VEIL token", "planned", "Fair launch date announced on X before deployment."],
+                ["$MASK token", "planned", "Fair launch date announced on X before deployment."],
               ].map(([s, state, note]) => (
                 <tr key={s} className="border-b border-line/60">
                   <td className="py-3 pr-4">{s}</td>
-                  <td className="py-3 pr-4"><Badge tone={state === "beta" ? "veil" : "warn"}>{state}</Badge></td>
+                  <td className="py-3 pr-4"><Badge tone={state === "beta" ? "mask" : "warn"}>{state}</Badge></td>
                   <td className="py-3 text-fog">{note}</td>
                 </tr>
               ))}
