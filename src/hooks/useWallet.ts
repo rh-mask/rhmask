@@ -67,7 +67,11 @@ export function useWallet() {
       await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CHAIN_HEX }] });
     } catch (err) {
       const code = (err as { code?: number })?.code;
-      if (code === 4902) {
+      if (code !== 4902) {
+        setError(err instanceof Error ? err.message : "switch rejected");
+        return;
+      }
+      try {
         await provider.request({
           method: "wallet_addEthereumChain",
           params: [
@@ -80,9 +84,16 @@ export function useWallet() {
             },
           ],
         });
-      } else {
-        setError(err instanceof Error ? err.message : "switch rejected");
+      } catch (addErr) {
+        setError(addErr instanceof Error ? addErr.message : "adding the chain was rejected");
+        return;
       }
+    }
+    try {
+      const hex = (await provider.request({ method: "eth_chainId" })) as string;
+      setChainId(Number.parseInt(hex, 16));
+    } catch {
+      /* the chainChanged event will catch up */
     }
   }, [provider]);
 
