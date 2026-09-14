@@ -1,31 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 import { WalletButton } from "@/components/WalletButton";
 import { SwapCard } from "@/components/SwapCard";
 import { StealthCard } from "@/components/StealthCard";
 import { VaultCard } from "@/components/VaultCard";
+import { PayCard } from "@/components/PayCard";
 
 const tabs = [
   { id: "swap", label: "Mask Swap" },
   { id: "receive", label: "Ghost Receive" },
+  { id: "pay", label: "Private Pay" },
   { id: "vault", label: "Blue Chip Vault" },
 ] as const;
 
 type Tab = (typeof tabs)[number]["id"];
+const DEFAULT_TAB: Tab = "receive";
+
+function isTab(v: string): v is Tab {
+  return tabs.some((t) => t.id === v);
+}
+
+/** Tab lives in the URL hash so /app#swap is linkable and survives reloads. */
+function subscribeHash(cb: () => void) {
+  window.addEventListener("hashchange", cb);
+  return () => window.removeEventListener("hashchange", cb);
+}
+function readHash() {
+  return window.location.hash.replace(/^#/, "");
+}
 
 export function Dashboard() {
-  const [tab, setTab] = useState<Tab>("receive");
+  const hash = useSyncExternalStore(subscribeHash, readHash, () => "");
+  const tab: Tab = isTab(hash) ? hash : DEFAULT_TAB;
+
+  function select(id: Tab) {
+    if (id === tab) return;
+    window.history.pushState(null, "", `#${id}`);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+  }
 
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex gap-1 rounded-xl border border-line bg-ink-2 p-1">
+        <div className="flex gap-1 rounded-xl border border-line bg-ink-2 p-1" role="tablist">
           {tabs.map((t) => (
             <button
               key={t.id}
               type="button"
-              onClick={() => setTab(t.id)}
+              role="tab"
+              aria-selected={tab === t.id}
+              onClick={() => select(t.id)}
               className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
                 tab === t.id ? "bg-ink-3 text-paper" : "text-fog hover:text-paper"
               }`}
@@ -41,6 +66,7 @@ export function Dashboard() {
         <div>
           {tab === "swap" && <SwapCard />}
           {tab === "receive" && <StealthCard />}
+          {tab === "pay" && <PayCard />}
           {tab === "vault" && <VaultCard />}
         </div>
         <aside className="card p-5 h-fit text-sm">
