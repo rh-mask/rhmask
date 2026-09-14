@@ -23,3 +23,6 @@ Thumbs.db
 
 # internal research and working notes - never published
 internal/
+
+# extension bundle
+extension/dist/
