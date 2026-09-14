@@ -34,9 +34,16 @@ export function explorerTx(hash: string) {
   return `${EXPLORER_URL}/tx/${hash}`;
 }
 
-/** Browser-side RPC URL. Falls back to the public endpoint. */
+/**
+ * Browser-side RPC URL.
+ *
+ * Default is the app's own /api/rpc pass-through: same origin, so an ISP that
+ * DNS-hijacks the chain's domain cannot break balance reads or sweeps.
+ * NEXT_PUBLIC_RHC_RPC_URL overrides it (own node, paid RPC). Outside the
+ * browser (tests, scripts) the public endpoint is used directly.
+ */
 export function publicRpcUrl() {
-  return (
-    process.env.NEXT_PUBLIC_RHC_RPC_URL || robinhoodChain.rpcUrls.default.http[0]
-  );
+  if (process.env.NEXT_PUBLIC_RHC_RPC_URL) return process.env.NEXT_PUBLIC_RHC_RPC_URL;
+  if (typeof window !== "undefined") return `${window.location.origin}/api/rpc`;
+  return robinhoodChain.rpcUrls.default.http[0];
 }
