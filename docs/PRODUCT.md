@@ -19,6 +19,13 @@ RhMask is the privacy layer for tokenized stocks on Robinhood Chain: receive uns
 - The recipient scans announcements with the viewing key (view tags discard ~99.6% of announcements without a full derivation) and sweeps with the spending key.
 - Later: gasless sweeps through a relay paid from the vault, viewing-key export for selective disclosure (auditors, tax), and a browser extension that auto-derives addresses on any dapp's "send" field.
 
+### 1b. Private Pay (QR request, transfer, receipt, claim)
+
+- Recipient: build a payment request (token, amount, memo optional) as a link and QR. Phone cameras open `/pay` directly.
+- Payer: scan or paste, get a one-time address, send from an injected wallet on Robinhood Chain or any wallet, get a receipt QR.
+- Recipient: scan the receipt, the viewing key verifies it, the spending key unlocks it, sweep to anywhere. Until the announcer contract ships, the receipt QR is the announcement.
+- Keys: meta-address as QR, backup and restore, passphrase encryption at rest (WebCrypto).
+
 ### 2. Mask Swap (private routing)
 
 - Two legs. **Cross-chain leg** uses an intent router: quotes from competing private fills, user deposits to a venue address, fill arrives at the receiving address. **Native leg** (in progress) routes stock-token swaps on-chain through a forwarder that batches and delays orders so no single swap is attributable in the mempool.

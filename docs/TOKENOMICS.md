@@ -77,6 +77,6 @@ Early unlock drops the tier immediately. No penalty burn: penalising exits makes
 
 ## What must be verified before this document is final
 
-1. That a contract on Robinhood Chain can hold and transfer stock tokens (issuer transfer restrictions). If not, the vault pays a redeemable claim rather than the token directly.
+1. That a contract on Robinhood Chain can hold and transfer stock tokens (issuer transfer restrictions). **Verified on mainnet 2026-09-12** (`npm run check:onchain`): transfer of NVDA, SPY, TSLA, AAPL and MSFT to a contract address and to a fresh EOA simulates fine from real holders, `approve` works, no `paused()` state. Caveat: every stock token is an upgradeable beacon proxy, so this is re-checked before each release; if the issuer ever restricts contracts, the vault falls back to paying a redeemable claim.
 2. The launchpad's exact creator-fee claim mechanics (escrow claim cadence, gas).
 3. Legal review of paying stock-token rewards to anonymous stakers in each target jurisdiction.
