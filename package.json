@@ -10,14 +10,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src scripts",
+    "lint": "eslint src scripts extension/src",
     "typecheck": "tsc --noEmit",
     "check:stealth": "node scripts/stealth-check.ts",
     "check": "node scripts/prepush-check.mjs",
     "check:fast": "node scripts/prepush-check.mjs --fast",
     "hooks:install": "node scripts/install-hooks.mjs",
     "check:payment": "node scripts/payment-check.ts",
-    "check:onchain": "node scripts/onchain-check.ts"
+    "check:onchain": "node scripts/onchain-check.ts",
+    "build:extension": "node extension/build.mjs"
   },
   "dependencies": {
     "@noble/curves": "^1.9.0",
@@ -33,10 +34,12 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.2",
+    "@types/chrome": "^0.2.9",
     "@types/node": "^24.0.0",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.0",
+    "esbuild": "^0.28.2",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4.3.2",
