@@ -1,0 +1,31 @@
+name: Bug report
+description: Something in the app or a check script does not behave as documented
+labels: [bug]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      placeholder: "/app#pay, /pay, npm run check:onchain, …"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Steps, expected result, actual result. Redact meta-addresses and keys.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Browser / OS / wallet
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety
+      options:
+        - label: This report contains no private keys, viewing keys or backup files
+          required: true
+        - label: This is not a security issue (those go to admin@rhmask.org, see SECURITY.md)
+          required: true
