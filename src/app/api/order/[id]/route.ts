@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 /** GET /api/order/:depositAddress - settlement status of a routed order. */
 export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
-  if (!/^[0-9a-zA-Z]{20,}$/.test(id)) {
+  if (!/^[0-9a-zA-Z._-]{20,128}$/.test(id)) {
     return NextResponse.json({ error: "invalid order id" }, { status: 400 });
   }
   try {

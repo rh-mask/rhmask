@@ -12,11 +12,11 @@ import { env } from "@/lib/env";
 const BASE_URL = "https://1click.chaindefuser.com";
 
 export const quoteInput = z.object({
-  originAsset: z.string().min(3),
-  destinationAsset: z.string().min(3),
+  originAsset: z.string().trim().min(3).max(128),
+  destinationAsset: z.string().trim().min(3).max(128),
   amount: z.string().regex(/^\d+$/, "amount must be an integer string in base units"),
-  recipient: z.string().min(10),
-  refundTo: z.string().min(10),
+  recipient: z.string().trim().min(10).max(128),
+  refundTo: z.string().trim().min(10).max(128),
   slippageBps: z.number().int().min(1).max(1000).default(100),
   dry: z.boolean().default(true),
 });
