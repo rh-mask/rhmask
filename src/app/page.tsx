@@ -9,6 +9,11 @@ const pillars = [
     status: "beta",
   },
   {
+    title: "Private Pay",
+    body: "Request a payment as a QR. The payer scans it, funds land on a one-time address, and a receipt QR lets you claim and sweep. Keys encrypted on your device.",
+    status: "beta",
+  },
+  {
     title: "Mask Swap",
     body: "Route swaps through private fills instead of public order books. Real venue name and flat fee printed before you send.",
     status: "beta",
@@ -140,7 +145,8 @@ export default function Landing() {
             </thead>
             <tbody>
               {[
-                ["Ghost Receive (key generation, derivation)", "beta", "Client-side only. Announcer contract not yet deployed."],
+                ["Ghost Receive (keys, meta-address QR, derivation, claim, sweep)", "beta", "Client-side. Receipt QR stands in for the announcer contract until it ships."],
+                ["Private Pay (request QR, send, receipt QR)", "beta", "Client-side. Sends through your own wallet on Robinhood Chain."],
                 ["Mask Swap quotes", "beta", "Private fills via intent router. Native on-chain route in progress."],
                 ["Blue Chip Vault", "planned", "Contract written after audit scope is fixed. No payouts yet."],
                 ["Proof Ledger", "planned", "Ships with the vault. Empty until the first payout."],
