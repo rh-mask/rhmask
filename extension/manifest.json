@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "RhMask",
+  "version": "0.1.0",
+  "description": "Fresh stealth address in any address field. Receive unseen on Robinhood Chain.",
+  "homepage_url": "https://rhmask.org",
+  "minimum_chrome_version": "116",
+  "action": {
+    "default_title": "RhMask",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "clipboardWrite"
+  ],
+  "host_permissions": [],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

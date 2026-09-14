@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>RhMask</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; width: 360px; background: #07080b; color: #eef0f5; font: 13px/1.45 ui-sans-serif, system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid #232733; }
+  header strong { font-size: 15px; letter-spacing: -0.2px; }
+  header .tag { margin-left: auto; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #b8ff5c; border: 1px solid rgba(184,255,92,.4); border-radius: 999px; padding: 2px 8px; }
+  main { padding: 12px 14px; display: grid; gap: 12px; }
+  .card { background: #0e1015; border: 1px solid #232733; border-radius: 12px; padding: 12px; display: grid; gap: 8px; }
+  .fog { color: #8b90a0; }
+  .mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; word-break: break-all; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; }
+  button { background: #161921; color: #eef0f5; border: 1px solid #232733; border-radius: 9px; padding: 7px 10px; font: inherit; cursor: pointer; }
+  button.primary { background: #b8ff5c; color: #0a1200; border-color: #b8ff5c; font-weight: 600; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  input, textarea { width: 100%; box-sizing: border-box; background: #161921; color: #eef0f5; border: 1px solid #232733; border-radius: 9px; padding: 8px; font: inherit; }
+  textarea { min-height: 64px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; }
+  .qr { display: flex; justify-content: center; }
+  .qr svg { width: 168px; height: 168px; border-radius: 10px; }
+  .warn { color: #ffb454; }
+  .ok { color: #b8ff5c; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  li { border: 1px solid #232733; border-radius: 9px; padding: 8px; display: grid; gap: 4px; }
+  a { color: #b8ff5c; }
+  h2 { margin: 0; font-size: 13px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" fill="#b8ff5c"/><path d="M6 12c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#07080b"/><ellipse cx="11.5" cy="14.5" rx="2.6" ry="1.7" fill="#b8ff5c"/><ellipse cx="20.5" cy="14.5" rx="2.6" ry="1.7" fill="#b8ff5c"/></svg>
+  <strong>RhMask</strong>
+  <span class="tag">beta</span>
+</header>
+<main>
+  <section class="card" id="keys-section">
+    <h2>Your meta-address</h2>
+    <p class="fog" id="keys-help">Generated in this browser, stored only in this extension. Share it once; every sender derives a fresh address from it.</p>
+    <div id="no-keys">
+      <div class="row">
+        <button class="primary" id="generate">Generate keys</button>
+        <button id="restore-toggle">Restore from backup</button>
+      </div>
+      <div id="restore-box" hidden>
+        <textarea id="restore-text" placeholder='{"spendingKey":"0x…","viewingKey":"0x…","metaAddress":"st:eth:0x…"}'></textarea>
+        <div class="row"><button id="restore">Restore</button></div>
+      </div>
+    </div>
+    <div id="has-keys" hidden>
+      <p class="mono" id="meta"></p>
+      <div class="qr" id="qr"></div>
+      <div class="row">
+        <button id="copy-meta">Copy</button>
+        <button id="backup">Backup JSON</button>
+        <button id="reveal">Reveal keys</button>
+        <button id="forget" class="warn">Forget</button>
+      </div>
+      <div id="revealed" hidden>
+        <p class="fog">Spending key</p><p class="mono" id="spend"></p>
+        <p class="fog">Viewing key</p><p class="mono" id="view"></p>
+      </div>
+    </div>
+    <p id="keys-msg" class="warn" hidden></p>
+  </section>
+
+  <section class="card" id="chip-section">
+    <h2>Use on this page</h2>
+    <p class="fog">Adds a chip next to every address field on the current tab. One click pastes a fresh stealth address and records the receipt here.</p>
+    <div class="row">
+      <button class="primary" id="inject" disabled>Add RhMask chips to this tab</button>
+      <button id="fresh" disabled>Copy a fresh address</button>
+    </div>
+    <p id="chip-msg" class="fog" hidden></p>
+  </section>
+
+  <section class="card">
+    <h2>Addresses you handed out</h2>
+    <p class="fog">Each one is a receipt. Open it in the app to check the balance, claim and sweep.</p>
+    <ul id="receipts"><li class="fog">None yet.</li></ul>
+  </section>
+
+  <section class="card">
+    <h2>Send privately</h2>
+    <p class="fog">Paste someone's meta-address to derive a one-time address for them.</p>
+    <input id="target" class="mono" placeholder="st:eth:0x…" spellcheck="false" />
+    <div class="row"><button id="derive">Derive address</button></div>
+    <div id="derived" hidden>
+      <p class="fog">One-time address</p><p class="mono" id="derived-addr"></p>
+      <p class="fog">Receipt link for them</p><p class="mono" id="derived-receipt"></p>
+      <div class="row"><button id="copy-derived">Copy address</button><button id="copy-receipt">Copy receipt</button></div>
+    </div>
+    <p id="derive-msg" class="warn" hidden></p>
+  </section>
+
+  <p class="fog" style="text-align:center"><a id="open-app" href="https://rhmask.org/app" target="_blank" rel="noreferrer">Open the app</a> · <span id="app-url-label"></span></p>
+</main>
+<script src="popup.js" type="module"></script>
+</body>
+</html>
