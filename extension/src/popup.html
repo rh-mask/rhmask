@@ -27,6 +27,7 @@
   li { border: 1px solid #232733; border-radius: 9px; padding: 8px; display: grid; gap: 4px; }
   a { color: #b8ff5c; }
   h2 { margin: 0; font-size: 13px; }
+  p { margin: 0; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -34,12 +35,13 @@
 <header>
   <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" fill="#b8ff5c"/><path d="M6 12c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#07080b"/><ellipse cx="11.5" cy="14.5" rx="2.6" ry="1.7" fill="#b8ff5c"/><ellipse cx="20.5" cy="14.5" rx="2.6" ry="1.7" fill="#b8ff5c"/></svg>
   <strong>RhMask</strong>
-  <span class="tag">beta</span>
+  <span class="tag" id="state-tag">beta</span>
 </header>
 <main>
-  <section class="card" id="keys-section">
+  <section class="card">
     <h2>Your meta-address</h2>
-    <p class="fog" id="keys-help">Generated in this browser, stored only in this extension. Share it once; every sender derives a fresh address from it.</p>
+    <p class="fog">Generated in this browser, stored only in this extension. Share it once; every sender derives a fresh address from it.</p>
+
     <div id="no-keys">
       <div class="row">
         <button class="primary" id="generate">Generate keys</button>
@@ -50,6 +52,13 @@
         <div class="row"><button id="restore">Restore</button></div>
       </div>
     </div>
+
+    <div id="locked" hidden>
+      <p class="fog">Keys are encrypted in this extension. Unlock them for this browser session.</p>
+      <input id="unlock-pass" type="password" placeholder="Passphrase" autocomplete="current-password" />
+      <div class="row"><button class="primary" id="unlock">Unlock</button><button id="forget-locked" class="warn">Forget keys</button></div>
+    </div>
+
     <div id="has-keys" hidden>
       <p class="mono" id="meta"></p>
       <div class="qr" id="qr"></div>
@@ -57,7 +66,16 @@
         <button id="copy-meta">Copy</button>
         <button id="backup">Backup JSON</button>
         <button id="reveal">Reveal keys</button>
+        <button id="encrypt-toggle">Encrypt with passphrase</button>
+        <button id="lock" hidden>Lock</button>
+        <button id="remove-encryption" hidden>Remove passphrase</button>
         <button id="forget" class="warn">Forget</button>
+      </div>
+      <div id="encrypt-box" hidden>
+        <p class="fog">AES-256-GCM, key derived from your passphrase with PBKDF2 (310k rounds). Same format as the app, so one backup restores in both.</p>
+        <input id="pass1" type="password" placeholder="Passphrase (8+ characters)" autocomplete="new-password" />
+        <input id="pass2" type="password" placeholder="Repeat passphrase" autocomplete="new-password" />
+        <div class="row"><button class="primary" id="encrypt">Encrypt and keep unlocked</button></div>
       </div>
       <div id="revealed" hidden>
         <p class="fog">Spending key</p><p class="mono" id="spend"></p>
@@ -67,7 +85,7 @@
     <p id="keys-msg" class="warn" hidden></p>
   </section>
 
-  <section class="card" id="chip-section">
+  <section class="card">
     <h2>Use on this page</h2>
     <p class="fog">Adds a chip next to every address field on the current tab. One click pastes a fresh stealth address and records the receipt here.</p>
     <div class="row">

@@ -1,10 +1,14 @@
 /**
- * Extension-side storage. chrome.storage.local, never sync. Beta: plaintext
- * keys, same JSON shape as the dapp's backup file so a backup restores in
- * either place. Passphrase encryption (shared format with the dapp) is the
- * next step.
+ * Extension-side storage. chrome.storage.local, never sync.
+ *
+ * Keys are stored either as plaintext JSON (same shape as the dapp's backup
+ * file) or as the shared encrypted blob from src/lib/keycrypto.ts, so a
+ * backup restores in either place and a passphrase set here works there.
+ * Unlocked keys live in chrome.storage.session (memory only, cleared when
+ * the browser closes, unreachable from content scripts).
  */
 import type { StealthKeys } from "../../src/lib/stealth";
+import { isEncryptedKeys, openKeys, parseKeys, sealKeys, type EncryptedKeys } from "../../src/lib/keycrypto";
 
 export type Receipt = {
   /** One-time address handed to a site or a person. */
@@ -16,20 +20,86 @@ export type Receipt = {
   createdAt: number;
 };
 
-const KEYS = "rhmask.keys.v1";
-const RECEIPTS = "rhmask.receipts.v1";
+export type KeyState = { keys: StealthKeys | null; encrypted: boolean; locked: boolean };
+
+export const KEYS = "rhmask.keys.v1";
+export const RECEIPTS = "rhmask.receipts.v1";
+const SESSION_KEYS = "rhmask.session.keys";
 const APP_URL = "rhmask.appUrl";
 export const DEFAULT_APP_URL = "https://rhmask.org";
 
-export async function getKeys(): Promise<StealthKeys | null> {
+async function readStored(): Promise<StealthKeys | EncryptedKeys | null> {
   const r = await chrome.storage.local.get(KEYS);
-  const k = r[KEYS] as StealthKeys | undefined;
-  return k && typeof k.metaAddress === "string" ? k : null;
+  const v = r[KEYS];
+  if (isEncryptedKeys(v)) return v;
+  return parseKeys(v);
 }
 
+async function readSession(): Promise<StealthKeys | null> {
+  try {
+    const r = await chrome.storage.session.get(SESSION_KEYS);
+    return parseKeys(r[SESSION_KEYS]);
+  } catch {
+    return null;
+  }
+}
+
+async function writeSession(keys: StealthKeys | null) {
+  try {
+    if (keys) await chrome.storage.session.set({ [SESSION_KEYS]: keys });
+    else await chrome.storage.session.remove(SESSION_KEYS);
+  } catch {
+    /* session storage unavailable: unlocked keys will not survive the popup */
+  }
+}
+
+/** Plaintext keys, or the unlocked copy of encrypted keys, or null. */
+export async function getKeys(): Promise<StealthKeys | null> {
+  const stored = await readStored();
+  if (!stored) return null;
+  if (isEncryptedKeys(stored)) return readSession();
+  return stored;
+}
+
+export async function getKeyState(): Promise<KeyState> {
+  const stored = await readStored();
+  if (!stored) return { keys: null, encrypted: false, locked: false };
+  if (isEncryptedKeys(stored)) {
+    const keys = await readSession();
+    return { keys, encrypted: true, locked: keys === null };
+  }
+  return { keys: stored, encrypted: false, locked: false };
+}
+
+/** Store plaintext keys (or remove everything with null). */
 export async function setKeys(keys: StealthKeys | null) {
+  await writeSession(null);
   if (keys) await chrome.storage.local.set({ [KEYS]: keys });
   else await chrome.storage.local.remove(KEYS);
+}
+
+export async function encryptStoredKeys(keys: StealthKeys, passphrase: string) {
+  const blob = await sealKeys(keys, passphrase);
+  await chrome.storage.local.set({ [KEYS]: blob });
+  await writeSession(keys);
+}
+
+export async function unlockKeys(passphrase: string): Promise<StealthKeys> {
+  const stored = await readStored();
+  if (!isEncryptedKeys(stored)) throw new Error("No encrypted keys in this extension.");
+  const keys = await openKeys(stored, passphrase);
+  await writeSession(keys);
+  return keys;
+}
+
+export async function lockKeys() {
+  await writeSession(null);
+}
+
+export async function removeEncryption() {
+  const keys = await readSession();
+  if (!keys) throw new Error("Unlock first.");
+  await setKeys(keys);
 }
 
 export async function getReceipts(): Promise<Receipt[]> {
