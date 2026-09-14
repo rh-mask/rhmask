@@ -1,5 +1,8 @@
 # RhMask browser extension
 
+**Status:** MVP in `extension/` (phase 1 below), built with `npm run build:extension`, loadable unpacked. See
+`extension/README.md` for what it does today.
+
 RhMask ships on two surfaces with the same two core functions. The dapp is where you set things up and see proof.
 The extension is where privacy happens at the moment you would otherwise leak.
 

@@ -27,7 +27,7 @@ two core functions, Ghost Receive and Mask Swap.
 - [x] On-chain verification: a contract can hold stock tokens on this chain (verified 2026-09-12, `npm run check:onchain`); vault streams tokens directly
 - First on-chain stealth payment on mainnet, screenshot and hash posted
 - Passkey (WebAuthn PRF) unlock on top of the passphrase store, same format for dapp and extension
-- Extension MVP: popup with keys and meta-address, address-field chip, manual announcement import
+- [x] Extension MVP: popup with keys and meta-address QR, backup/restore, address-field chips, receipts list (`extension/`)
 
 ## Phase 2 · Weeks 3–6 · Token and vault
 

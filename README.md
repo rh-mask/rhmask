@@ -145,6 +145,7 @@ rhmask/
 │     ├─ transfer.ts         wallet transfers, balances, pre-flight, sweep
 │     ├─ qr.ts               QR generation and decoding
 │     ├─ chain.ts · tokens.ts · env.ts · router/
+├─ extension/                MV3 browser extension (popup, address-field chips, receipts) · npm run build:extension
 ├─ scripts/                  stealth-check · payment-check · onchain-check · prepush-check · install-hooks
 ├─ contracts/                Solidity specs (vault, announcer, revenue router)
 ├─ docs/                     product · plan · extension · architecture · tokenomics · roadmap · push rules
