@@ -111,6 +111,7 @@ run("[4/5] typecheck + lint + stealth", ["run", "typecheck"]);
 run("", ["run", "lint"]);
 run("", ["run", "check:stealth"]);
 run("", ["run", "check:payment"]);
+run("", ["run", "check:keycrypto"]);
 if (fast) console.log("\n[5/5] build skipped (--fast)");
 else run("[5/5] production build", ["run", "build"]);
 

@@ -18,7 +18,8 @@
     "hooks:install": "node scripts/install-hooks.mjs",
     "check:payment": "node scripts/payment-check.ts",
     "check:onchain": "node scripts/onchain-check.ts",
-    "build:extension": "node extension/build.mjs"
+    "build:extension": "node extension/build.mjs",
+    "check:keycrypto": "node scripts/keycrypto-check.ts"
   },
   "dependencies": {
     "@noble/curves": "^1.9.0",
