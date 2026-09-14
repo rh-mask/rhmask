@@ -163,8 +163,9 @@ on-chain verification, ISP bypass, rhmask.org attached to the project.
 3. `StealthAnnouncer` + `StealthRegistry` contracts (ERC-5564 / ERC-6538) on testnet, then mainnet; scanner in
    the dapp replaces the receipt QR (the QR stays as the offline path).
 4. Mask Swap: asset picker, human amounts, address validation (done); live quotes once `ROUTER_JWT` is set.
-5. Extension MVP (done: popup with keys and meta-address QR, backup/restore, address-field chips, receipts list,
-   derive-for-someone; see `extension/README.md`). Next: passphrase store shared with the dapp, icons, store listing.
+5. Extension MVP (done: popup with keys and meta-address QR, backup/restore, passphrase encryption in the shared
+   `keycrypto` format with session-only unlock, address-field chips, receipts list, derive-for-someone; see
+   `extension/README.md`). Next: icons, store listing, background scanner once the announcer contract exists.
 6. Passkey (WebAuthn PRF) unlock; viewing-key export.
 7. Vault contracts + audit scope (feasibility is verified), token launch, first payout hash, ledger feed.
 8. Gasless sweep relay (EIP-7702 + paymaster), native private route, API v1.
