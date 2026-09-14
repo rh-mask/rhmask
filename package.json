@@ -22,7 +22,7 @@
     "check:keycrypto": "node scripts/keycrypto-check.ts"
   },
   "dependencies": {
-    "@noble/curves": "^1.9.0",
+    "@noble/curves": "^2.4.0",
     "@noble/hashes": "^1.8.0",
     "jsqr": "^1.4.0",
     "next": "16.2.10",
