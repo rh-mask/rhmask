@@ -100,14 +100,15 @@ failed transaction), sweep gas from `estimateGas` instead of a hard-coded 21k, r
 
 ### Mask Swap (dapp + extension)
 
-- **Asset picker** backed by `/api/tokens` and the router token list, with search. Raw asset ids go away.
-- **Human amounts**: enter `0.5 ETH`, the app converts to base units using the picked asset's decimals.
-- **Address validation**: EVM checksum check on the destination; per-chain rules on the refund address.
+- **Asset picker** (done): `/api/router-tokens` serves the router's list (189 assets, 35 chains, cached 10 min);
+  the card filters by chain and search. Raw asset ids are gone.
+- **Human amounts** (done): decimal input converted to base units with the picked asset's decimals.
+- **Address validation** (done): EVM address check on EVM chains, length check elsewhere, per field.
+- **Stealth destination shortcut** (done): "Receive on a fresh stealth address" derives one from your own
+  meta-address for EVM destinations.
 - **Live quotes** once `ROUTER_JWT` is set: deposit address, countdown to deadline, "send from wallet" button
   that fills the transfer for injected wallets.
 - **Receipt page** `/r/:id`: status polling, venue, fee line, share link, "size hidden" toggle.
-- **Stealth destination shortcut**: "receive this swap on a fresh stealth address" derives one from your own
-  meta-address in one click, so a swap and a private receive become one action.
 
 ### Blue Chip Vault + Proof Ledger
 

@@ -158,6 +158,7 @@ rhmask/
 | `GET` | `/api/health` | liveness |
 | `GET` | `/api/chain` | chain params, live block number, RPC error if any |
 | `GET` | `/api/tokens` | stock token registry |
+| `GET` | `/api/router-tokens` | assets the intent router can fill, cached 10 minutes, feeds the swap picker |
 | `POST` | `/api/quote` | `{ originAsset, destinationAsset, amount, recipient, refundTo, slippageBps?, dry? }` |
 | `GET` | `/api/order/:depositAddress` | order status |
 | `GET` | `/api/vault` | totals, basket, payouts (all zero until the vault ships) |
