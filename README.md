@@ -14,7 +14,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/rh-mask/rhmask/ci.yml?branch=main&style=flat-square&label=ci&labelColor=07080b)](https://github.com/rh-mask/rhmask/actions)
 [![License](https://img.shields.io/badge/license-MIT-8b90a0?style=flat-square&labelColor=07080b)](LICENSE)
 
-[**Open the app**](https://rhmask.org/app) · [Pay privately](https://rhmask.org/pay) · [Product](docs/PRODUCT.md) · [Plan](docs/PLAN.md) · [Tokenomics](docs/TOKENOMICS.md) · [Extension](docs/EXTENSION.md)
+[**Open the app**](https://rhmask.org/app) · [Pay privately](https://rhmask.org/pay) · [Product](docs/PRODUCT.md) · [Plan](docs/PLAN.md) · [Tokenomics](docs/TOKENOMICS.md) · [Extension](docs/EXTENSION.md) · [**Working on the UI?**](docs/HANDOFF.md)
 
 </div>
 
@@ -175,6 +175,9 @@ rhmask/
 | Stock tokens | 18-decimal ERC-20s, issuer-owned beacon proxies; addresses in `src/lib/tokens.ts`, re-verify before wiring value |
 
 ## ✦ Contributing
+
+New to the repository and here for the interface? Start with [`docs/HANDOFF.md`](docs/HANDOFF.md): design tokens,
+which rules are style and which are product promises, and what is deliberately unfinished.
 
 Read [`docs/PUSH_RULES.md`](docs/PUSH_RULES.md) first. In short:
 

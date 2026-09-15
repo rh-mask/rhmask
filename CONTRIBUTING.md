@@ -2,6 +2,9 @@
 
 Thanks for looking. RhMask is small on purpose, and the rules are short.
 
+Joining to work on the interface? Read [`docs/HANDOFF.md`](docs/HANDOFF.md) first. It has the design tokens, the
+handful of rules that are product promises rather than style, and an honest list of what is unfinished.
+
 ## Before you push
 
 1. `npm run hooks:install` once per clone. It installs the `pre-push` hook.
