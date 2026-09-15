@@ -1,0 +1,72 @@
+name: deploy
+
+# Deploys to Vercel from CI, so a push deploys even when the Vercel Git
+# integration is not installed on this repository.
+#
+# Enable it by adding one repository secret:
+#   VERCEL_TOKEN   a Vercel access token (vercel.com/account/tokens)
+# The org and project ids are not secret and live in vars below.
+#
+# Without the secret every job is skipped, so the workflow is inert until
+# someone opts in. If the native Vercel Git integration is connected instead,
+# delete this file: two deploy paths for one branch only causes confusion.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: team_8sJKjTd7Qo5IiL0obEzvbkfc
+  VERCEL_PROJECT_ID: prj_sU5xA1htp2DilF6vs3RYMXX3Mtd1
+
+jobs:
+  preview:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Skip when no token
+        id: gate
+        run: echo "enabled=${{ secrets.VERCEL_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+      - if: steps.gate.outputs.enabled == 'true'
+        run: npm install --global vercel@latest
+      - if: steps.gate.outputs.enabled == 'true'
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - if: steps.gate.outputs.enabled == 'true'
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - if: steps.gate.outputs.enabled == 'true'
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+  production:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Skip when no token
+        id: gate
+        run: echo "enabled=${{ secrets.VERCEL_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+      - if: steps.gate.outputs.enabled == 'true'
+        run: npm install --global vercel@latest
+      - if: steps.gate.outputs.enabled == 'true'
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - if: steps.gate.outputs.enabled == 'true'
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - if: steps.gate.outputs.enabled == 'true'
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
