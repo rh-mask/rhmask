@@ -43,7 +43,7 @@ export function Dashboard() {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex gap-1 rounded-xl border border-line bg-ink-2 p-1" role="tablist">
+        <div className="glass flex gap-1 rounded-2xl p-1.5" role="tablist">
           {tabs.map((t) => (
             <button
               key={t.id}
@@ -51,8 +51,10 @@ export function Dashboard() {
               role="tab"
               aria-selected={tab === t.id}
               onClick={() => select(t.id)}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
-                tab === t.id ? "bg-ink-3 text-paper" : "text-fog hover:text-paper"
+              className={`rounded-xl px-3.5 py-2 text-sm font-semibold transition-all duration-200 ${
+                tab === t.id
+                  ? "bg-gradient-to-b from-white/12 to-white/4 text-paper shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+                  : "text-fog hover:bg-white/5 hover:text-paper"
               }`}
             >
               {t.label}
@@ -69,8 +71,8 @@ export function Dashboard() {
           {tab === "pay" && <PayCard />}
           {tab === "vault" && <VaultCard />}
         </div>
-        <aside className="card p-5 h-fit text-sm">
-          <h3 className="font-semibold">What is hidden, what is not</h3>
+        <aside className="card aura h-fit p-5 text-sm" style={{ ["--aura" as string]: "var(--color-aqua)" }}>
+          <h3 className="display text-base">What is hidden, what is not</h3>
           <ul className="mt-3 space-y-2 text-fog">
             <li>Hidden: the link between your identity and a receiving address.</li>
             <li>Hidden: your order from public order books and mempools as a visible swap.</li>
