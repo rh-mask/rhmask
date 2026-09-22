@@ -65,8 +65,19 @@ Three fonts are wired in `layout.tsx` through `next/font/google` and exposed as 
 (`.display`, `--font-display`), **Plus Jakarta Sans** for body, **JetBrains Mono** for code (`.mono`). They are
 self-hosted at build time, so no request leaves the page.
 
-The ambient background is two fixed layers rendered once in `layout.tsx`: `.aurora` (four blurred colour fields,
+The ambient background is two fixed layers rendered once in `layout.tsx`: `.aurora` (four soft colour fields,
 clipped by its own wrapper so it can never widen the document) and `.grain`.
+
+**Performance rules, learned the hard way.** The first build ran at 49fps with 27 dropped frames per scroll.
+Two causes, both worth avoiding:
+
+- No `backdrop-filter` on repeated elements. A blurred backdrop on twenty cards forces each one to recompute
+  whenever anything behind it moves. Only the sticky header uses it, because there is exactly one.
+- No `filter: blur()` on an animated element. The aurora used to animate a 40px blur; every frame re-blurred a
+  full-screen surface. Soft radial-gradient stops give the same look at zero cost.
+
+After both fixes the page holds a locked 60fps on desktop and mobile. Re-measure before shipping anything that
+adds a filter, a large shadow animation, or a new fixed overlay.
 
 If you change the accent, change it in four places or it will look broken: `globals.css`, `src/app/icon.svg`,
 `src/components/Logo.tsx`, `src/app/opengraph-image.tsx`.
@@ -78,8 +89,9 @@ and the header and footer read from there.
 
 These are product promises. Changing them is a product decision, not a UI one.
 
-1. **Never remove a status label.** `beta` and `planned` badges, and the "Honest status" table, are the trust
-   story. If a surface is not live, the screen says so.
+1. **Never remove a status label.** The `beta` and `planned` badges on the feature cards and in the mechanism
+   list are the trust story. If a surface is not live, the screen says so. The full status detail now lives on
+   `/docs` rather than the landing page.
 2. **Never remove "what is hidden, what is not."** It appears beside the dashboard and in the docs. Privacy
    claims stay paired with their limits. We never write "anonymous" or "untraceable".
 3. **Keys never leave the browser.** Do not add analytics, a font that phones home, an error reporter, or any
