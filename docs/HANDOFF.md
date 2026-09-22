@@ -23,7 +23,9 @@ Production is Vercel, project `rhmask`, canonical domain `rhmask.org`.
 
 | Screen | Route | Components |
 |:--|:--|:--|
-| Landing | `src/app/page.tsx` | `Badge`, the honest-status table is inline |
+| Landing | `src/app/page.tsx` | `Badge`, `QrCode`, `Icons`; the honest-status table is inline |
+| Docs | `src/app/docs/page.tsx` | `DocShell`, `DocSection`, `Code`, `Note`, `DataTable` |
+| Whitepaper | `src/app/whitepaper/page.tsx` | same `DocShell` primitives |
 | Dashboard | `src/app/app/page.tsx` | `Dashboard` → `SwapCard` · `StealthCard` · `PayCard` · `VaultCard` |
 | Pay landing (scanned QR) | `src/app/pay/page.tsx` | `PayCard` in `mode="send"` |
 | Chrome (shell) | `src/app/layout.tsx` | `Nav`, `Footer`, `Logo` |
@@ -40,18 +42,37 @@ the OG image stay in step.
 
 | Token | Value | Use |
 |:--|:--|:--|
-| `--color-ink` / `ink-2` / `ink-3` | `#07080b` `#0e1015` `#161921` | page, card, field |
-| `--color-line` | `#232733` | every border |
-| `--color-paper` | `#eef0f5` | primary text |
-| `--color-fog` | `#8b90a0` | secondary text |
-| `--color-mask` / `mask-2` | `#b8ff5c` `#7fd12b` | accent, focus ring |
+| `--color-ink` … `ink-4` | `#05060a` `#0a0c13` `#11141e` `#191d2a` | page, card, field, raised |
+| `--color-line` / `line-2` | `#232838` `#333a4f` | borders, hover borders |
+| `--color-paper` | `#f0f2f8` | primary text |
+| `--color-fog` / `fog-2` | `#8b91a8` `#646a80` | secondary and tertiary text |
+| `--color-mask` / `mask-2` | `#b8ff5c` `#8ee03a` | primary accent, focus ring |
+| `--color-aqua` | `#52e8ff` | Private Pay, secondary gradients |
+| `--color-violet` | `#a78bfa` | Mask Swap, whitepaper accent |
+| `--color-pink` | `#ff6ec7` | token and vault |
 | `--color-warn` | `#ffb454` | anything `planned`, and every error |
 
-The helper classes `.card`, `.field`, `.btn`, `.btn-primary`, `.btn-ghost`, `.mono`, `.grid-bg` are in the same
-file. Restyle them freely; renaming them means touching every component, so prefer changing the rule.
+The CSS is layered. Base rules live in `@layer base` and component classes in `@layer components`, which is what
+lets a Tailwind utility such as `md:hidden` override `.btn`. Keep new component CSS inside that layer or you will
+reintroduce the bug where a button ignores a responsive utility.
+
+Helper classes, all in the same file: `.card` and `.glass` (glass surface), `.card-hover`, `.aura` (coloured
+hairline, set `--aura`), `.field`, `.btn` with `.btn-primary` / `.btn-ghost`, `.display`, `.mono`, `.shine`,
+`.gradient-lime`, `.gradient-violet`, `.eyebrow`, `.rule`, `.reveal`, `.pulse-dot`, `.grid-bg`, `.aurora`,
+`.grain`. Restyle them freely; renaming means touching every component, so prefer changing the rule.
+
+Three fonts are wired in `layout.tsx` through `next/font/google` and exposed as tokens: **Unbounded** for display
+(`.display`, `--font-display`), **Plus Jakarta Sans** for body, **JetBrains Mono** for code (`.mono`). They are
+self-hosted at build time, so no request leaves the page.
+
+The ambient background is two fixed layers rendered once in `layout.tsx`: `.aurora` (four blurred colour fields,
+clipped by its own wrapper so it can never widen the document) and `.grain`.
 
 If you change the accent, change it in four places or it will look broken: `globals.css`, `src/app/icon.svg`,
 `src/components/Logo.tsx`, `src/app/opengraph-image.tsx`.
+
+Links and handles are not hard-coded in components. They live in `src/lib/site.ts` (site URL, X handle, GitHub),
+and the header and footer read from there.
 
 ## Rules that are not style
 
@@ -118,6 +139,7 @@ git fetch origin && git pull --ff-only
 Honest list, so you do not spend time wondering whether something is intentional:
 
 - The swap asset picker uses two native `<select size=6>` lists. It works and validates; it is not designed.
+- `/docs` and `/whitepaper` are hand-authored React, not MDX. Long term they should read from `docs/`.
 - The vault tab is mostly empty state because the contract does not exist yet.
 - The extension popup (`extension/src/popup.html`) is hand-written CSS, not Tailwind, because it ships without a
   build step for styles. Same tokens, different file.
