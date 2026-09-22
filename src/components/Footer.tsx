@@ -20,7 +20,7 @@ const COLUMNS = [
       { href: "/docs", label: "Documentation" },
       { href: "/whitepaper", label: "Whitepaper" },
       { href: "/#how", label: "How it works" },
-      { href: "/#status", label: "Honest status" },
+      { href: "/docs#security", label: "Security model" },
     ],
   },
 ] as const;
