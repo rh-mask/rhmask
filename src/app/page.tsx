@@ -99,21 +99,13 @@ const PROOFS = [
 
 const MECHANISMS = [
   { name: "ERC-5564", detail: "Stealth addresses with view tags", state: "live" },
-  { name: "WebCrypto", detail: "PBKDF2 + AES-256-GCM key storage", state: "live" },
+  { name: "WebCrypto", detail: "PBKDF2 + AES-256-GCM at rest", state: "live" },
   { name: "ERC-6538", detail: "Meta-address registry", state: "planned" },
   { name: "WebAuthn PRF", detail: "Unlock with a passkey", state: "planned" },
   { name: "EIP-7702", detail: "Sponsored stealth sweeps", state: "planned" },
   { name: "ERC-7683", detail: "Intent-based private fills", state: "planned" },
 ];
 
-const STATUS_ROWS: Array<[string, "beta" | "planned", string]> = [
-  ["Ghost Receive (keys, meta-address QR, derivation, claim, sweep)", "beta", "Client-side. Receipt QR stands in for the announcer contract until it ships."],
-  ["Private Pay (request QR, send, receipt QR)", "beta", "Client-side. Sends through your own wallet on Robinhood Chain."],
-  ["Mask Swap quotes", "beta", "Private fills via intent router. Native on-chain route in progress."],
-  ["Blue Chip Vault", "planned", "Contract written after audit scope is fixed. No payouts yet."],
-  ["Proof Ledger", "planned", "Ships with the vault. Empty until the first payout."],
-  ["$MASK token", "planned", "Fair launch date announced on X before deployment."],
-];
 
 const SAMPLE_QR = "https://rhmask.org/pay?to=st:eth:0x02b4f1c6a7d8e93f5a1c0b7d6e2f8a34c9d5b1e07f3a6c8d2b4e9f1a5c7d3b6e8f0&token=NVDA&amount=1.5";
 
@@ -123,30 +115,30 @@ export default function Landing() {
       {/* ------------------------------------------------------------------ hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 grid-bg" aria-hidden="true" />
-        <div className="relative mx-auto max-w-6xl px-4 pt-14 pb-20 sm:pt-24 lg:pt-28">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+        <div
+          className="pointer-events-none absolute -left-40 -top-32 h-[34rem] w-[34rem] opacity-60"
+          style={{
+            background: "radial-gradient(closest-side, color-mix(in oklab, var(--color-mask) 26%, transparent), transparent)",
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 pt-12 pb-20 sm:pt-16 lg:pt-20">
+          {/* The headline spans the full column: at this size both sentences
+              land on one line each, which is where the line gets its weight. */}
+          <h1 className="display max-w-5xl text-[2rem] leading-[1.06] sm:text-5xl lg:text-[3.75rem]">
+            <span className="block shine">Wall Street sees everything.</span>
+            <span className="block gradient-lime">RhMask sees nothing.</span>
+          </h1>
+
+          <div className="mt-10 grid gap-12 lg:mt-12 lg:grid-cols-[1.15fr_1fr] lg:items-start lg:gap-16">
             <div>
-              <div className="flex flex-wrap gap-2">
-                <Badge tone="mask">
-                  <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-mask text-mask" aria-hidden="true" />
-                  Live on Robinhood Chain
-                </Badge>
-                <Badge>Non-custodial</Badge>
-                <Badge>No account</Badge>
-              </div>
-
-              <h1 className="display mt-7 text-[2rem] leading-[1.08] sm:text-5xl lg:text-[3.6rem]">
-                <span className="block shine">Wall Street sees everything.</span>
-                <span className="block gradient-lime">RhMask sees nothing.</span>
-              </h1>
-
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-fog">
+              <p className="max-w-xl text-lg leading-relaxed text-fog">
                 Tokenized stocks put the market on a public ledger. Your entries, your exits, your whole bag, readable
                 by anyone. RhMask is the privacy layer: receive unseen, pay unseen, and earn real stock tokens for
                 holding the line.
               </p>
 
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link href="/app" className="btn btn-primary w-full sm:w-auto">
                   Open the app <ArrowIcon className="h-4 w-4" />
                 </Link>
@@ -171,7 +163,7 @@ export default function Landing() {
             {/* floating product preview */}
             <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
               <div
-                className="absolute -inset-6 -z-10 rounded-[3rem] opacity-70 blur-3xl"
+                className="absolute -inset-10 -z-10 rounded-[3rem] opacity-70"
                 style={{ background: "radial-gradient(60% 60% at 50% 40%, color-mix(in oklab, var(--color-mask) 30%, transparent), transparent 70%)" }}
                 aria-hidden="true"
               />
@@ -204,11 +196,11 @@ export default function Landing() {
 
       {/* --------------------------------------------------------------- proofs */}
       <section className="mx-auto max-w-6xl px-4">
-        <div className="card reveal grid grid-cols-2 gap-px overflow-hidden p-0 lg:grid-cols-4">
+        <div className="card reveal grid grid-cols-2 divide-x divide-y divide-white/6 overflow-hidden p-0 lg:grid-cols-4 lg:divide-y-0">
           {PROOFS.map((p) => (
             <div key={p.label} className="p-6">
               <p className="display text-3xl gradient-lime sm:text-4xl">{p.value}</p>
-              <p className="mt-2 text-xs leading-relaxed text-fog">{p.label}</p>
+              <p className="mt-2.5 text-xs leading-relaxed text-fog">{p.label}</p>
             </div>
           ))}
         </div>
@@ -379,7 +371,7 @@ export default function Landing() {
               <div key={m.name} className="card reveal flex items-center justify-between gap-4 p-4">
                 <div className="min-w-0">
                   <p className="mono text-sm text-paper">{m.name}</p>
-                  <p className="mt-1 truncate text-xs text-fog">{m.detail}</p>
+                  <p className="mt-1 text-xs leading-snug text-fog">{m.detail}</p>
                 </div>
                 <Badge tone={m.state === "live" ? "mask" : "warn"}>{m.state}</Badge>
               </div>
@@ -430,42 +422,6 @@ export default function Landing() {
                 every address is re-verified before a release.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --------------------------------------------------------------- status */}
-      <section id="status" className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-24">
-        <div className="max-w-2xl">
-          <p className="eyebrow">Honest status</p>
-          <h2 className="display mt-3 text-3xl sm:text-4xl">We publish what is not finished</h2>
-          <p className="mt-4 text-fog">
-            Anything marked planned has no on-chain effect yet. Nothing on this site is estimated or back-filled.
-          </p>
-        </div>
-
-        <div className="card mt-10 overflow-hidden p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[42rem] text-sm">
-              <thead className="text-left text-fog">
-                <tr className="border-b border-white/8">
-                  <th className="px-6 py-4 font-medium">Surface</th>
-                  <th className="px-6 py-4 font-medium">State</th>
-                  <th className="px-6 py-4 font-medium">Note</th>
-                </tr>
-              </thead>
-              <tbody>
-                {STATUS_ROWS.map(([surface, state, note]) => (
-                  <tr key={surface} className="border-b border-white/5 last:border-0">
-                    <td className="px-6 py-4">{surface}</td>
-                    <td className="px-6 py-4">
-                      <Badge tone={state === "beta" ? "mask" : "warn"}>{state}</Badge>
-                    </td>
-                    <td className="px-6 py-4 text-fog">{note}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </div>
       </section>
