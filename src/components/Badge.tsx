@@ -12,7 +12,9 @@ export type BadgeTone = keyof typeof TONES;
 export function Badge({ tone = "fog", children }: { tone?: BadgeTone; children: React.ReactNode }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider backdrop-blur-sm ${TONES[tone]}`}
+      // No backdrop-filter here on purpose: badges repeat a dozen times per
+      // page and a blurred backdrop on each one costs frames. See docs/HANDOFF.md.
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${TONES[tone]}`}
     >
       {children}
     </span>
