@@ -121,9 +121,7 @@
       radial-gradient(36% 30% at 92% 8%, color-mix(in oklab, var(--color-aqua) 38%, transparent), transparent 62%),
       radial-gradient(46% 36% at 74% 88%, color-mix(in oklab, var(--color-violet) 38%, transparent), transparent 64%),
       radial-gradient(34% 28% at 16% 78%, color-mix(in oklab, var(--color-pink) 28%, transparent), transparent 62%);
-    filter: blur(40px);
     opacity: 1;
-    animation: drift 26s ease-in-out infinite alternate;
   }
 
   .grain {
@@ -151,9 +149,7 @@
     border: 1px solid rgba(255, 255, 255, 0.09);
     background:
       linear-gradient(158deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.025) 38%, rgba(255, 255, 255, 0) 72%),
-      color-mix(in oklab, var(--color-ink-2) 80%, transparent);
-    backdrop-filter: blur(22px) saturate(150%);
-    -webkit-backdrop-filter: blur(22px) saturate(150%);
+      color-mix(in oklab, var(--color-ink-2) 94%, transparent);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.11),
       inset 0 -1px 0 rgba(0, 0, 0, 0.35),
@@ -301,9 +297,7 @@
   .btn-ghost {
     color: var(--color-paper);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   .btn-ghost:not(:disabled):hover {
@@ -376,15 +370,6 @@
       animation-timeline: view();
       animation-range: entry 0% cover 26%;
     }
-  }
-}
-
-@keyframes drift {
-  from {
-    transform: translate3d(-1.5%, -1%, 0) scale(1);
-  }
-  to {
-    transform: translate3d(1.5%, 1.5%, 0) scale(1.06);
   }
 }
 
