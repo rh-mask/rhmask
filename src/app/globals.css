@@ -1,88 +1,412 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Design tokens. Every colour in the product comes from here, so the app,
+   the OG image and the extension stay in step. See docs/HANDOFF.md.
+--------------------------------------------------------------------------- */
 @theme {
-  --color-ink: #07080b;
-  --color-ink-2: #0e1015;
-  --color-ink-3: #161921;
-  --color-line: #232733;
-  --color-fog: #8b90a0;
-  --color-paper: #eef0f5;
+  /* surfaces, darkest to lightest */
+  --color-ink: #05060a;
+  --color-ink-2: #0a0c13;
+  --color-ink-3: #11141e;
+  --color-ink-4: #191d2a;
+
+  /* lines and text */
+  --color-line: #232838;
+  --color-line-2: #333a4f;
+  --color-fog: #8b91a8;
+  --color-fog-2: #646a80;
+  --color-paper: #f0f2f8;
+
+  /* accents */
   --color-mask: #b8ff5c;
-  --color-mask-2: #7fd12b;
+  --color-mask-2: #8ee03a;
+  --color-aqua: #52e8ff;
+  --color-violet: #a78bfa;
+  --color-pink: #ff6ec7;
   --color-warn: #ffb454;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --color-danger: #ff6b6b;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-title), var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-code), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius-glass: 1.25rem;
 }
 
-html {
-  color-scheme: dark;
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    /* `clip` cannot be scrolled into, so a stray wide child can never create
+       a sideways scrollbar the way `hidden` sometimes allows. */
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-mask) 32%, transparent);
+    color: var(--color-paper);
+  }
+
+  /* Keyboard focus is always visible, whatever the component. */
+  :focus-visible {
+    outline: 2px solid var(--color-mask);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  /* Thin scrollbars that match the surface. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line-2) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-line-2);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-body {
-  background: var(--color-ink);
-  color: var(--color-paper);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+/* ---------------------------------------------------------------------------
+   Components. This layer sits before Tailwind's utilities, so a utility such
+   as `md:hidden` always wins over `.btn`'s own display.
+--------------------------------------------------------------------------- */
+@layer components {
+  /* --- ambient background ------------------------------------------------ */
+  /* The wrapper is exactly the viewport and clips; the oversized, blurred
+     gradient lives inside it, so it can never widen the document. */
+  .aurora {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .aurora::before {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background:
+      radial-gradient(40% 32% at 8% 2%, color-mix(in oklab, var(--color-mask) 42%, transparent), transparent 64%),
+      radial-gradient(36% 30% at 92% 8%, color-mix(in oklab, var(--color-aqua) 38%, transparent), transparent 62%),
+      radial-gradient(46% 36% at 74% 88%, color-mix(in oklab, var(--color-violet) 38%, transparent), transparent 64%),
+      radial-gradient(34% 28% at 16% 78%, color-mix(in oklab, var(--color-pink) 28%, transparent), transparent 62%);
+    filter: blur(40px);
+    opacity: 1;
+    animation: drift 26s ease-in-out infinite alternate;
+  }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at top, black 20%, transparent 72%);
+  }
+
+  /* --- glass surfaces ---------------------------------------------------- */
+  .card,
+  .glass {
+    position: relative;
+    border-radius: var(--radius-glass);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background:
+      linear-gradient(158deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.025) 38%, rgba(255, 255, 255, 0) 72%),
+      color-mix(in oklab, var(--color-ink-2) 80%, transparent);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.11),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+      0 24px 60px -30px rgba(0, 0, 0, 0.95);
+  }
+
+  /* Specular highlight along the top edge. */
+  .card::before,
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset-inline: 12%;
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    pointer-events: none;
+  }
+
+  .card-hover {
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, border-color 260ms ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 34px 70px -32px rgba(0, 0, 0, 1);
+  }
+
+  /* A coloured hairline aura. Set --aura on the element. */
+  .aura::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(150deg, var(--aura, var(--color-mask)), transparent 55%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* --- controls ---------------------------------------------------------- */
+  .field {
+    width: 100%;
+    background: color-mix(in oklab, var(--color-ink-3) 88%, transparent);
+    border: 1px solid var(--color-line);
+    border-radius: 0.85rem;
+    padding: 0.72rem 0.95rem;
+    color: var(--color-paper);
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  .field::placeholder {
+    color: var(--color-fog-2);
+  }
+  .field:hover {
+    border-color: var(--color-line-2);
+  }
+  .field:focus {
+    border-color: color-mix(in oklab, var(--color-mask) 62%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 0 0 3px color-mix(in oklab, var(--color-mask) 16%, transparent);
+  }
+  select.field {
+    appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--color-fog) 50%),
+      linear-gradient(135deg, var(--color-fog) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2.2rem;
+  }
+  select.field[size] {
+    background-image: none;
+    padding-right: 0.95rem;
+  }
+  select.field option {
+    background: var(--color-ink-3);
+    color: var(--color-paper);
+  }
+
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.85rem;
+    padding: 0.72rem 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms ease, border-color 180ms ease,
+      opacity 180ms ease;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .btn:not(:disabled) {
+    cursor: pointer;
+  }
+  .btn:not(:disabled):active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  /* Sheen sweep on hover. */
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.35) 50%, transparent 68%);
+    transform: translateX(-120%);
+    transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn:not(:disabled):hover::after {
+    transform: translateX(120%);
+  }
+
+  .btn-primary {
+    color: #08140a;
+    background: linear-gradient(180deg, #d8ff9a 0%, var(--color-mask) 46%, var(--color-mask-2) 100%);
+    border: 1px solid color-mix(in oklab, var(--color-mask) 70%, #000);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 10px 30px -12px color-mix(in oklab, var(--color-mask) 70%, transparent);
+  }
+  .btn-primary:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 18px 40px -14px color-mix(in oklab, var(--color-mask) 80%, transparent);
+  }
+
+  .btn-ghost {
+    color: var(--color-paper);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .btn-ghost:not(:disabled):hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-2px);
+  }
+
+  /* --- type helpers ------------------------------------------------------ */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .shine {
+    background: linear-gradient(96deg, var(--color-paper) 6%, #cfd6e6 30%, var(--color-paper) 58%, #b9c2d6 82%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-lime {
+    background: linear-gradient(100deg, var(--color-mask), var(--color-aqua) 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-violet {
+    background: linear-gradient(100deg, var(--color-violet), var(--color-pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--color-fog);
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-line-2), transparent);
+  }
+
+  .pulse-dot::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: currentColor;
+    animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Scroll reveal is opt-in and degrades to plain visible without support. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 26%;
+    }
+  }
 }
 
-.card {
-  background: var(--color-ink-2);
-  border: 1px solid var(--color-line);
-  border-radius: 1rem;
+@keyframes drift {
+  from {
+    transform: translate3d(-1.5%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(1.5%, 1.5%, 0) scale(1.06);
+  }
 }
 
-.field {
-  width: 100%;
-  background: var(--color-ink-3);
-  border: 1px solid var(--color-line);
-  border-radius: 0.75rem;
-  padding: 0.7rem 0.9rem;
-  color: var(--color-paper);
-  outline: none;
-}
-.field:focus {
-  border-color: var(--color-mask-2);
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 0.75rem;
-  padding: 0.7rem 1.1rem;
-  font-weight: 600;
-  transition: opacity 120ms ease, transform 120ms ease;
-}
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.btn-primary {
-  background: var(--color-mask);
-  color: #0a1200;
-}
-.btn-primary:not(:disabled):hover {
-  transform: translateY(-1px);
-}
-.btn-ghost {
-  border: 1px solid var(--color-line);
-  color: var(--color-paper);
-}
-.btn-ghost:not(:disabled):hover {
-  border-color: var(--color-fog);
-}
-
-.mono {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  word-break: break-all;
-}
-
-.grid-bg {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
 }
