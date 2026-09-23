@@ -1,29 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Unbounded, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SITE } from "@/lib/site";
 
-/** Display face: rounded, wide, unmistakable. Used for the wordmark and headings. */
-const title = Unbounded({
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-title",
-  display: "swap",
-});
-
-/** Body face: humanist with soft curves, reads well at small sizes. */
-const body = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body",
-  display: "swap",
-});
-
+/** The only face: the whole product reads as a terminal. */
 const code = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "700", "800"],
   variable: "--font-code",
   display: "swap",
 });
@@ -60,16 +45,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05060a",
+  themeColor: "#000000",
   colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${title.variable} ${body.variable} ${code.variable}`}>
+    <html lang="en" className={code.variable}>
       <body className="min-h-dvh flex flex-col">
-        <div className="aurora" aria-hidden="true" />
-        <div className="grain" aria-hidden="true" />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn btn-primary text-sm"

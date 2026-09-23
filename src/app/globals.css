@@ -6,32 +6,42 @@
 --------------------------------------------------------------------------- */
 @theme {
   /* surfaces, darkest to lightest */
-  --color-ink: #05060a;
-  --color-ink-2: #0a0c13;
-  --color-ink-3: #11141e;
-  --color-ink-4: #191d2a;
+  --color-ink: #000000;
+  --color-ink-2: #07090a;
+  --color-ink-3: #0e1210;
+  --color-ink-4: #151a17;
 
   /* lines and text */
-  --color-line: #232838;
-  --color-line-2: #333a4f;
-  --color-fog: #8b91a8;
-  --color-fog-2: #646a80;
-  --color-paper: #f0f2f8;
+  --color-line: #1f2a22;
+  --color-line-2: #2f4034;
+  --color-fog: #8fa396;
+  --color-fog-2: #5f7065;
+  --color-paper: #e6f5e8;
 
-  /* accents */
-  --color-mask: #b8ff5c;
-  --color-mask-2: #8ee03a;
-  --color-aqua: #52e8ff;
-  --color-violet: #a78bfa;
-  --color-pink: #ff6ec7;
-  --color-warn: #ffb454;
-  --color-danger: #ff6b6b;
+  /* accents: Robinhood green first, the rest is a terminal ANSI set */
+  --color-mask: #ccff00;
+  --color-mask-2: #a8d400;
+  --color-aqua: #33d6e6;
+  --color-violet: #e5c07b;
+  --color-pink: #d670d6;
+  --color-warn: #ffb000;
+  --color-danger: #ff5000;
 
-  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-title), var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  /* One face everywhere: this is a terminal. */
+  --font-sans: var(--font-code), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-display: var(--font-code), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --font-mono: var(--font-code), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --radius-glass: 1.25rem;
+  /* Square corners across every rounded-* utility; rounded-full (dots) stays round. */
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-4xl: 0;
+  --radius-glass: 0;
 }
 
 /* ---------------------------------------------------------------------------
@@ -51,20 +61,21 @@
     background: var(--color-ink);
     color: var(--color-paper);
     font-family: var(--font-sans);
+    font-size: 15px;
     -webkit-font-smoothing: antialiased;
     overflow-x: clip;
+    caret-color: var(--color-mask);
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-mask) 32%, transparent);
-    color: var(--color-paper);
+    background: var(--color-mask);
+    color: #000;
   }
 
   /* Keyboard focus is always visible, whatever the component. */
   :focus-visible {
     outline: 2px solid var(--color-mask);
     outline-offset: 2px;
-    border-radius: 0.5rem;
   }
 
   /* Thin scrollbars that match the surface. */
@@ -78,9 +89,6 @@
   }
   *::-webkit-scrollbar-thumb {
     background: var(--color-line-2);
-    border-radius: 999px;
-    border: 3px solid transparent;
-    background-clip: content-box;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -102,128 +110,57 @@
    as `md:hidden` always wins over `.btn`'s own display.
 --------------------------------------------------------------------------- */
 @layer components {
-  /* --- ambient background ------------------------------------------------ */
-  /* The wrapper is exactly the viewport and clips; the oversized, blurred
-     gradient lives inside it, so it can never widen the document. */
-  .aurora {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .aurora::before {
-    content: "";
-    position: absolute;
-    inset: -30%;
-    background:
-      radial-gradient(40% 32% at 8% 2%, color-mix(in oklab, var(--color-mask) 42%, transparent), transparent 64%),
-      radial-gradient(36% 30% at 92% 8%, color-mix(in oklab, var(--color-aqua) 38%, transparent), transparent 62%),
-      radial-gradient(46% 36% at 74% 88%, color-mix(in oklab, var(--color-violet) 38%, transparent), transparent 64%),
-      radial-gradient(34% 28% at 16% 78%, color-mix(in oklab, var(--color-pink) 28%, transparent), transparent 62%);
-    opacity: 1;
-  }
-
-  .grain {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse at top, black 20%, transparent 72%);
-  }
-
-  /* --- glass surfaces ---------------------------------------------------- */
+  /* --- surfaces ---------------------------------------------------------- */
+  /* A terminal pane: flat, square, one hairline. */
   .card,
   .glass {
     position: relative;
-    border-radius: var(--radius-glass);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    background:
-      linear-gradient(158deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.025) 38%, rgba(255, 255, 255, 0) 72%),
-      color-mix(in oklab, var(--color-ink-2) 94%, transparent);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.11),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.35),
-      0 24px 60px -30px rgba(0, 0, 0, 0.95);
-  }
-
-  /* Specular highlight along the top edge. */
-  .card::before,
-  .glass::before {
-    content: "";
-    position: absolute;
-    inset-inline: 12%;
-    top: -1px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
-    pointer-events: none;
+    border: 1px solid var(--color-line-2);
+    background: var(--color-ink-2);
   }
 
   .card-hover {
-    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, border-color 260ms ease;
+    transition: border-color 120ms steps(2), background-color 120ms steps(2);
   }
   .card-hover:hover {
-    transform: translateY(-3px);
-    border-color: rgba(255, 255, 255, 0.16);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.16),
-      0 34px 70px -32px rgba(0, 0, 0, 1);
+    border-color: var(--color-mask);
   }
 
-  /* A coloured hairline aura. Set --aura on the element. */
-  .aura::after {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(150deg, var(--aura, var(--color-mask)), transparent 55%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    opacity: 0.6;
-    pointer-events: none;
+  /* Panel titles in the app read as prompts. */
+  .card :is(h2, h3).font-semibold::before {
+    content: "> ";
+    color: var(--color-mask);
+  }
+
+  /* A coloured top rule. Set --aura on the element. */
+  .aura {
+    border-top: 2px solid var(--aura, var(--color-mask));
   }
 
   /* --- controls ---------------------------------------------------------- */
   .field {
     width: 100%;
-    background: color-mix(in oklab, var(--color-ink-3) 88%, transparent);
-    border: 1px solid var(--color-line);
-    border-radius: 0.85rem;
-    padding: 0.72rem 0.95rem;
+    background: var(--color-ink);
+    border: 1px solid var(--color-line-2);
+    padding: 0.65rem 0.85rem;
     color: var(--color-paper);
     outline: none;
-    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition: border-color 120ms ease;
   }
   .field::placeholder {
     color: var(--color-fog-2);
   }
   .field:hover {
-    border-color: var(--color-line-2);
+    border-color: var(--color-fog-2);
   }
   .field:focus {
-    border-color: color-mix(in oklab, var(--color-mask) 62%, transparent);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 0 0 3px color-mix(in oklab, var(--color-mask) 16%, transparent);
+    border-color: var(--color-mask);
   }
   select.field {
     appearance: none;
     background-image:
-      linear-gradient(45deg, transparent 50%, var(--color-fog) 50%),
-      linear-gradient(135deg, var(--color-fog) 50%, transparent 50%);
+      linear-gradient(45deg, transparent 50%, var(--color-mask) 50%),
+      linear-gradient(135deg, var(--color-mask) 50%, transparent 50%);
     background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
     background-size: 5px 5px, 5px 5px;
     background-repeat: no-repeat;
@@ -231,86 +168,74 @@
   }
   select.field[size] {
     background-image: none;
-    padding-right: 0.95rem;
+    padding-right: 0.85rem;
   }
   select.field option {
-    background: var(--color-ink-3);
+    background: var(--color-ink);
     color: var(--color-paper);
   }
+  select.field option:checked {
+    background: var(--color-mask);
+    color: #000;
+  }
 
+  /* Buttons read as [ label ]. */
   .btn {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    border-radius: 0.85rem;
-    padding: 0.72rem 1.15rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    overflow: hidden;
-    isolation: isolate;
-    transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms ease, border-color 180ms ease,
-      opacity 180ms ease;
+    padding: 0.65rem 1rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  }
+  .btn::before {
+    content: "[";
+    opacity: 0.6;
+  }
+  .btn::after {
+    content: "]";
+    opacity: 0.6;
   }
   .btn:disabled {
-    opacity: 0.45;
+    opacity: 0.4;
     cursor: not-allowed;
   }
   .btn:not(:disabled) {
     cursor: pointer;
   }
   .btn:not(:disabled):active {
-    transform: translateY(1px) scale(0.99);
-  }
-
-  /* Sheen sweep on hover. */
-  .btn::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.35) 50%, transparent 68%);
-    transform: translateX(-120%);
-    transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .btn:not(:disabled):hover::after {
-    transform: translateX(120%);
+    transform: translateY(1px);
   }
 
   .btn-primary {
-    color: #08140a;
-    background: linear-gradient(180deg, #d8ff9a 0%, var(--color-mask) 46%, var(--color-mask-2) 100%);
-    border: 1px solid color-mix(in oklab, var(--color-mask) 70%, #000);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-      0 10px 30px -12px color-mix(in oklab, var(--color-mask) 70%, transparent);
+    color: #000;
+    background: var(--color-mask);
+    border: 1px solid var(--color-mask);
   }
   .btn-primary:not(:disabled):hover {
-    transform: translateY(-2px);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.8),
-      0 18px 40px -14px color-mix(in oklab, var(--color-mask) 80%, transparent);
+    background: #dcff4d;
+    border-color: #dcff4d;
   }
 
   .btn-ghost {
-    color: var(--color-paper);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: var(--color-mask);
+    background: transparent;
+    border: 1px solid var(--color-line-2);
   }
   .btn-ghost:not(:disabled):hover {
-    border-color: rgba(255, 255, 255, 0.22);
-    transform: translateY(-2px);
+    border-color: var(--color-mask);
+    background: color-mix(in oklab, var(--color-mask) 10%, transparent);
   }
 
   /* --- type helpers ------------------------------------------------------ */
   .display {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.035em;
-    line-height: 1.04;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
     text-wrap: balance;
   }
 
@@ -321,37 +246,43 @@
     overflow-wrap: anywhere;
   }
 
+  /* Kept as names so components need no rename; the look is solid colour now. */
   .shine {
-    background: linear-gradient(96deg, var(--color-paper) 6%, #cfd6e6 30%, var(--color-paper) 58%, #b9c2d6 82%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-paper);
   }
-
   .gradient-lime {
-    background: linear-gradient(100deg, var(--color-mask), var(--color-aqua) 92%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-mask);
   }
-
   .gradient-violet {
-    background: linear-gradient(100deg, var(--color-violet), var(--color-pink));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-violet);
   }
 
+  /* Section labels read as code comments. */
   .eyebrow {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
+    font-size: 0.75rem;
+    text-transform: lowercase;
     color: var(--color-fog);
+  }
+  .eyebrow::before {
+    content: "// ";
+    color: var(--color-mask);
   }
 
   .rule {
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-line-2), transparent);
+    background: var(--color-line-2);
+  }
+
+  /* Blinking block cursor, placed after a line of text. */
+  .cursor::after {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 0.95em;
+    margin-left: 0.12em;
+    vertical-align: -0.08em;
+    background: var(--color-mask);
+    animation: blink 1.1s steps(1) infinite;
   }
 
   .pulse-dot::before {
@@ -361,6 +292,59 @@
     border-radius: 999px;
     background: currentColor;
     animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Endless ticker strip. The track holds the list twice, so -50% loops seamlessly. */
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 40s linear infinite;
+  }
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+
+  /* --- looping icon motion ---------------------------------------------- */
+  /* Small, cheap, transform-only loops so idle screens never feel dead.
+     Reduced-motion users get the static icon via the base rule. Stagger with
+     style={{ animationDelay }}. */
+  .loop-float,
+  .loop-pulse,
+  .loop-flip,
+  .loop-spin,
+  .loop-bob {
+    display: inline-block;
+  }
+  .loop-float {
+    animation: loop-float 3.2s ease-in-out infinite;
+  }
+  .loop-pulse {
+    animation: loop-pulse 2.4s ease-in-out infinite;
+  }
+  .loop-flip {
+    animation: loop-flip 4s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+  }
+  .loop-spin {
+    animation: loop-spin 6s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+  }
+  .loop-bob {
+    animation: loop-bob 1.6s steps(2) infinite;
+  }
+
+  /* The logo's eyes blink every few seconds. */
+  .logo-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blink-eye 4.5s ease-in-out infinite;
+  }
+
+  /* Terminal spinner: |/-\ cycling in place. */
+  .spinner::before {
+    content: "|";
+    display: inline-block;
+    width: 1ch;
+    color: var(--color-mask);
+    animation: spinner 0.8s steps(1) infinite;
   }
 
   /* Scroll reveal is opt-in and degrades to plain visible without support. */
@@ -376,11 +360,96 @@
 @keyframes reveal-in {
   from {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes loop-float {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes loop-pulse {
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes loop-flip {
+  0%,
+  35% {
+    transform: rotate(0);
+  }
+  50%,
+  85% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loop-spin {
+  0%,
+  20% {
+    transform: rotate(0);
+  }
+  45%,
+  70% {
+    transform: rotate(90deg);
+  }
+  95%,
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes loop-bob {
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes blink-eye {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  94% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    content: "|";
+  }
+  25% {
+    content: "/";
+  }
+  50% {
+    content: "-";
+  }
+  75% {
+    content: "\\";
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
   }
 }
 

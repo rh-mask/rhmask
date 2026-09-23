@@ -25,8 +25,7 @@ export function DocShell({
 }) {
   return (
     <div>
-      <header className="relative overflow-hidden border-b border-white/8">
-        <div className="absolute inset-0 grid-bg" aria-hidden="true" />
+      <header className="relative overflow-hidden border-b border-line-2">
         <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-12 sm:pt-20">
           <p className="eyebrow">{eyebrow}</p>
           <h1 className="display mt-4 text-4xl sm:text-5xl">{title}</h1>
@@ -44,7 +43,7 @@ export function DocShell({
                 <li key={t.id} className="shrink-0">
                   <a
                     href={`#${t.id}`}
-                    className="block whitespace-nowrap rounded-lg border border-white/8 px-3 py-2 text-sm text-fog transition-colors hover:border-white/15 hover:text-paper lg:border-0 lg:border-l lg:border-line lg:whitespace-normal lg:rounded-none lg:rounded-r-lg hover:lg:border-mask"
+                    className="block whitespace-nowrap rounded-lg border border-line-2 px-3 py-2 text-sm text-fog transition-colors hover:border-mask hover:text-mask lg:border-0 lg:border-l lg:border-line lg:whitespace-normal lg:rounded-none lg:rounded-r-lg hover:lg:border-mask"
                   >
                     {t.label}
                   </a>
@@ -68,7 +67,7 @@ export function DocShell({
 /** A titled section with a stable anchor. */
 export function DocSection({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-24 border-t border-white/8 py-12 first:border-0 first:pt-0">
+    <section id={id} className="scroll-mt-24 border-t border-line-2 py-12 first:border-0 first:pt-0">
       <h2 className="display text-2xl sm:text-3xl">{title}</h2>
       <div className="mt-6 grid gap-5 text-[0.95rem] leading-relaxed text-fog">{children}</div>
     </section>
@@ -104,7 +103,7 @@ export function DataTable({ head, rows }: { head: string[]; rows: React.ReactNod
       <div className="overflow-x-auto">
         <table className="w-full min-w-[34rem] text-sm">
           <thead className="text-left text-fog">
-            <tr className="border-b border-white/8">
+            <tr className="border-b border-line-2">
               {head.map((h) => (
                 <th key={h} className="px-5 py-3 font-medium">
                   {h}
@@ -114,7 +113,7 @@ export function DataTable({ head, rows }: { head: string[]; rows: React.ReactNod
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={i} className="border-b border-white/5 last:border-0">
+              <tr key={i} className="border-b border-line last:border-0">
                 {r.map((cell, j) => (
                   <td key={j} className="px-5 py-3 align-top text-fog first:text-paper">
                     {cell}

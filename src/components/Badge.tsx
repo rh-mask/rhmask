@@ -1,10 +1,10 @@
 const TONES = {
-  fog: "border-white/12 text-fog bg-white/4",
-  mask: "border-mask/35 text-mask bg-mask/8",
-  aqua: "border-aqua/35 text-aqua bg-aqua/8",
-  violet: "border-violet/35 text-violet bg-violet/8",
-  pink: "border-pink/35 text-pink bg-pink/8",
-  warn: "border-warn/35 text-warn bg-warn/8",
+  fog: "border-line-2 text-fog",
+  mask: "border-mask/50 text-mask bg-mask/8",
+  aqua: "border-aqua/50 text-aqua bg-aqua/8",
+  violet: "border-violet/50 text-violet bg-violet/8",
+  pink: "border-pink/50 text-pink bg-pink/8",
+  warn: "border-warn/50 text-warn bg-warn/8",
 } as const;
 
 export type BadgeTone = keyof typeof TONES;
@@ -14,9 +14,9 @@ export function Badge({ tone = "fog", children }: { tone?: BadgeTone; children: 
     <span
       // No backdrop-filter here on purpose: badges repeat a dozen times per
       // page and a blurred backdrop on each one costs frames. See docs/HANDOFF.md.
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${TONES[tone]}`}
+      className={`inline-flex items-center gap-1.5 border px-2 py-0.5 text-[11px] font-bold lowercase ${TONES[tone]}`}
     >
-      {children}
+      [{children}]
     </span>
   );
 }

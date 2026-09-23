@@ -180,7 +180,7 @@ export function ClaimCard() {
                   ))}
               </ul>
             ) : (
-              <p className="mt-2 text-sm text-fog">Reading…</p>
+              <p className="spinner mt-2 text-sm text-fog"> Reading…</p>
             )}
           </div>
 

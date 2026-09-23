@@ -7,8 +7,8 @@ import { GitHubIcon, MenuIcon, XIcon } from "@/components/Icons";
 import { NAV_LINKS, SITE } from "@/lib/site";
 
 /**
- * Sticky glass header. Gains a stronger blur and a hairline once the page
- * scrolls, so the hero stays clean at the top. Mobile gets a full-width
+ * Sticky solid header. Gains a hairline once the page scrolls, so the hero
+ * stays clean at the top. Mobile gets a full-width
  * sheet instead of a cramped row.
  */
 export function Nav() {
@@ -32,17 +32,14 @@ export function Nav() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-colors duration-300 ${
-        scrolled ? "border-b border-white/8 bg-ink/70 backdrop-blur-xl" : "border-b border-transparent"
+      className={`sticky top-0 z-40 bg-ink transition-colors duration-300 ${
+        scrolled ? "border-b border-line" : "border-b border-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
         <Link href="/" className="group flex items-center gap-2.5" onClick={() => setOpen(false)}>
-          <span className="relative">
-            <Logo className="h-7 w-7 transition-transform duration-300 group-hover:scale-110" />
-            <span className="absolute inset-0 -z-10 rounded-full bg-mask/40 blur-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          </span>
-          <span className="display text-lg tracking-tight">RhMask</span>
+          <Logo className="h-7 w-7 transition-transform duration-300 group-hover:scale-110" />
+          <span className="cursor text-lg font-bold tracking-tight">rhmask</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -50,9 +47,9 @@ export function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-lg px-3 py-2 text-sm text-fog transition-colors hover:bg-white/5 hover:text-paper"
+              className="px-3 py-2 text-sm lowercase text-fog transition-colors hover:bg-ink-3 hover:text-mask"
             >
-              {l.label}
+              ./{l.label}
             </Link>
           ))}
           <span className="mx-2 h-5 w-px bg-line" aria-hidden="true" />
@@ -62,7 +59,7 @@ export function Nav() {
             rel="noreferrer"
             aria-label={`RhMask on X, ${SITE.x.handle}`}
             title={SITE.x.handle}
-            className="rounded-lg p-2 text-fog transition-colors hover:bg-white/5 hover:text-paper"
+            className="rounded-full p-2 text-fog transition-colors hover:bg-ink-3 hover:text-paper"
           >
             <XIcon className="h-4 w-4" />
           </a>
@@ -72,12 +69,12 @@ export function Nav() {
             rel="noreferrer"
             aria-label="RhMask on GitHub"
             title={SITE.github.handle}
-            className="rounded-lg p-2 text-fog transition-colors hover:bg-white/5 hover:text-paper"
+            className="rounded-full p-2 text-fog transition-colors hover:bg-ink-3 hover:text-paper"
           >
             <GitHubIcon className="h-4 w-4" />
           </a>
           <Link href="/app" className="btn btn-primary ml-2 px-4! py-2! text-sm">
-            Open app
+            open app
           </Link>
         </nav>
 
@@ -96,7 +93,7 @@ export function Nav() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="border-t border-white/8 bg-ink/95 backdrop-blur-xl md:hidden"
+        className="border-t border-line bg-ink md:hidden"
       >
         <div className="mx-auto grid max-w-6xl gap-1 px-4 py-4">
           {NAV_LINKS.map((l) => (
@@ -104,13 +101,13 @@ export function Nav() {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3 text-base text-fog transition-colors hover:bg-white/5 hover:text-paper"
+              className="px-3 py-3 text-base lowercase text-fog transition-colors hover:bg-ink-3 hover:text-mask"
             >
-              {l.label}
+              ./{l.label}
             </Link>
           ))}
           <Link href="/app" onClick={() => setOpen(false)} className="btn btn-primary mt-2">
-            Open app
+            open app
           </Link>
           <div className="mt-3 flex items-center gap-2">
             <a href={SITE.x.url} target="_blank" rel="noreferrer" className="btn btn-ghost flex-1 text-sm">
