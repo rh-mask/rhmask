@@ -27,13 +27,13 @@ const COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-24 border-t border-white/8">
+    <footer className="relative mt-24 border-t border-line">
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
           <div>
             <Link href="/" className="flex items-center gap-2.5">
               <Logo className="h-7 w-7" />
-              <span className="display text-lg">RhMask</span>
+              <span className="text-lg font-bold tracking-tight">rhmask</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-fog">
               The privacy layer for tokenized stocks. Receive unseen, pay unseen, and get paid in real stock tokens.
@@ -80,7 +80,7 @@ export function Footer() {
             <p className="eyebrow">Network</p>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li className="flex items-center gap-2 text-fog">
-                <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-mask text-mask" aria-hidden="true" />
+                <span className="pulse-dot relative inline-block h-1.5 w-1.5 rounded-full bg-mask text-mask" aria-hidden="true" />
                 Robinhood Chain · {ROBINHOOD_CHAIN_ID}
               </li>
               <li>

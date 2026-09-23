@@ -149,7 +149,7 @@ export function SwapCard() {
       </p>
 
       {listError && <p className="mt-4 text-sm text-warn">Asset list unavailable: {listError}. Retry in a moment.</p>}
-      {!list && !listError && <p className="mt-4 text-sm text-fog">Loading assets…</p>}
+      {!list && !listError && <p className="spinner mt-4 text-sm text-fog"> Loading assets…</p>}
 
       {list && (
         <div className="mt-5 grid gap-4">
