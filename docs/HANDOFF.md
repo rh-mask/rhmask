@@ -40,33 +40,42 @@ product, not decoration.
 All colour lives in `src/app/globals.css` under `@theme`. Use the token, never a raw hex, so both surfaces and
 the OG image stay in step.
 
+The look is a terminal: one monospace face, square corners, Robinhood green on black, ANSI tones for the rest.
+
 | Token | Value | Use |
 |:--|:--|:--|
-| `--color-ink` … `ink-4` | `#05060a` `#0a0c13` `#11141e` `#191d2a` | page, card, field, raised |
-| `--color-line` / `line-2` | `#232838` `#333a4f` | borders, hover borders |
-| `--color-paper` | `#f0f2f8` | primary text |
-| `--color-fog` / `fog-2` | `#8b91a8` `#646a80` | secondary and tertiary text |
-| `--color-mask` / `mask-2` | `#b8ff5c` `#8ee03a` | primary accent, focus ring |
-| `--color-aqua` | `#52e8ff` | Private Pay, secondary gradients |
-| `--color-violet` | `#a78bfa` | Mask Swap, whitepaper accent |
-| `--color-pink` | `#ff6ec7` | token and vault |
-| `--color-warn` | `#ffb454` | anything `planned`, and every error |
+| `--color-ink` … `ink-4` | `#000000` `#07090a` `#0e1210` `#151a17` | page, pane, field, raised |
+| `--color-line` / `line-2` | `#1f2a22` `#2f4034` | dividers, pane borders |
+| `--color-paper` | `#e6f5e8` | primary text |
+| `--color-fog` / `fog-2` | `#8fa396` `#5f7065` | secondary text, comments |
+| `--color-mask` / `mask-2` | `#ccff00` `#a8d400` | Robinhood neon green: primary accent, prompt, cursor, focus ring |
+| `--color-aqua` | `#33d6e6` | ANSI cyan: Private Pay, paths |
+| `--color-violet` | `#e5c07b` | ANSI yellow: Mask Swap |
+| `--color-pink` | `#d670d6` | ANSI magenta: token and vault |
+| `--color-warn` | `#ffb000` | anything `planned`, and every error |
+
+Every `rounded-*` radius token is zeroed in `@theme`, so corners are square everywhere; `rounded-full` (dots) is
+untouched.
 
 The CSS is layered. Base rules live in `@layer base` and component classes in `@layer components`, which is what
 lets a Tailwind utility such as `md:hidden` override `.btn`. Keep new component CSS inside that layer or you will
 reintroduce the bug where a button ignores a responsive utility.
 
-Helper classes, all in the same file: `.card` and `.glass` (glass surface), `.card-hover`, `.aura` (coloured
-hairline, set `--aura`), `.field`, `.btn` with `.btn-primary` / `.btn-ghost`, `.display`, `.mono`, `.shine`,
-`.gradient-lime`, `.gradient-violet`, `.eyebrow`, `.rule`, `.reveal`, `.pulse-dot`, `.grid-bg`, `.aurora`,
-`.grain`. Restyle them freely; renaming means touching every component, so prefer changing the rule.
+Helper classes, all in the same file: `.card` and `.glass` (flat pane), `.card-hover`, `.aura` (coloured top rule,
+set `--aura`), `.field`, `.btn` with `.btn-primary` / `.btn-ghost` (rendered as `[ label ]`), `.display`, `.mono`,
+`.shine`, `.gradient-lime`, `.gradient-violet` (solid colours now, names kept), `.eyebrow` (prefixed `// `),
+`.rule`, `.cursor` (blinking block after the text), `.ticker` / `.ticker-track`, `.reveal`, `.pulse-dot` (needs a
+`relative` parent), `.spinner` (`|/-\` before the text), `.logo-eye` (blinking logo eyes), and the looping icon
+classes `.loop-float` / `.loop-pulse` / `.loop-flip` / `.loop-spin` / `.loop-bob` (transform-only; stagger with
+`animationDelay`; reduced motion stops them). Panel titles inside `.card` with `font-semibold` get a `> ` prompt automatically. Restyle them
+freely; renaming means touching every component, so prefer changing the rule.
 
-Three fonts are wired in `layout.tsx` through `next/font/google` and exposed as tokens: **Unbounded** for display
-(`.display`, `--font-display`), **Plus Jakarta Sans** for body, **JetBrains Mono** for code (`.mono`). They are
-self-hosted at build time, so no request leaves the page.
+`src/components/Terminal.tsx` holds the window chrome (`Terminal`, title bar with a path) and the `Cmd` shell line.
 
-The ambient background is two fixed layers rendered once in `layout.tsx`: `.aurora` (four soft colour fields,
-clipped by its own wrapper so it can never widen the document) and `.grain`.
+One font is wired in `layout.tsx` through `next/font/google`: **JetBrains Mono**, used for display, body and code.
+It is self-hosted at build time, so no request leaves the page.
+
+There is no ambient background layer: the page is flat black.
 
 **Performance rules, learned the hard way.** The first build ran at 49fps with 27 dropped frames per scroll.
 Two causes, both worth avoiding:
@@ -80,7 +89,7 @@ After both fixes the page holds a locked 60fps on desktop and mobile. Re-measure
 adds a filter, a large shadow animation, or a new fixed overlay.
 
 If you change the accent, change it in four places or it will look broken: `globals.css`, `src/app/icon.svg`,
-`src/components/Logo.tsx`, `src/app/opengraph-image.tsx`.
+`src/components/Logo.tsx`, `src/app/opengraph-image.tsx`, and the extension (`extension/src/popup.html`, `content.ts`).
 
 Links and handles are not hard-coded in components. They live in `src/lib/site.ts` (site URL, X handle, GitHub),
 and the header and footer read from there.
