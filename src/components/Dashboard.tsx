@@ -6,12 +6,15 @@ import { SwapCard } from "@/components/SwapCard";
 import { StealthCard } from "@/components/StealthCard";
 import { VaultCard } from "@/components/VaultCard";
 import { PayCard } from "@/components/PayCard";
+import { Terminal } from "@/components/Terminal";
+import { GhostIcon, QrIcon, SwapIcon, VaultIcon } from "@/components/Icons";
+import { ROBINHOOD_CHAIN_ID } from "@/lib/chain";
 
 const tabs = [
-  { id: "swap", label: "Mask Swap" },
-  { id: "receive", label: "Ghost Receive" },
-  { id: "pay", label: "Private Pay" },
-  { id: "vault", label: "Blue Chip Vault" },
+  { id: "swap", label: "Mask Swap", icon: SwapIcon, anim: "loop-flip" },
+  { id: "receive", label: "Ghost Receive", icon: GhostIcon, anim: "loop-float" },
+  { id: "pay", label: "Private Pay", icon: QrIcon, anim: "loop-pulse" },
+  { id: "vault", label: "Blue Chip Vault", icon: VaultIcon, anim: "loop-spin" },
 ] as const;
 
 type Tab = (typeof tabs)[number]["id"];
@@ -42,27 +45,34 @@ export function Dashboard() {
 
   return (
     <div>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="glass flex gap-1 rounded-2xl p-1.5" role="tablist">
-          {tabs.map((t) => (
+      <p className="text-sm text-fog">
+        <span className="text-mask">guest@rhmask</span>:<span className="text-aqua">~/app</span>$ rhmask {tab}
+        <span className="cursor" aria-hidden="true" />
+      </p>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap border border-line-2" role="tablist">
+          {tabs.map((t, i) => (
             <button
               key={t.id}
               type="button"
               role="tab"
               aria-selected={tab === t.id}
               onClick={() => select(t.id)}
-              className={`rounded-xl px-3.5 py-2 text-sm font-semibold transition-all duration-200 ${
-                tab === t.id
-                  ? "bg-gradient-to-b from-white/12 to-white/4 text-paper shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
-                  : "text-fog hover:bg-white/5 hover:text-paper"
+              className={`flex items-center gap-2 border-r border-line-2 px-3.5 py-2 text-sm font-bold last:border-r-0 transition-colors ${
+                tab === t.id ? "bg-mask text-black" : "text-fog hover:bg-ink-3 hover:text-paper"
               }`}
             >
-              {t.label}
+              {/* Only the active tab's icon loops, so the row stays calm. */}
+              <span className={tab === t.id ? t.anim : undefined}>
+                <t.icon className="h-4 w-4" />
+              </span>
+              <span className="opacity-60">{i + 1}:</span> {t.label}
             </button>
           ))}
         </div>
         <WalletButton />
       </div>
+      <p className="spinner mt-3 text-xs text-fog"> robinhood chain · {ROBINHOOD_CHAIN_ID} · keys stay in this tab</p>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
         <div>
@@ -71,16 +81,16 @@ export function Dashboard() {
           {tab === "pay" && <PayCard />}
           {tab === "vault" && <VaultCard />}
         </div>
-        <aside className="card aura h-fit p-5 text-sm" style={{ ["--aura" as string]: "var(--color-aqua)" }}>
-          <h3 className="display text-base">What is hidden, what is not</h3>
-          <ul className="mt-3 space-y-2 text-fog">
-            <li>Hidden: the link between your identity and a receiving address.</li>
-            <li>Hidden: your order from public order books and mempools as a visible swap.</li>
-            <li>Not hidden: on-chain settlement itself. The chain is public by nature.</li>
-            <li>Not hidden: the venue filling an order sees the deposit and the receiving address.</li>
+        <Terminal title="privacy.diff" className="h-fit text-sm">
+          <h3 className="font-bold">## what is hidden, what is not</h3>
+          <ul className="mt-3 space-y-2">
+            <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: the link between your identity and a receiving address.</span></li>
+            <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: your order from public order books and mempools as a visible swap.</span></li>
+            <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: on-chain settlement itself. The chain is public by nature.</span></li>
+            <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: the venue filling an order sees the deposit and the receiving address.</span></li>
           </ul>
-          <p className="mt-4 text-xs text-fog/70">No account. No email. No KYC. Keys stay on your device.</p>
-        </aside>
+          <p className="mt-4 text-xs text-fog-2">{"// "}No account. No email. No KYC. Keys stay on your device.</p>
+        </Terminal>
       </div>
     </div>
   );
