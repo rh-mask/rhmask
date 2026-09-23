@@ -5,27 +5,27 @@
 <title>RhMask</title>
 <style>
   :root { color-scheme: dark; }
-  body { margin: 0; width: 360px; background: #07080b; color: #eef0f5; font: 13px/1.45 ui-sans-serif, system-ui, sans-serif; }
-  header { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid #232733; }
+  body { margin: 0; width: 360px; background: #000000; color: #e6f5e8; font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace; }
+  header { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid #2f4034; }
   header strong { font-size: 15px; letter-spacing: -0.2px; }
-  header .tag { margin-left: auto; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #b8ff5c; border: 1px solid rgba(184,255,92,.4); border-radius: 999px; padding: 2px 8px; }
+  header .tag { margin-left: auto; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #ccff00; border: 1px solid rgba(204,255,0,.5); border-radius: 999px; padding: 2px 8px; }
   main { padding: 12px 14px; display: grid; gap: 12px; }
-  .card { background: #0e1015; border: 1px solid #232733; border-radius: 12px; padding: 12px; display: grid; gap: 8px; }
-  .fog { color: #8b90a0; }
+  .card { background: #07090a; border: 1px solid #2f4034; border-radius: 0; padding: 12px; display: grid; gap: 8px; }
+  .fog { color: #8fa396; }
   .mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; word-break: break-all; }
   .row { display: flex; flex-wrap: wrap; gap: 6px; }
-  button { background: #161921; color: #eef0f5; border: 1px solid #232733; border-radius: 9px; padding: 7px 10px; font: inherit; cursor: pointer; }
-  button.primary { background: #b8ff5c; color: #0a1200; border-color: #b8ff5c; font-weight: 600; }
+  button { background: #0e1210; color: #e6f5e8; border: 1px solid #2f4034; border-radius: 0; padding: 7px 10px; font: inherit; cursor: pointer; }
+  button.primary { background: #ccff00; color: #000000; border-color: #ccff00; font-weight: 600; }
   button:disabled { opacity: .5; cursor: not-allowed; }
-  input, textarea { width: 100%; box-sizing: border-box; background: #161921; color: #eef0f5; border: 1px solid #232733; border-radius: 9px; padding: 8px; font: inherit; }
+  input, textarea { width: 100%; box-sizing: border-box; background: #0e1210; color: #e6f5e8; border: 1px solid #2f4034; border-radius: 0; padding: 8px; font: inherit; }
   textarea { min-height: 64px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; }
   .qr { display: flex; justify-content: center; }
   .qr svg { width: 168px; height: 168px; border-radius: 10px; }
-  .warn { color: #ffb454; }
-  .ok { color: #b8ff5c; }
+  .warn { color: #ffb000; }
+  .ok { color: #ccff00; }
   ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  li { border: 1px solid #232733; border-radius: 9px; padding: 8px; display: grid; gap: 4px; }
-  a { color: #b8ff5c; }
+  li { border: 1px solid #2f4034; border-radius: 0; padding: 8px; display: grid; gap: 4px; }
+  a { color: #ccff00; }
   h2 { margin: 0; font-size: 13px; }
   p { margin: 0; }
   [hidden] { display: none !important; }
@@ -33,7 +33,7 @@
 </head>
 <body>
 <header>
-  <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="7" fill="#b8ff5c"/><path d="M6 12c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#07080b"/><ellipse cx="11.5" cy="14.5" rx="2.6" ry="1.7" fill="#b8ff5c"/><ellipse cx="20.5" cy="14.5" rx="2.6" ry="1.7" fill="#b8ff5c"/></svg>
+  <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="#ccff00"/><path d="M6 12.5c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#000000"/><ellipse cx="11.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/><ellipse cx="20.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/></svg>
   <strong>RhMask</strong>
   <span class="tag" id="state-tag">beta</span>
 </header>
