@@ -31,23 +31,27 @@ Two surfaces carry the same three things: the web app, and a browser extension t
 **The description.** Paste it wherever a bio or a listing wants a paragraph: the Telegram channel, a
 pinned post, a directory entry, a press note.
 
-> **RhMask is** the privacy layer for tokenized stocks. Right now your whole portfolio sits on a public
-> ledger: every entry, every size, every counterparty, readable by anyone who cares to look. RhMask gives
-> that back. Publish one address, and every payment after it lands somewhere new that only you can spend
-> from. Keys are made on your device. No account, no email, nothing to sign up for.
+> **RhMask is** the privacy layer for tokenized stocks. Your portfolio sits on a public ledger for anyone
+> to read. Publish one address instead, and every payment lands somewhere new that only you can spend
+> from. Keys never leave your device.
 
-*67 words, 386 characters. Own the market. Stay unseen.*
+*40 words, 235 characters. Fits a Telegram description. Own the market. Stay unseen.*
 
-**Both versions open with "RhMask is."** Keep it that way. A description gets quoted, indexed and pasted
-into places that strip the surrounding context, so the first two words have to say what the thing is
-rather than set a scene.
+**Shorter still, where the character limit bites.**
 
-**Shorter, for a bio with a character limit.**
+> **RhMask is** the privacy layer for tokenized stocks. Publish one address; every payment lands somewhere
+> new only you can spend from. Keys never leave your device.
 
-> **RhMask** is the privacy layer for tokenized stocks. Publish one address; every payment lands somewhere
-> new that only you can spend from. Keys never leave your device.
+*26 words, 159 characters. An X bio cuts at 160, so this one has a single character to spare: check the
+count before changing a word of it.*
 
-*27 words, 164 characters. Fits a Telegram description and an X bio.*
+The short one is the long one with the problem sentence dropped and two words trimmed to clear the limit.
+**No claim differs between them, and none should.** The two get seen together, and a reader who spots a
+claim that changed between versions is right to wonder which one is the real one.
+
+**Both open with "RhMask is."** Keep it that way. A description gets quoted, indexed and pasted into
+places that strip the surrounding context, so the first two words have to say what the thing is rather
+than set a scene.
 
 **Keeping it honest.** The short forms work by leaving things out, which is fair, and stop working the
 moment they leave out something that changes the decision.
