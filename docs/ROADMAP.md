@@ -23,9 +23,10 @@ two core functions, Ghost Receive and Mask Swap.
 - Router partner key → live (non-dry) quotes with deposit addresses and order status
 - Asset picker backed by the router token list and the stock token registry
 - Receipt page per order, shareable link, size toggle
-- `StealthAnnouncer` + `StealthRegistry` written, tested, deployed to testnet
+- [x] `StealthAnnouncer` (ERC-5564) and `StealthRegistry` (ERC-6538) written, compiled and **deployed to mainnet** 2026-09-25, with the announce-and-scan loop verified on chain
 - [x] On-chain verification: a contract can hold stock tokens on this chain (verified 2026-09-12, `npm run check:onchain`); vault streams tokens directly
-- First on-chain stealth payment on mainnet, screenshot and hash posted
+- [x] First on-chain stealth payment on mainnet: `0xb363b2e3…f599`, swept back in `0x6db1fde3…358d`
+- [x] First on-chain announcement: `0x80861d97…b785`, found by a viewing-key scan
 - Passkey (WebAuthn PRF) unlock on top of the passphrase store, same format for dapp and extension
 - [x] Extension MVP: popup with keys and meta-address QR, backup/restore, address-field chips, receipts list (`extension/`)
 
