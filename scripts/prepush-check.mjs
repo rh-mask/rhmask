@@ -70,6 +70,14 @@ const leaked = tracked.filter((f) => PRIVATE.some((re) => re.test(f)));
 if (leaked.length) fail(`private or generated files are tracked: ${leaked.join(", ")}`);
 else ok("no private or generated files tracked");
 
+// Assistant rule files, which some tools now write into the project root on
+// install. The forbidden-terms scan below only reads a fixed list of public
+// paths, so a file at the root called CLAUDE.md would sail straight past it.
+const ASSISTANT = [/^AGENTS\.md$/i, /^CLAUDE\.md$/i, /^\.cursorrules$/i, /^\.cursor\//, /^\.aider/i, /copilot-instructions\.md$/i];
+const assistantFiles = tracked.filter((f) => ASSISTANT.some((re) => re.test(f)));
+if (assistantFiles.length) fail(`assistant rule files are tracked: ${assistantFiles.join(", ")}`);
+else ok("no assistant rule files tracked");
+
 // ---------------------------------------------------------------------------
 // 3. Public text: no old brand, no third-party brands, no AI attribution.
 //    Generic terms live here; project-specific ones (competitor names) live in

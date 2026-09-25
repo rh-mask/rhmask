@@ -36,3 +36,12 @@ marketing/video/*.mp4
 
 # solc artefacts, rebuilt with npm run contracts:build
 contracts/out/
+
+# Assistant rule files some tools drop into the project root.
+# They are tooling, not source, and the contributor list stays human.
+AGENTS.md
+CLAUDE.md
+.cursorrules
+.cursor/
+.aider*
+.github/copilot-instructions.md
