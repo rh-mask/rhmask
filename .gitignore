@@ -33,6 +33,7 @@ cli/dist/
 marketing/posters/*.jpg
 marketing/posters/*.png
 marketing/video/*.mp4
+marketing/video/*.webm
 
 # solc artefacts, rebuilt with npm run contracts:build
 contracts/out/
