@@ -83,7 +83,7 @@ failed transaction), sweep gas from `estimateGas` instead of a hard-coded 21k, r
 | Router API | Deposit ids with `.` or `-` (non-EVM venues) were rejected as invalid | Regex widened, length capped |
 | Router API | Asset ids and addresses were not trimmed; unbounded length | Trimmed and capped at 128 chars |
 | Headers | No `Permissions-Policy`, no HSTS | Both added in `next.config.ts` |
-| Repo | Duplicate `.vercel` ignore line | Removed |
+| Repo | Duplicate ignore line for the deploy directory | Removed |
 | Repo | No pre-push gate; commit history carried AI co-author trailers | `scripts/prepush-check.mjs`, hook installer, CI workflow, rules in `PUSH_RULES.md` |
 
 ## 3. Feature plan

@@ -12,7 +12,7 @@
 ## Components
 
 ```
- browser                          Vercel (Next.js)                       chain / venues
+ browser                          our origin (Next.js)                   chain / venues
  ┌─────────────────┐              ┌──────────────────────┐              ┌──────────────────┐
  │ Ghost Receive   │  none        │                      │              │ Robinhood Chain  │
  │  keys, derive   │─────────────▶│                      │              │  4663            │
@@ -67,11 +67,11 @@ Neither has an owner, a pause, or an upgrade path, and neither holds funds.
 
 | Concern | Choice |
 |---|---|
-| Hosting | Vercel, region `sin1`, Node runtime for route handlers |
+| Hosting | Any Node host that runs Next.js; the Node runtime is required for the route handlers |
 | RPC | Alchemy (server), public RPC fallback (browser) |
 | Database | none in this release; order history is per-browser. A Postgres with row-level security is the planned addition for rewards accounting |
-| Secrets | Vercel project env |
-| Observability | Vercel logs; add a structured logger before rewards accounting ships |
+| Secrets | Host environment variables; none are prefixed `NEXT_PUBLIC_` |
+| Observability | Host request logs only. The application writes no logs of its own and reads no client IP. Add a structured logger before rewards accounting ships |
 
 ## The RPC pass-through
 
@@ -88,3 +88,31 @@ The route signs nothing and holds nothing. A raw transaction arrives already sig
 | Intrinsic gas for a plain ETH transfer is above 21,000 (measured 21,358-21,369 and it moves with L1 data cost) | Never hard-code 21,000. `estimateGas` then add headroom, or the chain rejects the transaction outright. |
 | Stock tokens are upgradeable beacon proxies owned by the issuer | Re-verify every address and every transfer assumption before a release. `npm run check:onchain` does this. |
 | Chain 4663 is absent from the Arbitrum Orbit registry | The L1 bridge contracts come from the chain's own docs and were cross-checked on mainnet before any funds moved. |
+
+## Invariants
+
+These are product promises rather than preferences. Changing one is a product decision.
+
+1. **A surface that is not live says so.** The `beta` and `planned` labels on the feature cards and in the
+   status table are load-bearing. Never quietly promote a label.
+2. **A privacy claim ships with its limits.** What is hidden and what is not is stated on `/docs` and in the
+   README. We never write "anonymous" or "untraceable", because neither is true of what this builds.
+3. **Keys never leave the browser.** No analytics, no self-hosted-elsewhere font, no error reporter, and no
+   `fetch` in any component that touches `src/lib/stealth.ts`, `keycrypto.ts` or `keystore.ts`.
+4. **Key handling stays client-side.** Everything under `src/lib/` marked `"use client"` is client-only on
+   purpose, and moving it to a server component would defeat the point.
+5. **Warnings come before money.** The "test with a small amount first" line on the pay flow and the gas
+   warning on sweep stay visible.
+6. **Secrets stay behind a click.** Private keys, backups and a recovered stealth key are never rendered by
+   default.
+
+## Interface rules
+
+Style is open to change; these are not, because they were each paid for once.
+
+| Rule | Why |
+|:--|:--|
+| No `backdrop-filter`, and no animated `filter: blur()` | Twenty blurred cards and one animated blur cost 27 dropped frames and held the page at 49fps. Removing them locked 60. |
+| Component CSS lives in `@layer components` | Otherwise plain custom CSS outranks Tailwind utilities and `md:hidden` stops working. |
+| Full-bleed background effects need an `overflow: hidden` parent | A fixed, oversized gradient widened the document and produced horizontal scroll on phones. |
+| Measure mobile with device emulation, not a narrow window | A narrow desktop window does not reproduce either bug above. |
