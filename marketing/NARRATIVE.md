@@ -2,13 +2,17 @@
 
 This is the selling story. Every poster, caption, and thread pulls from here. Do not invent new claims in a caption; if it is not in this file or in the status table, it is not said.
 
-Home: **rhmask.org** (production today at rhmask.vercel.app until DNS points over).
+Home: **rhmask.org**, live.
 
-## The enemy
+## What got lost
 
-Tokenized stocks are the biggest thing to happen to markets in a decade, and they come with a flaw nobody talks about: **the ledger is public**. Your NVDA bag, your entry, your exit, your average price, your wallet's whole history. Anyone with an explorer can read it. Funds read it. Bots read it. Your competitors read it.
+Tokenized stocks are the biggest thing to happen to markets in a decade, and something ordinary went missing on the way: **discretion**.
 
-On Wall Street, only the exchange sees the tape. On-chain, everyone does.
+Your position, your entry, your exit, your average price, your whole history. All of it readable by anyone with a block explorer, permanently.
+
+On Wall Street only the venue sees the tape, and nobody calls that secretive. It is simply how a serious market works. Public ledgers removed it by accident, not by design, and there is no reason it has to stay removed.
+
+That is the gap we build in. Not a fight, a fix.
 
 ## The promise
 
@@ -29,9 +33,9 @@ Two surfaces carry the same three things: the web app, and a browser extension t
 Alternates for rotation:
 
 - Own the market. Stay unseen.
-- Your stocks. Nobody's business.
-- Hidden from the tape. Not from you.
-- Scan. Pay. Nobody saw it.
+- Discretion, restored.
+- Your position is your business.
+- Scan. Pay. Move on.
 - The first token that pays you in someone else's stock.
 
 ## Proof points (only these, only when true)

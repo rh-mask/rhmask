@@ -157,10 +157,12 @@ launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running
 ### 11 · Run the checks
 `rhmask-p11.jpg`
 
-> Do not trust us. Run it.
+> Every claim we make ships with a command.
 >
 > `npm run check:onchain` reads Robinhood Chain and simulates real transfers from real holders. It signs
 > nothing and broadcasts nothing. Three more commands check the crypto itself.
+>
+> Run any of them and you will get the same answer we did.
 >
 > github.com/rh-mask/rhmask
 
@@ -244,7 +246,7 @@ launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running
 >
 > Just keys, made on your device in about ten seconds.
 >
-> Nothing to sign up for means nothing to breach, nothing to subpoena, and nothing to sell.
+> No account means there is simply nothing about you to store.
 >
 > rhmask.org
 
@@ -269,10 +271,10 @@ launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running
 ### 19 · Read the code
 `rhmask-p19.jpg`
 
-> A privacy tool you cannot read is a promise, not a guarantee.
+> Privacy work is worth reading, so we published all of it.
 >
-> Every line that touches your keys is public, and so is every check that backs a claim we make. MIT
-> licensed, and every push passes the same gate.
+> Every line that touches your keys is public, and so is every check behind a claim we make. MIT licensed,
+> and every push goes through the same gate.
 >
 > github.com/rh-mask/rhmask
 
