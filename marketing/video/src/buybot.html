@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>RhMask buybot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* Deliberately carries no numbers. A buybot reuses one clip for every buy;
+     the amounts belong in the message text, where they are actually true. */
+  :root { --ink:#000; --ink2:#07090a; --line:#2f4034; --fog:#8fa396; --fog2:#5f7065;
+          --paper:#e6f5e8; --lime:#ccff00; --aqua:#33d6e6; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:640px; height:640px; background:var(--ink); overflow:hidden;
+         font-family:"JetBrains Mono", ui-monospace, monospace; color:var(--paper); }
+
+  .grid { position:absolute; inset:0;
+    background-image:linear-gradient(to right,rgba(204,255,0,.05) 1px,transparent 1px),
+                     linear-gradient(to bottom,rgba(204,255,0,.05) 1px,transparent 1px);
+    background-size:40px 40px; }
+  .glow { position:absolute; border-radius:50%; filter:blur(70px);
+          width:520px; height:520px; background:rgba(204,255,0,.14);
+          left:60px; top:130px; }
+
+  .win { position:absolute; inset:22px; border:2px solid var(--line); background:rgba(7,9,10,.82);
+         display:flex; flex-direction:column; }
+  .bar { display:flex; align-items:center; gap:9px; padding:13px 16px; border-bottom:2px solid var(--line);
+         font-size:16px; color:var(--fog); }
+  .dot { width:11px; height:11px; border-radius:50%; }
+  .body { flex:1; padding:20px 22px; display:flex; flex-direction:column; }
+
+  .line { font-size:19px; line-height:1.6; white-space:pre; }
+  .cursor { display:inline-block; width:10px; height:19px; background:var(--lime);
+            vertical-align:-3px; margin-left:2px; }
+
+  .stage { flex:1; display:grid; place-items:center; perspective:1400px; }
+  .coin { position:relative; width:240px; height:240px; transform-style:preserve-3d; }
+  .face { position:absolute; inset:0; border-radius:50%; display:grid; place-items:center;
+          backface-visibility:hidden; overflow:hidden; }
+  .front { transform: translateZ(15.5px); }
+  .back { transform: rotateY(180deg) translateZ(15.5px); }
+  .plate { position:absolute; inset:0; border-radius:50%;
+    background:radial-gradient(circle at 32% 26%, #eaffb0 0%, #ccff00 34%, #a8d400 74%, #7d9e00 100%); }
+  .ring { position:absolute; inset:5%; border-radius:50%; border:4px solid rgba(0,0,0,.35); }
+  .mark { position:relative; width:58%; height:58%; }
+  .mark svg { width:100%; height:100%; display:block; }
+  .rim { position:absolute; inset:0; transform-style:preserve-3d; }
+  .rim i { position:absolute; display:block; left:50%; top:50%; width:11.7px; height:31px;
+           margin-left:-5.85px; margin-top:-15.5px;
+           background:linear-gradient(to bottom,#a8d400,#7d9e00 45%,#5c7400 100%); }
+
+  .alert { display:flex; align-items:center; gap:12px; font-size:27px; font-weight:800;
+           letter-spacing:-.02em; color:var(--lime); }
+  .pulse { width:15px; height:15px; border-radius:50%; background:var(--lime); }
+  .foot { display:flex; align-items:center; justify-content:space-between;
+          font-size:16px; color:var(--fog2); padding-top:12px; }
+  .hide { opacity:0; }
+</style>
+</head>
+<body>
+<div class="grid"></div>
+<div class="glow"></div>
+
+<div class="win">
+  <div class="bar">
+    <span class="dot" style="background:#ff5000"></span>
+    <span class="dot" style="background:#ffb000"></span>
+    <span class="dot" style="background:#ccff00"></span>
+    <span style="margin-left:6px">rhmask &mdash; buybot</span>
+  </div>
+  <div class="body">
+    <p class="line"><span style="color:var(--lime)">$</span> <span id="typed"></span><span class="cursor" id="cur"></span></p>
+    <p class="line" id="l2" style="color:var(--fog)">listening &middot; robinhood chain 4663</p>
+
+    <div class="stage">
+      <div class="coin" id="coin">
+        <div class="rim" id="rim"></div>
+        <div class="face front">
+          <div class="plate"></div><div class="ring"></div>
+          <div class="mark"><svg viewBox="0 0 32 32">
+            <path d="M6 12.5c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#000"/>
+            <ellipse cx="11.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/>
+            <ellipse cx="20.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/></svg></div>
+        </div>
+        <div class="face back">
+          <div class="plate"></div><div class="ring"></div>
+          <div class="mark"><svg viewBox="0 0 32 32">
+            <path d="M6 12.5c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#000"/>
+            <ellipse cx="11.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/>
+            <ellipse cx="20.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert" id="alert"><span class="pulse" id="pulse"></span><span>BUY DETECTED</span></div>
+    <div class="foot"><span>$MASK</span><span>rhmask.org</span></div>
+  </div>
+</div>
+
+<script>
+  const DUR = 6.0;      // total seconds
+  const SPIN = 2.0;     // seconds per turn, so it divides DUR exactly and the loop is seamless
+  window.DUR = DUR;
+
+  const CMD = "rhmask watch --buys";
+  const typed = document.getElementById("typed");
+  const cur = document.getElementById("cur");
+  const l2 = document.getElementById("l2");
+  const alert = document.getElementById("alert");
+  const pulse = document.getElementById("pulse");
+  const coin = document.getElementById("coin");
+  const rim = document.getElementById("rim");
+
+  // Rim, built once.
+  const N = 64, R = 120;
+  for (let i = 0; i < N; i++) {
+    const a = (360 / N) * i;
+    const el = document.createElement("i");
+    el.style.transform = `rotateZ(${a}deg) translateY(${-R}px) rotateX(90deg)`;
+    el.style.filter = `brightness(${(0.45 + 0.55 * Math.abs(Math.cos((a * Math.PI) / 180))).toFixed(3)})`;
+    rim.appendChild(el);
+  }
+
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+
+  /** Deterministic. Nothing animates on its own; the renderer steps time. */
+  window.setT = (t) => {
+    // Type the command over the first 1.2s.
+    const chars = Math.round(clamp01(t / 1.2) * CMD.length);
+    typed.textContent = CMD.slice(0, chars);
+
+    // Cursor blinks at 2Hz while typing, then sits solid until the fade.
+    cur.style.opacity = t < 1.25 ? (Math.floor(t * 4) % 2 ? 0.2 : 1) : 0;
+
+    // Everything fades back out at the end, so the loop point is invisible.
+    // One multiplier, applied to opacities computed fresh each frame; reading
+    // back the style we just wrote is how a fade like this quietly drifts.
+    const fade = 1 - clamp01((t - 5.45) / 0.55);
+
+    const cmdOn = 1;
+    const l2On = t > 1.35 ? 1 : 0;
+    const on = t > 2.0;
+    const beat = on ? 0.55 + 0.45 * Math.abs(Math.sin((t - 2.0) * Math.PI * 1.4)) : 0;
+
+    typed.parentElement.style.opacity = (cmdOn * fade).toFixed(3);
+    l2.style.opacity = (l2On * fade).toFixed(3);
+    alert.style.opacity = ((on ? 1 : 0) * fade).toFixed(3);
+    pulse.style.opacity = (beat * fade).toFixed(3);
+    pulse.style.boxShadow = `0 0 ${(beat * 16).toFixed(1)}px rgba(204,255,0,.9)`;
+
+    // The coin never stops, and its period divides the clip exactly.
+    coin.style.transform = `rotateX(-20deg) rotateY(${((t / SPIN) * 360).toFixed(3)}deg)`;
+
+    document.documentElement.dataset.ready = "1";
+  };
+  window.setT(0);
+</script>
+</body>
+</html>
