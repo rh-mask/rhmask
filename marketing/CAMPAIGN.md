@@ -63,7 +63,7 @@ receipts; here they learn the shape of the thing and decide whether the team is 
 promotional act, and it is what makes Act V believable.
 
 **Continuity:** it opens on the trust boundary that Act III's proof posts implied but never drew, and it
-closes on what we refused to build, which sets up the contracts landing in Act IV.
+closes on what is not in the architecture, which sets up the contracts landing in Act IV.
 
 ## Act IV · Live on mainnet (day 19, the headline moment)
 
