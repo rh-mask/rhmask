@@ -123,6 +123,9 @@ These are product promises. Changing them is a product decision, not a UI one.
 | `npm run check:onchain` | read-only mainnet verification; needs network |
 | `npm run build:extension` | bundles `extension/` into `extension/dist` for unpacked loading |
 
+Deploys are run by hand from a linked checkout (`vercel deploy --prod`). There is deliberately no deploy
+workflow in this repository: GitHub runs the checks, and nothing else.
+
 The forbidden-terms step reads an optional private list that is not in the repository. You will see a note that
 it is missing; that is expected and not a failure.
 
