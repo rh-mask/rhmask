@@ -1,0 +1,27 @@
+{
+  "chainId": 4663,
+  "chainName": "Robinhood Chain",
+  "deployedAt": "2026-09-25T04:15:30.189Z",
+  "deployer": "0xe6580E40a294F2b3b99E76c4862eF43987A6151A",
+  "contracts": {
+    "StealthAnnouncer": {
+      "address": "0x5707e5ed1852174e09f6e113f0e56f14bfc2c25d",
+      "txHash": "0x55f314ae028119e7c1aca8511f2adb815c210785c14a375d719ba76d240ff34c",
+      "block": 71934007,
+      "gasUsed": "223780",
+      "standard": "ERC-5564"
+    },
+    "StealthRegistry": {
+      "address": "0xa30e5702561bf230ad37ceecd1801c61067996a9",
+      "txHash": "0xd1cb0e474323d733c86db55d0c02ee4b9eea842d5f8f4c7695cff3a55be12a19",
+      "block": 71934071,
+      "gasUsed": "360397",
+      "standard": "ERC-6538"
+    }
+  },
+  "verification": {
+    "announceTx": "0x80861d97c427eac94d9243390d9cc0a97621d97698547f69a29cecbff0b6b785",
+    "registerTx": "0x488899a40184f4db990b979c084aeee45d04489e9d7c8b355fc2be50f0078154",
+    "stealthAddress": "0x1e944ad26e3a951f6ab6f3d9939927cac6d790aa"
+  }
+}
