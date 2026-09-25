@@ -60,6 +60,12 @@ announcer  robinscan.io/address/0x5707e5ed1852174e09f6e113f0e56f14bfc2c25d
 registry   robinscan.io/address/0xa30e5702561bf230ad37ceecd1801c61067996a9
 ```
 
+> **Always name the chain beside an address.** `0x5707e5ed1852174e09f6e113f0e56f14bfc2c25d` is the
+> announcer **on chain 4663**, and it is the *registry* on the testnet, chain 46630. Both are ours, both are
+> real, and reading the code proves it: 788 bytes on mainnet, 1,422 on testnet. A `CREATE` address is only
+> a hash of the deployer and its nonce, so the same deployer produced a collision across the two chains.
+> Every address in a post carries `chain 4663` with it. See [`../docs/TESTNET.md`](../docs/TESTNET.md).
+
 ---
 
 ## The launch thread
