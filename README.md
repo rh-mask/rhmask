@@ -22,7 +22,11 @@
 
 Tokenized stocks put the market on a public ledger. Every entry, every exit, every balance is readable by anyone with an explorer. RhMask gives holders three things: a way to **receive unseen**, a way to **trade unseen**, and a vault that **pays stakers in real stock tokens**.
 
-Two surfaces, same core functions: the **web app** (this repository) and a **browser extension** that drops a fresh stealth address into any address field on any site.
+Three surfaces, one core: the **web app** (this repository), a **browser extension** that drops a fresh stealth address into any address field on any site, and a **command line** that does the key work with no browser at all.
+
+```bash
+npx rhmask          # not published yet; build it with npm run build:cli
+```
 
 ## ✦ Surfaces
 
@@ -33,6 +37,7 @@ Two surfaces, same core functions: the **web app** (this repository) and a **bro
 | **Mask Swap** | Private fills instead of public order books. Venue name and flat fee printed before you send. Non-custodial. | `beta · dry quotes` |
 | **Blue Chip Vault** | Stake `$MASK`; protocol revenue buys a basket of stock tokens and streams it to stakers. | `planned` |
 | **Proof Ledger** | Every payout listed with its transaction hash. If it is not on the ledger, it did not happen. | `planned` |
+| **`rhmask` CLI** | Nine commands. Five never open a socket; none can sign or broadcast. Prints a scannable payment-request QR into the terminal. | `built, unpublished` |
 
 > **Honest status.** Anything marked `planned` has no on-chain effect yet. Nothing on the site is estimated or back-filled. The live status table is on the landing page.
 
@@ -120,6 +125,9 @@ The app runs with no keys at all. Routes that need a key return a `503` naming t
 | `npm run check:fast` | Same without the build |
 | `npm run check:stealth` | ERC-5564 round-trip: derive, recognise, recover, and a stranger cannot |
 | `npm run check:payment` | Private Pay request and receipt formats round-trip, bad input is rejected |
+| `npm run check:keycrypto` | Sealed keys open again, a wrong passphrase fails, a tampered blob fails |
+| `npm run check:captions` | Every caption in `marketing/` has its poster rendered beside it |
+| `npm run check:cli` | The CLI works end to end, and its terminal QR still decodes |
 | `npm run check:onchain` | Read-only mainnet check: tokens, stealth receive, vault feasibility, sweep errors |
 | `npm run hooks:install` | Installs the git `pre-push` hook once per clone |
 
@@ -147,6 +155,7 @@ rhmask/
 │     ├─ transfer.ts         wallet transfers, balances, pre-flight, sweep
 │     ├─ qr.ts               QR generation and decoding
 │     ├─ chain.ts · tokens.ts · env.ts · router/
+├─ cli/                      `rhmask` command line · one bundled file, no runtime deps · npm run build:cli
 ├─ extension/                MV3 browser extension (popup, address-field chips, receipts) · npm run build:extension
 ├─ scripts/                  stealth-check · payment-check · onchain-check · prepush-check · install-hooks
 ├─ contracts/                Solidity specs (vault, announcer, revenue router)
@@ -172,6 +181,7 @@ rhmask/
 | | |
 |:--|:--|
 | Chain | Robinhood Chain, id `4663` (Arbitrum Orbit L2) |
+| Sandbox | Robinhood Chain Testnet, id `46630`, settles to Sepolia. Both contracts live there too — see [`docs/TESTNET.md`](docs/TESTNET.md) |
 | RPC | `https://rpc.mainnet.chain.robinhood.com` (public, rate-limited) |
 | Explorer | `https://robinhoodchain.blockscout.com` |
 | Stock tokens | 18-decimal ERC-20s, issuer-owned beacon proxies; addresses in `src/lib/tokens.ts`, re-verify before wiring value |
