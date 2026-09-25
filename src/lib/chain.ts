@@ -24,6 +24,34 @@ export const robinhoodChain = defineChain({
   },
 });
 
+export const ROBINHOOD_TESTNET_ID = 46630;
+
+/**
+ * Robinhood Chain Testnet, which settles to Sepolia. This is the sandbox: the
+ * same contracts, the same derivation, funds that are worth nothing.
+ *
+ * The chain's own testnet RPC host is unreachable from some networks, so the
+ * default here is a public mirror that answers for the same chain id. Anything
+ * pointed at it should still assert the chain id before writing.
+ * The CLI keeps its own copy of these values so that it can ship without viem;
+ * if one changes, change both.
+ */
+export const robinhoodTestnet = defineChain({
+  id: ROBINHOOD_TESTNET_ID,
+  name: "Robinhood Chain Testnet",
+  testnet: true,
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://robinhood-sepolia-rpc.publicnode.com"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Explorer",
+      url: "https://explorer.testnet.chain.robinhood.com",
+    },
+  },
+});
+
 export const EXPLORER_URL = robinhoodChain.blockExplorers.default.url;
 
 export function explorerAddress(address: string) {
