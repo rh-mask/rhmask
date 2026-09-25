@@ -1,10 +1,14 @@
 # Campaign: one story, told in order
 
 Everything in `marketing/` is one narrative, not a pile of posts. This file is the running order and the
-connective tissue between them. Assets: the trailer in [`video/`](video/), forty-one posters in
+connective tissue between them. Assets: the trailer in [`video/`](video/), fifty-six posters in
 [`posters/`](posters/), with captions split across [`posters/CAPTIONS.md`](posters/CAPTIONS.md) for 01–20,
-this file for 21–24, [`ARCHITECTURE-CONTENT.md`](ARCHITECTURE-CONTENT.md) for 25–36, and
-[`MAINNET-PROOF.md`](MAINNET-PROOF.md) for 37–41.
+this file for 21–24, [`ARCHITECTURE-CONTENT.md`](ARCHITECTURE-CONTENT.md) for 25–36,
+[`MAINNET-PROOF.md`](MAINNET-PROOF.md) for 37–41, [`BUILD-LOG.md`](BUILD-LOG.md) for 42–50, and
+[`CLI.md`](CLI.md) for 51–52, and [`SANDBOX.md`](SANDBOX.md) for 53–56.
+
+**Every caption in this directory has a rendered poster beside it.** Nothing is written ahead of its
+image, so a file can be read top to bottom and posted from directly. `npm run check:captions` enforces it.
 
 The spine is simple and it never changes:
 
@@ -65,6 +69,21 @@ promotional act, and it is what makes Act V believable.
 **Continuity:** it opens on the trust boundary that Act III's proof posts implied but never drew, and it
 closes on what is not in the architecture, which sets up the contracts landing in Act IV.
 
+## Act III¾ · The build log (days 18–19, the run-up)
+
+Nine dated posters, `p42`–`p50`, each anchored to a commit hash or a block number. Captions, the verified
+chronology and the thread live in [`BUILD-LOG.md`](BUILD-LOG.md).
+
+This act exists because "step by step" is a claim like any other, and this one happens to be checkable:
+the repository and the chain recorded the same order independently. It ends on the first private payment,
+the bug that payment exposed, and the contracts that followed forty-four minutes later — which is exactly
+where Act IV opens.
+
+**Continuity:** the closing post says tomorrow we publish the addresses. Act IV then does. Do not run this
+act after Act IV; a run-up posted afterwards reads as backfill.
+
+**There was no testnet stage**, and nothing here may imply one. See the rules in `BUILD-LOG.md`.
+
 ## Act IV · Live on mainnet (day 19, the headline moment)
 
 Five proof posters, `p37`-`p41`, plus a seven-part thread. Captions and verified facts live in
@@ -91,8 +110,12 @@ posters over the following days.
 
 ## Act V · The rest (days 20+)
 
-`p08` Mask Swap · `p16` The extension · `p09` Blue Chip Vault · `p10` Proof Ledger · `p19` Read the code ·
+`p51` The terminal · `p52` A QR in text · `p53`–`p56` The sandbox · `p08` Mask Swap · `p16` The extension · `p09` Blue Chip Vault · `p10` Proof Ledger · `p19` Read the code ·
 `p02` Terminal status · `p20` Open the app.
+
+`p51`, `p52` and `p53` may not be posted until the npm package actually resolves; see [`CLI.md`](CLI.md).
+The sandbox set is sequenced in [`SANDBOX.md`](SANDBOX.md); post `p53` and `p56` as a pair, never the
+invitation without the limit.
 
 Keep `p09` and `p10` late and always labelled `planned`. Nothing about the token goes out before the proof
 in Act III and the contracts in Act IV have landed.
@@ -241,3 +264,6 @@ pressure:
 - One claim per post. If a post needs two, it is two posts.
 - Every number is re-checked before reuse. Asset and chain counts drift.
 - Never name a competitor. Name what we do.
+- **Never print a contract address without its chain id.** `0x5707e5ed…` is the announcer on chain 4663
+  and the registry on chain 46630; both are ours. An address is a hash of a deployer and a nonce, not an
+  identity. See [`../docs/TESTNET.md`](../docs/TESTNET.md).

@@ -5,8 +5,14 @@ Telegram or Discord. Keep the rules from [`../NARRATIVE.md`](../NARRATIVE.md): n
 "untraceable", always say `planned` when something is not live, and never invent a claim the status page
 cannot back.
 
-Files are `rhmask-p01.jpg` … `rhmask-p41.jpg`, all 1080×1350. Captions for `p21`–`p24`, the contract
-launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running order for the whole campaign.
+Files are `rhmask-p01.jpg` … `rhmask-p56.jpg`, all 1080×1350. This file covers `p01`–`p20`. The rest live
+beside their own set: `p21`–`p24` in [`../CAMPAIGN.md`](../CAMPAIGN.md), `p25`–`p36` in
+[`../ARCHITECTURE-CONTENT.md`](../ARCHITECTURE-CONTENT.md), `p37`–`p41` in
+[`../MAINNET-PROOF.md`](../MAINNET-PROOF.md), `p42`–`p50` in [`../BUILD-LOG.md`](../BUILD-LOG.md), `p51`–`p52` in [`../CLI.md`](../CLI.md), `p53`–`p56` in [`../SANDBOX.md`](../SANDBOX.md).
+`CAMPAIGN.md` holds the running order for all of them.
+
+**No caption is written before its poster exists.** `npm run check:captions` fails if any caption in
+`marketing/` names an image that is not on disk.
 
 ---
 
