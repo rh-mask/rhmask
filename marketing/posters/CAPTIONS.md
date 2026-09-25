@@ -34,7 +34,7 @@ launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running
 > server: none sees a key
 > account: not required
 >
-> Nothing to sign up for means nothing to breach.
+> Ten seconds and a pair of keys is the whole setup.
 >
 > rhmask.org
 

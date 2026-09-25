@@ -193,8 +193,8 @@ Post as a single thread. Every hash is real and links to the explorer.
 
 > What we deliberately did not ship: `owner()`, `pause()`, `upgradeTo()`.
 >
-> 788 and 1,422 bytes of runtime. No admin key, no proxy, no funds held, so there is nothing to rug and
-> nothing for us to change later.
+> 788 and 1,422 bytes of runtime. No admin key, no proxy, no funds held, so they behave the same way for
+> everyone, permanently.
 >
 > Not audited. The vault, which will hold value, is not deployed and will not be until it is.
 
