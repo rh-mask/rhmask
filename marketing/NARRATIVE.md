@@ -26,6 +26,32 @@ Three things, no more:
 
 Two surfaces carry the same three things: the web app, and a browser extension that puts a fresh stealth address into any address field on any site.
 
+## Boilerplate
+
+The one-paragraph description. Paste it where a bio or a listing needs more than a line: the Telegram
+channel, a pinned post, a directory entry, a press note, the extension's store listing.
+
+> **RhMask** is a privacy layer for tokenized stocks on Robinhood Chain. You publish one meta-address, and
+> everyone who pays you derives a fresh, unlinkable address from it on their own device, so your positions
+> never pile up on a single wallet that anyone with an explorer can read. It is built on canonical
+> standards — ERC-5564 stealth addresses and an ERC-6538 registry, both deployed on mainnet — and your keys
+> are generated and sealed in your own browser: no account, no email, nothing about you to store. Ghost
+> Receive and Private Pay work today and have been proven end to end with live funds; Mask Swap prices
+> routes but cannot fill them yet, and the Blue Chip Vault that will pay stakers in real stock tokens is
+> not deployed. All of it is MIT-licensed and open, including the checks behind every claim.
+
+**Keeping it true.** Every clause above is a status claim, so it goes stale the moment something ships.
+
+| If this changes | Change this |
+|:--|:--|
+| The npm package goes live | Add a closing sentence: *The same core runs in the browser, in a browser extension and on the command line.* |
+| Mask Swap gets a router key | "prices routes but cannot fill them yet" becomes "fills privately" |
+| The vault is deployed | Move it out of the "not deployed" clause and say what it actually pays |
+| A contract is audited | Say by whom, and never before |
+
+Shorter forms already exist and should not be re-invented: one line in `src/lib/site.ts`, the GitHub repo
+description, and the npm package description. Keep all three saying the same thing as this paragraph.
+
 ## Master tagline
 
 > **Wall Street sees everything. RhMask sees nothing.**
