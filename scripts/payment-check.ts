@@ -16,7 +16,7 @@ import {
   parseAnnouncementInput,
 } from "../src/lib/payment.ts";
 
-const origin = "https://rhmask.vercel.app";
+const origin = "https://rhmask.org";
 const keys = generateStealthKeys();
 
 // 1. payment request

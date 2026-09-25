@@ -1,6 +1,6 @@
 # Product plan
 
-Status as of 2026-09-12. Live at https://rhmask.vercel.app. This document is the single list of what is
+Status as of 2026-09-12. Live at https://rhmask.org. This document is the single list of what is
 fixed, what is next, and why. The roadmap (`ROADMAP.md`) is the calendar view of the same plan; the extension
 design is in `EXTENSION.md`.
 

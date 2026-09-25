@@ -8,7 +8,7 @@ Dates are targets, not promises. A surface is "live" only when the status table 
 - [x] Dashboard: Ghost Receive (keys, derive, verify), Mask Swap (dry quotes), Vault (empty, labelled)
 - [x] API: health, chain, tokens, quote, order status, vault summary
 - [x] Docs: product, architecture, tokenomics, roadmap, narrative
-- [x] Deploy to Vercel production (https://rhmask.vercel.app)
+- [x] Deploy to production (https://rhmask.org)
 - [x] Push rules, pre-push hook, CI workflow
 - [x] Private Pay: request QR, send, receipt QR, claim, sweep
 - [x] Meta-address QR, key backup / restore, encrypted key storage (passphrase)
