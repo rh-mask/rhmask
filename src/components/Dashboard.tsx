@@ -6,7 +6,6 @@ import { SwapCard } from "@/components/SwapCard";
 import { StealthCard } from "@/components/StealthCard";
 import { VaultCard } from "@/components/VaultCard";
 import { PayCard } from "@/components/PayCard";
-import { Terminal } from "@/components/Terminal";
 import { GhostIcon, QrIcon, SwapIcon, VaultIcon } from "@/components/Icons";
 import { ROBINHOOD_CHAIN_ID } from "@/lib/chain";
 
@@ -74,25 +73,14 @@ export function Dashboard() {
       </div>
       <p className="spinner mt-3 text-xs text-fog"> robinhood chain · {ROBINHOOD_CHAIN_ID} · keys stay in this tab</p>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
-        <div>
-          {tab === "swap" && <SwapCard />}
-          {tab === "receive" && <StealthCard />}
-          {tab === "pay" && <PayCard />}
-          {tab === "vault" && <VaultCard />}
-        </div>
-        <Terminal title="privacy.diff" className="h-fit text-sm">
-          <h3 className="font-bold">## what is hidden, what is not</h3>
-          <ul className="mt-3 space-y-2">
-            <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: the link between your identity and a receiving address.</span></li>
-            <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: your order from public order books and mempools as a visible swap.</span></li>
-            <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: your IP from the chain&rsquo;s node operator. Chain reads go through this app&rsquo;s own origin.</span></li>
-            <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: on-chain settlement itself. The chain is public by nature.</span></li>
-            <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: the venue filling an order sees the deposit and the receiving address.</span></li>
-            <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: your IP from our host, which logs it like any web server. Use your own node and neither of us sees it.</span></li>
-          </ul>
-          <p className="mt-4 text-xs text-fog-2">{"// "}No account. No email. No KYC. Keys stay on your device.</p>
-        </Terminal>
+      {/* The hidden/not-hidden disclosure used to sit beside this as a sidebar.
+          It lives on the landing page and in the docs instead: repeating it on
+          every tab of the app made the working surface narrower for nothing. */}
+      <div className="mt-8">
+        {tab === "swap" && <SwapCard />}
+        {tab === "receive" && <StealthCard />}
+        {tab === "pay" && <PayCard />}
+        {tab === "vault" && <VaultCard />}
       </div>
     </div>
   );
