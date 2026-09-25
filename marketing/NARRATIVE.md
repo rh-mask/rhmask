@@ -58,6 +58,28 @@ Caveat we always carry: the stock tokens themselves are upgradeable beacon proxi
 - "Planned" is a word we use in public. It builds more trust than a fake number.
 - We do not name other projects. We name what we do.
 
+### Do not build the story on distrust
+
+This is the one that is easiest to get wrong, because fear writes fast copy.
+
+The frame is **discretion as a normal condition**, not defence against enemies. A trader who does not
+broadcast their book is not hiding, they are being professional, and that has been ordinary for a century.
+Public ledgers removed it by accident. We are restoring something normal, not arming anyone.
+
+So: lead with what the design gives, not with what it protects against. Both sentences can be true and only
+one of them is ours.
+
+| Do not write | Write instead |
+|---|---|
+| "Do not trust us, verify" | "Every claim has a command behind it" |
+| "Nothing to rug, nothing to seize" | "Nothing to administer, so it works the same for everyone" |
+| "No table to breach or subpoena" | "No account, so there is nothing about you to store" |
+| "It could be compromised and you would be fine" | "It never needs a secret, so it never holds one" |
+| "What we refused to build" | "What is not in it" |
+
+The reader should finish a post feeling composed, not hunted. If a line only works by implying someone is
+coming for them, it is the wrong line, however true it is.
+
 ## FOMO mechanics (honest ones)
 
 - **Day-one yield**: the creator fee on `$MASK` trading means the vault has revenue the minute the token exists. Post the first payout hash within days of launch.
