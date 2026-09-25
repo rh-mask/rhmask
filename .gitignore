@@ -32,3 +32,6 @@ extension/dist/
 marketing/posters/*.jpg
 marketing/posters/*.png
 marketing/video/*.mp4
+
+# solc artefacts, rebuilt with npm run contracts:build
+contracts/out/
