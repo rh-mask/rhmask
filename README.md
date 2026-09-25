@@ -14,8 +14,9 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/rh-mask/rhmask/ci.yml?branch=main&style=flat-square&label=ci&labelColor=07080b)](https://github.com/rh-mask/rhmask/actions)
 [![License](https://img.shields.io/badge/license-MIT-8b90a0?style=flat-square&labelColor=07080b)](LICENSE)
 [![npm](https://img.shields.io/npm/v/rhmask?style=flat-square&label=npm&color=b8ff5c&labelColor=07080b)](https://www.npmjs.com/package/rhmask)
+[![Telegram](https://img.shields.io/badge/telegram-rhmaskorg-b8ff5c?style=flat-square&labelColor=07080b)](https://t.me/rhmaskorg)
 
-[**rhmask.org**](https://rhmask.org) · [**@RHmask_**](https://x.com/RHmask_) · [**GitHub**](https://github.com/rh-mask/rhmask) · [**npm**](https://www.npmjs.com/package/rhmask)
+[**rhmask.org**](https://rhmask.org) · [**@RHmask_**](https://x.com/RHmask_) · [**Telegram**](https://t.me/rhmaskorg) · [**GitHub**](https://github.com/rh-mask/rhmask) · [**npm**](https://www.npmjs.com/package/rhmask)
 
 [Open the app](https://rhmask.org/app) · [Pay privately](https://rhmask.org/pay) · [Docs](https://rhmask.org/docs) · [Whitepaper](https://rhmask.org/whitepaper) · [Product](docs/PRODUCT.md) · [Architecture](docs/ARCHITECTURE.md) · [Tokenomics](docs/TOKENOMICS.md) · [Extension](docs/EXTENSION.md) · [Sandbox](docs/TESTNET.md)
 
