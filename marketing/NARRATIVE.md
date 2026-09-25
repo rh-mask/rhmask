@@ -31,12 +31,16 @@ Two surfaces carry the same three things: the web app, and a browser extension t
 **The description.** Paste it wherever a bio or a listing wants a paragraph: the Telegram channel, a
 pinned post, a directory entry, a press note.
 
-> Tokenized stocks put your whole portfolio on a public ledger. Every entry, every size, every
-> counterparty, readable by anyone who cares to look. **RhMask** gives the discretion back. Publish one
-> address, and every payment after it lands somewhere new that only you can spend from. Keys are made on
-> your device. No account, no email, nothing to sign up for.
+> **RhMask is** the privacy layer for tokenized stocks. Right now your whole portfolio sits on a public
+> ledger: every entry, every size, every counterparty, readable by anyone who cares to look. RhMask gives
+> that back. Publish one address, and every payment after it lands somewhere new that only you can spend
+> from. Keys are made on your device. No account, no email, nothing to sign up for.
 
-*60 words, 352 characters. Own the market. Stay unseen.*
+*67 words, 386 characters. Own the market. Stay unseen.*
+
+**Both versions open with "RhMask is."** Keep it that way. A description gets quoted, indexed and pasted
+into places that strip the surrounding context, so the first two words have to say what the thing is
+rather than set a scene.
 
 **Shorter, for a bio with a character limit.**
 
