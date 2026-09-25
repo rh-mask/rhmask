@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/Logo";
-import { GitHubIcon, MenuIcon, XIcon } from "@/components/Icons";
+import { GitHubIcon, MenuIcon, TelegramIcon, XIcon } from "@/components/Icons";
 import { NAV_LINKS, SITE } from "@/lib/site";
 
 /**
@@ -73,6 +73,16 @@ export function Nav() {
           >
             <GitHubIcon className="h-4 w-4" />
           </a>
+          <a
+            href={SITE.telegram.url}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="RhMask on Telegram"
+            title={SITE.telegram.handle}
+            className="rounded-full p-2 text-fog transition-colors hover:bg-ink-3 hover:text-paper"
+          >
+            <TelegramIcon className="h-4 w-4" />
+          </a>
           <Link href="/app" className="btn btn-primary ml-2 px-4! py-2! text-sm">
             open app
           </Link>
@@ -117,6 +127,9 @@ export function Nav() {
               <GitHubIcon className="h-4 w-4" /> GitHub
             </a>
           </div>
+          <a href={SITE.telegram.url} target="_blank" rel="noreferrer" className="btn btn-ghost mt-2 w-full text-sm">
+            <TelegramIcon className="h-4 w-4" /> Telegram
+          </a>
         </div>
       </div>
     </header>

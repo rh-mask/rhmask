@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { GitHubIcon, XIcon } from "@/components/Icons";
+import { GitHubIcon, TelegramIcon, XIcon } from "@/components/Icons";
 import { SITE } from "@/lib/site";
 import { EXPLORER_URL, ROBINHOOD_CHAIN_ID } from "@/lib/chain";
 
@@ -56,6 +56,15 @@ export function Footer() {
                 className="btn btn-ghost px-3! py-2!"
               >
                 <GitHubIcon className="h-4 w-4" />
+              </a>
+              <a
+                href={SITE.telegram.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="RhMask on Telegram"
+                className="btn btn-ghost px-3! py-2!"
+              >
+                <TelegramIcon className="h-4 w-4" />
               </a>
               <span className="ml-1 text-xs text-fog-2">{SITE.x.handle}</span>
             </div>
