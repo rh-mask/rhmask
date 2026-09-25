@@ -1,9 +1,10 @@
 # Campaign: one story, told in order
 
 Everything in `marketing/` is one narrative, not a pile of posts. This file is the running order and the
-connective tissue between them. Assets: the trailer in [`video/`](video/), thirty-six posters in
+connective tissue between them. Assets: the trailer in [`video/`](video/), forty-one posters in
 [`posters/`](posters/), with captions split across [`posters/CAPTIONS.md`](posters/CAPTIONS.md) for 01–20,
-this file for 21–24, and [`ARCHITECTURE-CONTENT.md`](ARCHITECTURE-CONTENT.md) for 25–36.
+this file for 21–24, [`ARCHITECTURE-CONTENT.md`](ARCHITECTURE-CONTENT.md) for 25–36, and
+[`MAINNET-PROOF.md`](MAINNET-PROOF.md) for 37–41.
 
 The spine is simple and it never changes:
 
@@ -64,7 +65,18 @@ promotional act, and it is what makes Act V believable.
 **Continuity:** it opens on the trust boundary that Act III's proof posts implied but never drew, and it
 closes on what we refused to build, which sets up the contracts landing in Act IV.
 
-## Act IV · The contracts (day 19, the launch thread)
+## Act IV · Live on mainnet (day 19, the headline moment)
+
+Five proof posters, `p37`-`p41`, plus a seven-part thread. Captions and verified facts live in
+[`MAINNET-PROOF.md`](MAINNET-PROOF.md).
+
+This is the moment the whole campaign has been building towards: a claim with a block number attached. Post
+`p37` and `p38` within an hour of each other. `p37` is the announcement, `p38` is the one that convinces
+people, because the evidence in it is the chain explorer rather than anything we control.
+
+Then the earlier contract set, `p21`-`p24`, over the following week as follow-ups.
+
+## Act IV b · The contracts (follow-ups)
 
 This is the moment the product stops depending on a QR handoff. Post the thread below, then space the four
 posters over the following days.

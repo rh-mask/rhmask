@@ -5,7 +5,7 @@ Telegram or Discord. Keep the rules from [`../NARRATIVE.md`](../NARRATIVE.md): n
 "untraceable", always say `planned` when something is not live, and never invent a claim the status page
 cannot back.
 
-Files are `rhmask-p01.jpg` … `rhmask-p36.jpg`, all 1080×1350. Captions for `p21`–`p24`, the contract
+Files are `rhmask-p01.jpg` … `rhmask-p41.jpg`, all 1080×1350. Captions for `p21`–`p24`, the contract
 launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running order for the whole campaign.
 
 ---
