@@ -1,25 +1,62 @@
 /**
- * Deploys StealthAnnouncer and StealthRegistry to Robinhood Chain, then proves
- * the loop that matters: announce a real stealth payment, scan for it with a
- * viewing key, and confirm a stranger cannot claim it.
- * Records every address and tx hash in contracts/deployments.json.
+ * Deploys StealthAnnouncer and StealthRegistry, then proves the loop that
+ * matters: announce a real stealth payment, scan for it with a viewing key,
+ * and confirm a stranger cannot claim it.
+ *
+ *   node scripts/contracts-deploy.mjs                deploy to mainnet, chain 4663
+ *   node scripts/contracts-deploy.mjs --network testnet   the sandbox, chain 46630
+ *
+ * Mainnet records into contracts/deployments.json, testnet into
+ * contracts/deployments.testnet.json, so one can never overwrite the other.
  */
 import { createPublicClient, createWalletClient, http, formatEther, toHex, hexToBytes } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { readFileSync, writeFileSync } from "node:fs";
-import { robinhoodChain } from "../src/lib/chain.ts";
+import { robinhoodChain, robinhoodTestnet } from "../src/lib/chain.ts";
 import { generateStealthKeys, deriveStealthAddress, checkAnnouncement } from "../src/lib/stealth.ts";
 
-const RPC = "https://rhmask.org/api/rpc";
+const which = process.argv.includes("--network") ? process.argv[process.argv.indexOf("--network") + 1] : "mainnet";
+if (which !== "mainnet" && which !== "testnet") throw new Error(`--network must be mainnet or testnet, got "${which}"`);
+
+const TARGET = {
+  mainnet: {
+    chain: robinhoodChain,
+    // The same-origin pass-through, so a hijacked DNS cannot stall a deploy.
+    rpc: "https://rhmask.org/api/rpc",
+    explorer: "https://robinhoodchain.blockscout.com",
+    out: "../contracts/deployments.json",
+  },
+  testnet: {
+    chain: robinhoodTestnet,
+    rpc: process.env.RHC_TESTNET_RPC || robinhoodTestnet.rpcUrls.default.http[0],
+    explorer: robinhoodTestnet.blockExplorers.default.url,
+    out: "../contracts/deployments.testnet.json",
+  },
+}[which];
+
 const w = JSON.parse(readFileSync(new URL("../internal/test-wallet.json", import.meta.url), "utf8"));
 const account = privateKeyToAccount(w.privateKey);
-const pub = createPublicClient({ chain: robinhoodChain, transport: http(RPC) });
-const wallet = createWalletClient({ account, chain: robinhoodChain, transport: http(RPC) });
+const pub = createPublicClient({ chain: TARGET.chain, transport: http(TARGET.rpc) });
+const wallet = createWalletClient({ account, chain: TARGET.chain, transport: http(TARGET.rpc) });
 const art = (n) => JSON.parse(readFileSync(new URL(`../contracts/out/${n}.json`, import.meta.url), "utf8"));
-const ex = (h) => `https://robinhoodchain.blockscout.com/tx/${h}`;
+const ex = (h) => `${TARGET.explorer}/tx/${h}`;
+
+// Never take the endpoint's word for which chain it is. A mirror that quietly
+// serves a different network would otherwise burn real funds on the wrong one.
+const live = await pub.getChainId();
+if (live !== TARGET.chain.id) throw new Error(`${TARGET.rpc} is chain ${live}, expected ${TARGET.chain.id} (${which})`);
 
 const before = await pub.getBalance({ address: account.address });
+console.log(`target   ${TARGET.chain.name}  (${which}, chain ${live})`);
 console.log(`deployer ${account.address}\nbalance  ${formatEther(before)} ETH\n`);
+if (before === 0n) {
+  throw new Error(
+    `${account.address} holds nothing on ${TARGET.chain.name}. ` +
+      (which === "testnet"
+        ? "Fund it with Sepolia ETH and bridge, or send testnet ETH directly. See docs/TESTNET.md."
+        : "Fund the deployer first."),
+  );
+}
 
 async function deploy(name) {
   const { abi, bytecode } = art(name);
@@ -98,8 +135,9 @@ const after = await pub.getBalance({ address: account.address });
 console.log(`\nspent    ${formatEther(before - after)} ETH   left ${formatEther(after)} ETH`);
 
 const out = {
-  chainId: robinhoodChain.id,
-  chainName: robinhoodChain.name,
+  network: which,
+  chainId: TARGET.chain.id,
+  chainName: TARGET.chain.name,
   deployedAt: new Date().toISOString(),
   deployer: account.address,
   contracts: {
@@ -108,8 +146,8 @@ const out = {
   },
   verification: { announceTx: annTx, registerTx: regTx, stealthAddress: d.stealthAddress },
 };
-const path = new URL("../contracts/deployments.json", import.meta.url);
+const path = new URL(TARGET.out, import.meta.url);
 writeFileSync(path, JSON.stringify(out, null, 2) + "\n");
-console.log(`\nrecorded in contracts/deployments.json`);
+console.log(`\nrecorded in ${TARGET.out.replace("../", "")}`);
 console.log(`announcer ${ex(announcer.txHash)}`);
 console.log(`registry  ${ex(registry.txHash)}`);
