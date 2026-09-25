@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>RhMask token</title>
+<style>
+  /* A real cylinder, not a flipped image: two faces plus a rim built from
+     tangent segments, so the coin still has body when it turns edge-on. */
+  :root { --lime:#ccff00; --lime-2:#a8d400; --lime-3:#7d9e00; --ink:#000; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:100%; height:100%; background:transparent; }
+  body { display:grid; place-items:center; }
+
+  .stage { perspective: 1400px; }
+  .coin {
+    position:relative;
+    width: var(--d); height: var(--d);
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .face {
+    position:absolute; inset:0;
+    border-radius:50%;
+    display:grid; place-items:center;
+    backface-visibility: hidden;
+    overflow:hidden;
+  }
+  .front { transform: translateZ(calc(var(--t) / 2)); }
+  .back  { transform: rotateY(180deg) translateZ(calc(var(--t) / 2)); }
+
+  /* Face plate: a lime disc with a subtle radial shade so it reads as metal. */
+  .plate {
+    position:absolute; inset:0; border-radius:50%;
+    background:
+      radial-gradient(circle at 32% 26%, #eaffb0 0%, var(--lime) 34%, var(--lime-2) 74%, var(--lime-3) 100%);
+  }
+  .ring {
+    position:absolute; inset:5%; border-radius:50%;
+    border: calc(var(--d) * 0.018) solid rgba(0,0,0,.35);
+  }
+  .mark { position:relative; width:58%; height:58%; }
+  .mark svg { width:100%; height:100%; display:block; }
+
+  /* Rim: N tangent plates around the circle, extruded along Z. */
+  .rim { position:absolute; inset:0; transform-style: preserve-3d; }
+  .rim i {
+    position:absolute; display:block;
+    left:50%; top:50%;
+    width: var(--seg); height: var(--t);
+    margin-left: calc(var(--seg) / -2);
+    margin-top: calc(var(--t) / -2);
+    background: linear-gradient(to bottom, var(--lime-2), var(--lime-3) 45%, #5c7400 100%);
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="coin" id="coin">
+    <div class="rim" id="rim"></div>
+    <div class="face front">
+      <div class="plate"></div><div class="ring"></div>
+      <div class="mark">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 12.5c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#000"/>
+          <ellipse cx="11.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/>
+          <ellipse cx="20.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/>
+        </svg>
+      </div>
+    </div>
+    <div class="face back">
+      <div class="plate"></div><div class="ring"></div>
+      <div class="mark">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 12.5c0-2 2-3.5 10-3.5s10 1.5 10 3.5c0 5-3 9.5-6 9.5-2 0-3-1.5-4-1.5s-2 1.5-4 1.5c-3 0-6-4.5-6-9.5z" fill="#000"/>
+          <ellipse cx="11.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/>
+          <ellipse cx="20.5" cy="15" rx="2.6" ry="1.7" fill="#ccff00"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const P = new URLSearchParams(location.search);
+  const D = Number(P.get("d") || 260);        // diameter in px
+  const T = Math.max(8, Math.round(D * 0.13)); // thickness: enough that the edge-on moment still reads
+  const N = Number(P.get("n") || 72);          // rim segments
+  const SPIN = Number(P.get("spin") || 3);     // seconds per full turn
+
+  const coin = document.getElementById("coin");
+  const rim = document.getElementById("rim");
+  const R = D / 2;
+  const seg = (Math.PI * D) / N + 1.2;         // chord, with overlap so no seams
+
+  document.documentElement.style.setProperty("--d", D + "px");
+  document.documentElement.style.setProperty("--t", T + "px");
+  document.documentElement.style.setProperty("--seg", seg.toFixed(2) + "px");
+
+  for (let i = 0; i < N; i++) {
+    const a = (360 / N) * i;
+    const el = document.createElement("i");
+    // Walk to the rim at angle a, then lay the plate flat so its height is the
+    // coin's thickness along Z.
+    el.style.transform = `rotateZ(${a}deg) translateY(${-R}px) rotateX(90deg)`;
+    // Shade by facing, so the rim reads as curved rather than as a ring of tabs.
+    const shade = 0.45 + 0.55 * Math.abs(Math.cos((a * Math.PI) / 180));
+    el.style.filter = `brightness(${shade.toFixed(3)})`;
+    rim.appendChild(el);
+  }
+
+  /** Deterministic: the renderer calls setT(seconds), nothing animates on its own. */
+  window.SPIN = SPIN;
+  window.setT = (t) => {
+    const deg = (t / SPIN) * 360;
+    // A small fixed tilt gives the disc some dimension without wobbling.
+    coin.style.transform = `rotateX(-20deg) rotateY(${deg.toFixed(3)}deg)`;
+    document.documentElement.dataset.ready = "1";
+  };
+  window.setT(0);
+</script>
+</body>
+</html>
