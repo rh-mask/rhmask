@@ -26,6 +26,7 @@ internal/
 
 # extension bundle
 extension/dist/
+cli/dist/
 
 # campaign binaries: rendered artefacts, not source. They are regenerated from
 # the HTML in the session scratchpad, so git is the wrong place to keep them.

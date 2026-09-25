@@ -1,0 +1,42 @@
+{
+  "name": "rhmask",
+  "version": "0.1.0",
+  "description": "Stealth addresses and private payment requests for Robinhood Chain, from your terminal. Key commands run offline; nothing here can sign or broadcast.",
+  "keywords": [
+    "ethereum",
+    "stealth-address",
+    "erc-5564",
+    "erc-6538",
+    "privacy",
+    "qrcode",
+    "cli"
+  ],
+  "homepage": "https://rhmask.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rh-mask/rhmask.git",
+    "directory": "cli"
+  },
+  "bugs": "https://github.com/rh-mask/rhmask/issues",
+  "license": "MIT",
+  "author": "rh-mask",
+  "type": "module",
+  "bin": {
+    "rhmask": "dist/rhmask.mjs"
+  },
+  "files": [
+    "dist/rhmask.mjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "prepublishOnly": "node build.mjs"
+  }
+}
