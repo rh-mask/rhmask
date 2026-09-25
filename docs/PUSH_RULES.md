@@ -23,7 +23,11 @@ A push that fails any rule is refused. There is no override flag on purpose.
    - AI attribution words,
    - every term in `internal/forbidden-terms.txt` (gitignored; competitor and third-party product names go there,
      one per line, so the list itself is never published).
-6. **Typecheck, lint, crypto round-trips, production build** all pass. `--fast` skips the build for quick local
+6. **No caption without its poster.** Every `rhmask-pNN.jpg` named in a `marketing/` markdown file must be
+   rendered and on disk. A caption written ahead of its image makes the file unreadable as a posting list,
+   which is what those files are for. `check:captions` enforces it, and is a no-op where the untracked
+   JPEGs are absent, such as CI and a fresh clone.
+7. **Typecheck, lint, crypto round-trips, production build** all pass. `--fast` skips the build for quick local
    loops; the hook and CI always run the full set.
 
 ## Commit style
