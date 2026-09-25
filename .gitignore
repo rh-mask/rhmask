@@ -26,3 +26,9 @@ internal/
 
 # extension bundle
 extension/dist/
+
+# campaign binaries: rendered artefacts, not source. They are regenerated from
+# the HTML in the session scratchpad, so git is the wrong place to keep them.
+marketing/posters/*.jpg
+marketing/posters/*.png
+marketing/video/*.mp4
