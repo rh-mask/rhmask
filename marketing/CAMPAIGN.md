@@ -1,8 +1,9 @@
 # Campaign: one story, told in order
 
 Everything in `marketing/` is one narrative, not a pile of posts. This file is the running order and the
-connective tissue between them. Assets: the trailer in [`video/`](video/), twenty-four posters in
-[`posters/`](posters/), captions in [`posters/CAPTIONS.md`](posters/CAPTIONS.md).
+connective tissue between them. Assets: the trailer in [`video/`](video/), thirty-six posters in
+[`posters/`](posters/), with captions split across [`posters/CAPTIONS.md`](posters/CAPTIONS.md) for 01–20,
+this file for 21–24, and [`ARCHITECTURE-CONTENT.md`](ARCHITECTURE-CONTENT.md) for 25–36.
 
 The spine is simple and it never changes:
 
@@ -51,7 +52,19 @@ one: people scan it, so it earns replies that carry the thread.
 
 **Continuity:** this act is deliberately the least promotional. It exists so that Act V is believed.
 
-## Act IV · The contracts (day 16, the launch thread)
+## Act III½ · The architecture (days 16–18)
+
+Twelve diagram posters, `p25`–`p36`, posted as one long-form thread. Captions and running order live in
+[`ARCHITECTURE-CONTENT.md`](ARCHITECTURE-CONTENT.md).
+
+This act exists because the architecture is the argument. By now the audience has seen the problem and the
+receipts; here they learn the shape of the thing and decide whether the team is serious. It is the least
+promotional act, and it is what makes Act V believable.
+
+**Continuity:** it opens on the trust boundary that Act III's proof posts implied but never drew, and it
+closes on what we refused to build, which sets up the contracts landing in Act IV.
+
+## Act IV · The contracts (day 19, the launch thread)
 
 This is the moment the product stops depending on a QR handoff. Post the thread below, then space the four
 posters over the following days.
