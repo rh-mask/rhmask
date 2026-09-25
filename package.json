@@ -10,7 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src scripts extension/src",
+    "lint": "eslint src scripts extension/src cli/src",
     "typecheck": "tsc --noEmit",
     "check:stealth": "node scripts/stealth-check.ts",
     "check": "node scripts/prepush-check.mjs",
@@ -21,7 +21,12 @@
     "build:extension": "node extension/build.mjs",
     "check:keycrypto": "node scripts/keycrypto-check.ts",
     "contracts:build": "node scripts/contracts-build.mjs",
-    "contracts:deploy": "node scripts/contracts-deploy.mjs"
+    "contracts:deploy": "node scripts/contracts-deploy.mjs",
+    "check:captions": "node scripts/captions-check.mjs",
+    "build:cli": "node cli/build.mjs",
+    "check:cli": "node scripts/cli-check.ts",
+    "contracts:deploy:testnet": "node scripts/contracts-deploy.mjs --network testnet",
+    "bridge:testnet": "node scripts/bridge-testnet.mjs"
   },
   "dependencies": {
     "@noble/curves": "^1.9.0",
