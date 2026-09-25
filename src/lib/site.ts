@@ -14,6 +14,10 @@ export const SITE = {
     handle: "rh-mask/rhmask",
     url: "https://github.com/rh-mask/rhmask",
   },
+  telegram: {
+    handle: "t.me/rhmaskorg",
+    url: "https://t.me/rhmaskorg",
+  },
   explorer: "https://robinhoodchain.blockscout.com",
 } as const;
 
