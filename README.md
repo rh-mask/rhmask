@@ -13,8 +13,11 @@
 [![Stealth](https://img.shields.io/badge/stealth-ERC--5564-b8ff5c?style=flat-square&labelColor=07080b)](https://eips.ethereum.org/EIPS/eip-5564)
 [![CI](https://img.shields.io/github/actions/workflow/status/rh-mask/rhmask/ci.yml?branch=main&style=flat-square&label=ci&labelColor=07080b)](https://github.com/rh-mask/rhmask/actions)
 [![License](https://img.shields.io/badge/license-MIT-8b90a0?style=flat-square&labelColor=07080b)](LICENSE)
+[![npm](https://img.shields.io/npm/v/rhmask?style=flat-square&label=npm&color=b8ff5c&labelColor=07080b)](https://www.npmjs.com/package/rhmask)
 
-[**Open the app**](https://rhmask.org/app) · [Pay privately](https://rhmask.org/pay) · [Product](docs/PRODUCT.md) · [Plan](docs/PLAN.md) · [Tokenomics](docs/TOKENOMICS.md) · [Extension](docs/EXTENSION.md) · [**Working on the UI?**](docs/HANDOFF.md)
+[**rhmask.org**](https://rhmask.org) · [**@RHmask_**](https://x.com/RHmask_) · [**GitHub**](https://github.com/rh-mask/rhmask) · [**npm**](https://www.npmjs.com/package/rhmask)
+
+[Open the app](https://rhmask.org/app) · [Pay privately](https://rhmask.org/pay) · [Docs](https://rhmask.org/docs) · [Whitepaper](https://rhmask.org/whitepaper) · [Product](docs/PRODUCT.md) · [Architecture](docs/ARCHITECTURE.md) · [Tokenomics](docs/TOKENOMICS.md) · [Extension](docs/EXTENSION.md) · [Sandbox](docs/TESTNET.md)
 
 </div>
 
@@ -94,7 +97,7 @@ We say this on every screen where it matters. Never "anonymous", never "untracea
 | Key storage | WebCrypto PBKDF2-SHA256 + AES-256-GCM | Encrypted at rest, decrypted only in memory |
 | QR | `qrcode` (SVG) + native `BarcodeDetector` with `jsqr` fallback | Renders on the first frame, scans on every browser |
 | Wallet | EIP-1193 injected provider | No account linkage, no third-party connect modal |
-| Hosting | Vercel | `/api/rpc` pass-through keeps the app working where the chain's RPC domain is blocked |
+| Hosting | Any Node host | `/api/rpc` pass-through keeps the app working where the chain's RPC domain is blocked |
 
 ## ✦ Getting started
 
@@ -188,10 +191,8 @@ rhmask/
 
 ## ✦ Contributing
 
-New to the repository and here for the interface? Start with [`docs/HANDOFF.md`](docs/HANDOFF.md): design tokens,
-which rules are style and which are product promises, and what is deliberately unfinished.
-
-Read [`docs/PUSH_RULES.md`](docs/PUSH_RULES.md) first. In short:
+Start with [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the invariants and the interface rules, then
+[`docs/PUSH_RULES.md`](docs/PUSH_RULES.md) for what a push has to pass. In short:
 
 - Every push passes `npm run check`, locally through the hook and again in CI.
 - One change per commit, imperative subject, no trailers of any kind.
@@ -200,7 +201,9 @@ Read [`docs/PUSH_RULES.md`](docs/PUSH_RULES.md) first. In short:
 
 ## ✦ Deploy
 
-Vercel, framework preset Next.js, region `sin1` (see [`vercel.json`](vercel.json)). Canonical domain **rhmask.org**: point `A rhmask.org 76.76.21.21` and `CNAME www cname.vercel-dns.com` at the registrar, then set `NEXT_PUBLIC_APP_URL=https://rhmask.org`. Redeploy with `vercel deploy --prod` from a linked checkout. No database is required.
+A standard Next.js build on any Node host. `npm run build`, then `npm start`. Route handlers need the Node runtime, not an edge-only one, and no database is required.
+
+Canonical domain is **rhmask.org**; set `NEXT_PUBLIC_APP_URL=https://rhmask.org` so metadata and QR links resolve. Deploys are run by hand, on purpose: this repository runs checks and nothing else.
 
 ## ✦ License
 
