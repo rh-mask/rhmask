@@ -88,7 +88,7 @@ if (!extra.length) console.log("  note internal/forbidden-terms.txt missing or e
 const terms = [...new Set([...generic, ...extra])];
 const PUBLIC = tracked.filter(
   (f) =>
-    /^(README\.md|LICENSE|package\.json|docs\/|marketing\/|src\/|scripts\/|contracts\/|public\/|\.github\/)/.test(f) &&
+    /^(README\.md|LICENSE|package\.json|docs\/|marketing\/|src\/|scripts\/|contracts\/|public\/|cli\/|extension\/|\.github\/)/.test(f) &&
     !/\.(png|jpg|svg|ico|lock)$/.test(f),
 );
 const hits = [];
@@ -122,6 +122,8 @@ run("", ["run", "lint"]);
 run("", ["run", "check:stealth"]);
 run("", ["run", "check:payment"]);
 run("", ["run", "check:keycrypto"]);
+run("", ["run", "check:captions"]);
+run("", ["run", "check:cli"]);
 if (fast) console.log("\n[5/5] build skipped (--fast)");
 else run("[5/5] production build", ["run", "build"]);
 
