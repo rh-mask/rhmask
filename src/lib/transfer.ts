@@ -114,8 +114,12 @@ export async function sweep(stealthPrivateKey: `0x${string}`, token: string, to:
   if (token === "ETH") {
     const balance = await client.getBalance({ address: account.address });
     if (balance === 0n) throw new Error("No ETH on this address.");
-    // Ask the chain instead of assuming 21k: Orbit chains can price calldata into the gas limit.
-    const gas = await client.estimateGas({ account, to, value: 1n }).catch(() => 21_000n);
+    // This chain prices L1 calldata into the gas limit, so a plain transfer needs
+    // more than 21,000 and the exact number moves with L1 data cost. Measured on
+    // mainnet: 21,369 for an ETH transfer, and 21,000 is rejected outright as
+    // "intrinsic gas too low". So the estimate is required, never assumed.
+    const estimated = await client.estimateGas({ account, to, value: 1n });
+    const gas = (estimated * 13n) / 10n;
     const cost = gas * fees.maxFeePerGas;
     if (balance <= cost) throw new Error("Not enough ETH to cover gas for the sweep.");
     return wallet.sendTransaction({

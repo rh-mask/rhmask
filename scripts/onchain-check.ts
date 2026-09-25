@@ -175,7 +175,16 @@ async function main() {
   record("latest block", ageSec < 120, `#${block.number}, ${ageSec}s old, baseFee ${block.baseFeePerGas ?? "n/a"} wei`);
   const fees = await client.estimateFeesPerGas();
   record("estimateFeesPerGas (sweep uses it)", fees.maxFeePerGas > 0n, `maxFee ${fees.maxFeePerGas} wei, priority ${fees.maxPriorityFeePerGas} wei`);
-  record("ETH sweep gas cost at 21k gas", true, `${formatUnits(21_000n * fees.maxFeePerGas, 18)} ETH`);
+  // 21,000 is an Ethereum number. This chain prices L1 calldata into the limit, so the real
+  // intrinsic gas is higher and moves with L1 data cost. Measured 21,369 on 2026-09-25, and a
+  // transaction sent with exactly 21,000 is rejected as "intrinsic gas too low". Measure, never assume.
+  const burn = "0x000000000000000000000000000000000000dEaD" as const;
+  const ethGas = await client.estimateGas({ account: burn, to: burn, value: 0n }).catch(() => 0n);
+  record(
+    "ETH transfer intrinsic gas is above 21000",
+    ethGas > 21_000n,
+    ethGas > 0n ? `${ethGas} units, costing ${formatUnits(ethGas * fees.maxFeePerGas, 18)} ETH` : "estimate unavailable",
+  );
 
   // 2. stock token contracts ----------------------------------------------
   console.log("\n[2] stock token contracts");
@@ -267,7 +276,7 @@ async function main() {
   if (anyHolder) {
     try {
       const gas = await client.estimateGas({ account: anyHolder, to: d.stealthAddress, value: 1n });
-      record("ETH -> stealth address (estimateGas)", gas >= 21_000n, `${gas} gas`);
+      record("ETH -> stealth address (estimateGas)", gas > 21_000n, `${gas} gas, above Ethereum's 21000 as this chain requires`);
     } catch (e) {
       record("ETH -> stealth address (estimateGas)", false, short(e));
     }
