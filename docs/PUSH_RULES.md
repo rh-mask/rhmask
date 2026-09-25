@@ -12,13 +12,18 @@ A push that fails any rule is refused. There is no override flag on purpose.
    global one that belongs to another account.
 2. **No private files.** `internal/`, `.env*` (except `.env.example`), `.vercel/`, `node_modules/`, `.next/`,
    keys and certificates are never tracked.
-3. **No foreign brands in public text.** README, LICENSE, `docs/`, `marketing/`, `src/`, `scripts/`, `contracts/`,
+3. **No rendered binaries.** Poster JPEGs and the trailer MP4 are build output, not source: they are
+   regenerated from HTML, so they are gitignored. A clone should carry code, not eighteen megabytes of
+   campaign artwork. Small site assets under `public/` are the exception, because the site serves them.
+4. **No retired brand names**, in a file *or* in a commit message. The gate checks both; it used to check
+   only files, which is how one rebrand commit kept the old name in its body.
+5. **No foreign brands in public text.** README, LICENSE, `docs/`, `marketing/`, `src/`, `scripts/`, `contracts/`,
    `public/` and `.github/` are scanned, case-insensitively, for:
    - the previous project name and its derived names (so a rebrand never leaks half-done),
    - AI attribution words,
    - every term in `internal/forbidden-terms.txt` (gitignored; competitor and third-party product names go there,
      one per line, so the list itself is never published).
-4. **Typecheck, lint, stealth round-trip, production build** all pass. `--fast` skips the build for quick local
+6. **Typecheck, lint, crypto round-trips, production build** all pass. `--fast` skips the build for quick local
    loops; the hook and CI always run the full set.
 
 ## Commit style

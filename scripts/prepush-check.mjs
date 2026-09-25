@@ -26,6 +26,10 @@ const git = (args) => execSync(`git ${args}`, { cwd: root, encoding: "utf8" }).t
 // ---------------------------------------------------------------------------
 console.log("\n[1/5] commit history");
 const AI_PATTERN = /claude|anthropic|copilot|openai|chatgpt|co-authored-by/i;
+// A commit message is published text too, but the file scan in step 3 never sees
+// one. That gap is how a retired brand name survived a rebrand, inside the body
+// of the very commit that removed it everywhere else.
+const BRAND_PATTERN = /veilstreet|veilvault|veil swap|\$veil\b/i;
 let range = "HEAD";
 try {
   const upstream = git("rev-parse --abbrev-ref --symbolic-full-name @{u}");
@@ -45,6 +49,12 @@ for (const c of commits) {
     badCommits++;
     const line = hit.split("\n").find((l) => AI_PATTERN.test(l))?.trim();
     fail(`commit ${hash.slice(0, 8)} carries an AI identity or a co-author trailer: "${line}"`);
+  }
+  const brandHit = [an, ae, cn, ce, body].find((v) => BRAND_PATTERN.test(v ?? ""));
+  if (brandHit) {
+    badCommits++;
+    const line = brandHit.split("\n").find((l) => BRAND_PATTERN.test(l))?.trim();
+    fail(`commit ${hash.slice(0, 8)} names a retired brand in its message: "${line}"`);
   }
 }
 if (badCommits === 0) ok(`${commits.length} commit(s) in ${range} are clean`);
