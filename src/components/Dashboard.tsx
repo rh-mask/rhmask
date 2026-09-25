@@ -86,8 +86,10 @@ export function Dashboard() {
           <ul className="mt-3 space-y-2">
             <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: the link between your identity and a receiving address.</span></li>
             <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: your order from public order books and mempools as a visible swap.</span></li>
+            <li className="flex gap-2"><span className="text-mask">+</span><span className="text-fog">Hidden: your IP from the chain&rsquo;s node operator. Chain reads go through this app&rsquo;s own origin.</span></li>
             <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: on-chain settlement itself. The chain is public by nature.</span></li>
             <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: the venue filling an order sees the deposit and the receiving address.</span></li>
+            <li className="flex gap-2"><span className="text-warn">!</span><span className="text-fog">Not hidden: your IP from our host, which logs it like any web server. Use your own node and neither of us sees it.</span></li>
           </ul>
           <p className="mt-4 text-xs text-fog-2">{"// "}No account. No email. No KYC. Keys stay on your device.</p>
         </Terminal>

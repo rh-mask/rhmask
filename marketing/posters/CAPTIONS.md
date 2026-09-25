@@ -216,8 +216,8 @@ launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running
 
 > Most privacy products tell you what they hide. Here is what we do not.
 >
-> Settlement stays public. The venue filling your order sees the deposit. Your IP reaches the RPC unless
-> you run your own node.
+> Settlement stays public. The venue filling your order sees the deposit. Your IP reaches our host, the way
+> it reaches any website, though it no longer reaches the chain's node operator.
 >
 > A privacy claim without its limits is marketing, not privacy.
 

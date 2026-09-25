@@ -71,7 +71,9 @@ Nothing in this flow touches a server. The receipt QR carries the ERC-5564 annou
 
 **Hidden:** the link between you and a receiving address (stealth addresses); your order from public order books and mempools as a visible swap.
 
-**Not hidden:** on-chain settlement itself; the venue filling an order sees the deposit and the receiving address; network-level metadata (your IP to the RPC) unless you use your own node.
+**Also hidden:** your IP from the chain&rsquo;s node operator. The browser talks to this app&rsquo;s own origin and the server forwards, so the node sees us, not you.
+
+**Not hidden:** on-chain settlement itself; the venue filling an order sees the deposit and the receiving address; your IP from our own host, which logs it like any web server. Point `NEXT_PUBLIC_RHC_RPC_URL` at your own node and neither of us sees it.
 
 We say this on every screen where it matters. Never "anonymous", never "untraceable".
 

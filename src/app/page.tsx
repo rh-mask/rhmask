@@ -128,12 +128,13 @@ const HIDDEN = [
   "The link between your identity and a receiving address.",
   "Your order, from public order books and mempools, as a visible swap.",
   "Your balance history, because it never piles up on one wallet.",
+  "Your IP from the chain's node operator: requests go through this app's own origin, not to them.",
 ];
 
 const VISIBLE = [
   "On-chain settlement itself. The chain is public by nature.",
   "The venue filling an order sees the deposit and the receiving address.",
-  "Network metadata, your IP to the RPC, unless you run your own node.",
+  "Your IP from us. Our host logs it like any web server. Point the app at your own node and nobody sees it.",
 ];
 
 const SAMPLE_QR = "https://rhmask.org/pay?to=st:eth:0x02b4f1c6a7d8e93f5a1c0b7d6e2f8a34c9d5b1e07f3a6c8d2b4e9f1a5c7d3b6e8f0&token=NVDA&amount=1.5";

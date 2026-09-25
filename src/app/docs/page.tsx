@@ -167,7 +167,9 @@ ${SITE.url}/app?claim=1&addr=0x…&eph=0x…&tag=87&tx=0x…#receive`}</Code>
         </ul>
         <p>
           What is <i>not</i> hidden matters just as much: on-chain settlement is public, the venue filling a swap sees
-          the deposit and the receiving address, and your IP reaches whichever RPC you use unless you run your own node.
+          the deposit and the receiving address. Your IP does not reach the chain&rsquo;s node operator, because the
+          browser talks to this app&rsquo;s own origin and the server forwards; it does reach our host, which logs it like
+          any web server. Point <code className="mono">NEXT_PUBLIC_RHC_RPC_URL</code> at your own node and neither of us sees it.
         </p>
         <p>
           Found a problem? Report it privately by email rather than in a public issue. Details are in{" "}
