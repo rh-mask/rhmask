@@ -5,7 +5,8 @@ Telegram or Discord. Keep the rules from [`../NARRATIVE.md`](../NARRATIVE.md): n
 "untraceable", always say `planned` when something is not live, and never invent a claim the status page
 cannot back.
 
-Files are `rhmask-p01.jpg` … `rhmask-p20.jpg`, all 1080×1350.
+Files are `rhmask-p01.jpg` … `rhmask-p24.jpg`, all 1080×1350. Captions for `p21`–`p24`, the contract
+launch set, live in [`../CAMPAIGN.md`](../CAMPAIGN.md) together with the running order for the whole campaign.
 
 ---
 
@@ -294,8 +295,9 @@ Files are `rhmask-p01.jpg` … `rhmask-p20.jpg`, all 1080×1350.
 
 ## Posting notes
 
-- **Order for a launch run:** 01, 04, 03, 05, 06, 07, 13, 17, 11, 18, 12, 14, 15, 08, 16, 09, 10, 19, 02, 20.
-  It opens with the problem, proves the product, then earns trust before it mentions the token.
+- **Running order lives in [`../CAMPAIGN.md`](../CAMPAIGN.md)**, which sequences the trailer, all twenty-four
+  posters and the contract launch thread into one story. Do not post these out of order: the credibility
+  comes from the sequence, not from any single image.
 - **One claim per post.** Do not stack two features into one caption.
 - **Anything `planned` says so in the caption**, not only in the image.
 - **Numbers drift.** 197 assets and 36 chains were read from the live API on 2026-09-25. Re-check before
