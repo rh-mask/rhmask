@@ -2,7 +2,7 @@
 
 Thanks for looking. RhMask is small on purpose, and the rules are short.
 
-Joining to work on the interface? Read [`docs/HANDOFF.md`](docs/HANDOFF.md) first. It has the design tokens, the
+Joining to work on the interface? Read [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) first. It has the invariants, the
 handful of rules that are product promises rather than style, and an honest list of what is unfinished.
 
 ## Before you push

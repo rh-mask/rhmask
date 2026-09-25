@@ -2,7 +2,7 @@
 
 /* ---------------------------------------------------------------------------
    Design tokens. Every colour in the product comes from here, so the app,
-   the OG image and the extension stay in step. See docs/HANDOFF.md.
+   the OG image and the extension stay in step. See docs/ARCHITECTURE.md.
 --------------------------------------------------------------------------- */
 @theme {
   /* surfaces, darkest to lightest */

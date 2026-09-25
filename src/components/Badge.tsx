@@ -13,7 +13,7 @@ export function Badge({ tone = "fog", children }: { tone?: BadgeTone; children: 
   return (
     <span
       // No backdrop-filter here on purpose: badges repeat a dozen times per
-      // page and a blurred backdrop on each one costs frames. See docs/HANDOFF.md.
+      // page and a blurred backdrop on each one costs frames. See docs/ARCHITECTURE.md.
       className={`inline-flex items-center gap-1.5 border px-2 py-0.5 text-[11px] font-bold lowercase ${TONES[tone]}`}
     >
       [{children}]
